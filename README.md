@@ -1,4 +1,4 @@
-# TI_GEN
+# tigen
 
 
 ### Contributors of the project
