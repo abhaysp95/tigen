@@ -21,7 +21,9 @@ namespace entities {
 			std::vector<instructor> _instructors;
 		public:
 			explicit course(std::string number, std::string name,
-					size_t max_students, std::vector<instructor> instructors);
+					size_t max_students, std::vector<instructor>& instructors);
+			explicit course(std::string number, std::string name,
+					size_t max_students, std::vector<instructor>&& instructors);
 
 			// copy constructor and copy assignment
 			course(const course& other) = default;
