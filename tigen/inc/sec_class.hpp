@@ -19,16 +19,18 @@ namespace entities {
 	  */
 	class sec_class {
 		private:
-			std::string _id;
+			size_t _id;
 			entities::department _dept;
 			entities::course _course;
 			entities::room _room;
 			entities::instructor _instructor;
 			entities::class_time _class_time;
 		public:
-			sec_class(std::string id, entities::department dept, entities::course course,
-					entities::room room, entities::instructor instructor,
-					entities::class_time class_time);
+			//sec_class(size_t id, entities::department dept, entities::course course,
+					//entities::room room, entities::instructor instructor,
+					//entities::class_time class_time);
+
+			sec_class(size_t id, entities::department dept, entities::course course);
 
 			// copy constructor and copy assignment
 			sec_class(const sec_class& other) = default;
@@ -36,22 +38,23 @@ namespace entities {
 
 			// move constructor and move assignment
 			sec_class(sec_class&& other) = delete;
-			sec_class& operator=(sec_class& other) = delete;
+			sec_class& operator=(sec_class& other) = default;
 
 			// mutators
-			void set_room(entities::room room);
-			void set_instructor(entities::instructor instructor);
-			void set_class_time(entities::class_time class_time);
+			void set_room(entities::room& room);
+			void set_instructor(entities::instructor& instructor);
+			void set_class_time(entities::class_time& class_time);
 
 			// accessor
-			std::string get_id() const;
+			size_t get_id() const;
 			entities::department get_deparatment() const;
 			entities::room get_room() const;
 			entities::course get_course() const;
 			entities::instructor get_instructor() const;
 			entities::class_time get_class_time() const;
 
-			std::ostream& dump(std::ostream& os) const;
+			//std::ostream& dump(std::ostream& os) const;
+			friend std::ostream& operator<<(std::ostream& os, const sec_class& other);
 	};
 };
 

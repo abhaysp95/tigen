@@ -26,8 +26,8 @@ namespace entities {
 			department& operator=(const department& other) = default;
 
 			// move constructor and move assignment
-			department(department&& other) = delete;
-			department& operator=(department&& other) = delete;
+			department(department&& other) = default;
+			department& operator=(department&& other) = default;
 
 			// accessors
 			std::string get_name() const;

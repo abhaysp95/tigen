@@ -21,17 +21,19 @@ namespace gen_algo {
 			std::vector<entities::room> _rooms;
 			std::vector<entities::class_time> _class_times;
 			size_t _classes_count;
-			data* _instance;
+			//data* _instance;
 
-			data();
-			data* get_instance();  // returning the instance as reference
+			//data* get_instance();  // returning the instance as reference
+			void create_data();
 		public:
+			data();
 			// accessors
 			std::vector<entities::department> get_deparatments() const;
 			std::vector<entities::course> get_courses() const;
 			std::vector<entities::instructor> get_instructors() const;
 			std::vector<entities::room> get_rooms() const;
-			std::vector<entities::class_time> get_class_time() const;
+			std::vector<entities::class_time> get_class_times() const;
+			size_t get_classes_count() const;
 	};
 };
 

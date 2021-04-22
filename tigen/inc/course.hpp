@@ -30,8 +30,8 @@ namespace entities {
 			course& operator=(const course& other) = default;
 
 			// move constructor and move assignment
-			course(course&& other) = delete;
-			course& operator=(course&& other) = delete;
+			course(course&& other) = default;
+			course& operator=(course&& other) = default;
 
 			// accessors
 			std::string get_number() const;
@@ -39,7 +39,8 @@ namespace entities {
 			size_t get_max_students() const;
 			std::vector<instructor> get_instructors() const;
 
-			std::ostream& dump(std::ostream& os) const;
+			//std::ostream& dump(std::ostream& os) const;
+			friend std::ostream& operator<<(std::ostream& os, const course& other);
 	};
 };
 
