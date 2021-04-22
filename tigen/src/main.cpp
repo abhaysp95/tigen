@@ -90,7 +90,6 @@ int main(int argc, char **argv) {
 		std::cout << "      " << schedule_number++ << "       | " << sch << " | "
 			<< sch.get_fitness() << " | " << sch.get_number_of_conflicts() << '\n';
 	}
-	std::cout << new_population.get_schedules().at(0).get_sec_classes().at(0) << std::endl;
 	//gen_algo::schedule new_sch(gene_data);
 	//std::cout << new_sch << std::endl;
 	return 0;
