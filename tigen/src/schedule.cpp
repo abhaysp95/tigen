@@ -23,8 +23,8 @@ namespace gen_algo {
 				new_class.set_room(this->_gene_data.get_rooms().at(
 							util::get_random_num(this->_gene_data.get_rooms().size())
 							));
-				new_class.set_instructor(this->_gene_data.get_instructors().at(
-							util::get_random_num(this->_gene_data.get_instructors().size())
+				new_class.set_instructor(crs.get_instructors().at(
+							util::get_random_num(crs.get_instructors().size())
 							));
 				new_class.set_class_time(this->_gene_data.get_class_times().at(
 							util::get_random_num(this->_gene_data.get_class_times().size())
