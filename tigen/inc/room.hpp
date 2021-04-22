@@ -15,6 +15,7 @@ namespace entities {
 			std::string _number;
 			size_t _capacity;
 		public:
+			room();
 			explicit room(std::string number, size_t capacity);
 
 			// copy constructor and copy assignment
@@ -22,8 +23,10 @@ namespace entities {
 			room& operator=(const room& other) = default;
 
 			// move constructor and move assignment
-			room(room&& other) = delete;
-			room& operator=(room&& other) = delete;
+			room(room&& other) = default;
+			room& operator=(room&& other) = default;
+
+			bool operator==(const room& other) const;
 
 			std::string get_number() const;
 			size_t get_capacity() const;

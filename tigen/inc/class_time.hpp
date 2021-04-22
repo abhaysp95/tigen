@@ -15,6 +15,7 @@ namespace entities {
 			std::string _id;
 			std::string _time;
 		public:
+			class_time();
 			explicit class_time(std::string id, std::string time);
 
 			// copy constructor and copy assignment
@@ -22,8 +23,10 @@ namespace entities {
 			class_time& operator=(const class_time& other) = default;
 
 			// move constructor and move assignment
-			class_time(class_time&& other) = delete;
-			class_time& operator=(class_time&& other) = delete;
+			class_time(class_time&& other) = default;
+			class_time& operator=(class_time&& other) = default;
+
+			bool operator==(const class_time& other) const;
 
 			// accessors
 			std::string get_id() const;

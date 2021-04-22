@@ -15,7 +15,11 @@ namespace entities {
 	size_t course::get_max_students() const { return this->_max_students; }
 	std::vector<instructor> course::get_instructors() const { return this->_instructors; }
 
-	std::ostream& course::dump(std::ostream& os) const {
+	/*std::ostream& course::dump(std::ostream& os) const {
 		return os << this->_name;
+	}*/
+
+	std::ostream& operator<<(std::ostream& os, const course& other) {
+		return os << other.get_name();
 	}
 };

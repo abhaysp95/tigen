@@ -15,6 +15,7 @@ namespace entities {
 			std::string _id;
 			std::string _name;
 		public:
+			instructor();
 			explicit instructor(std::string id, std::string name);
 
 			// copy constructor and copy assignment
@@ -22,14 +23,17 @@ namespace entities {
 			instructor& operator=(const instructor& other) = default;
 
 			// move constructor and move assignment
-			instructor(instructor&& other) = delete;
-			instructor& operator=(instructor&& other) = delete;
+			instructor(instructor&& other) = default;
+			instructor& operator=(instructor&& other) = default;
+
+			bool operator==(const instructor& other) const;
 
 			// accessors
 			std::string get_id() const;
 			std::string get_name() const;
 
-			std::ostream& dump(std::ostream& os) const;
+			//std::ostream& dump(std::ostream& os) const;
+			friend std::ostream& operator<<(std::ostream& os, const instructor& other);
 	};
 };
 
