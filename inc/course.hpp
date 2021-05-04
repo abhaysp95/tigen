@@ -39,6 +39,8 @@ namespace entities {
 			size_t get_max_students() const;
 			std::vector<instructor> get_instructors() const;
 
+			bool operator==(const course& other) const;
+
 			//std::ostream& dump(std::ostream& os) const;
 			friend std::ostream& operator<<(std::ostream& os, const course& other);
 	};
