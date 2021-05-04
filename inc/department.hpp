@@ -32,6 +32,8 @@ namespace entities {
 			// accessors
 			std::string get_name() const;
 			std::vector<course> get_courses() const;
+
+			bool operator==(const department& other) const;
 	};
 };
 
