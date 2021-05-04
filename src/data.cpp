@@ -35,25 +35,42 @@ namespace gen_algo {
 		entities::instructor i7("I7", "Dr. Kashyap");
 		entities::instructor i8("I8", "Dr. Satya");
 		entities::instructor i9("I9", "Dr. Kavya");
-		this->_instructors = std::vector<entities::instructor>{i1, i2, i3, i4, i5, i6, i7, i8, i9};
+		entities::instructor i10("I10", "Dr. Garg");
+		entities::instructor i11("I11", "Dr. Kapil");
+		entities::instructor i12("I12", "Dr. kanad");
+		entities::instructor i13("I13", "Dr. Anusuya");
+		entities::instructor i14("I14", "Dr. Agastya");
+		entities::instructor i15("I15", "Dr. Vajashrava");
+		this->_instructors = std::vector<entities::instructor>{
+			i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15
+		};
 
 		// courses running
 		entities::course c1("C1", "Automobile", 120, std::vector<entities::instructor>{i3, i5});
 		entities::course c2("C2", "Aeronautics", 150, std::vector<entities::instructor>{i5, i4});
-		entities::course c3("C3", "Biological", 140, std::vector<entities::instructor>{i1, i7});
-		entities::course c4("C4", "Chemical", 150, std::vector<entities::instructor>{i1, i7});
-		entities::course c5("C5", "Embedded Programming", 120, std::vector<entities::instructor>{i2});
-		entities::course c6("C6", "Web Development", 170, std::vector<entities::instructor>{i6, i9});
-		entities::course c7("C7", "Networking Security", 140, std::vector<entities::instructor>{i2, i8});
+		entities::course c3("C3", "Metullurgy", 150, std::vector<entities::instructor>{i10});
+		entities::course c4("C4", "Biological", 140, std::vector<entities::instructor>{i1, i7});
+		entities::course c5("C5", "Chemical", 150, std::vector<entities::instructor>{i1, i7});
+		entities::course c6("C6", "Embedded Programming", 120, std::vector<entities::instructor>{i2});
+		entities::course c7("C7", "Web Development", 170, std::vector<entities::instructor>{i6, i9});
+		entities::course c8("C8", "Networking Security", 140, std::vector<entities::instructor>{i2, i8});
+		entities::course c9("C9", "Electronics", 130, std::vector<entities::instructor>{i2, i11});
+		entities::course c10("C10", "Robotics", 180, std::vector<entities::instructor>{i11, i2, i14});
+		entities::course c11("C11", "GIS & Remote Sensing", 120, std::vector<entities::instructor>{i11, i14});
+		entities::course c12("C12", "Construction", 110, std::vector<entities::instructor>{i12, i15});
+		entities::course c13("C13", "Ceramic", 90, std::vector<entities::instructor>{i13});
+		entities::course c14("C14", "Mining", 100, std::vector<entities::instructor>{i12, i15});
 		this->_courses = std::vector<entities::course>{c1, c2, c3, c4, c5, c6, c7};
 
 		// departments available
 		entities::department d1("Dept. of Mechanincal Engineering",
-				std::vector<entities::course>{c1, c2});
-		entities::department d2("Dept. of NueroScience", std::vector<entities::course>{c3, c4});
+				std::vector<entities::course>{c1, c2, c3});
+		entities::department d2("Dept. of NueroScience", std::vector<entities::course>{c4, c5});
 		entities::department d3("Dept. of Information Technology",
-				std::vector<entities::course>{c5, c6, c7});
-		this->_depts = std::vector<entities::department>{d1, d2, d3};
+				std::vector<entities::course>{c6, c7, c8});
+		entities::department d4("Dept. of Electrical Engineering", std::vector<entities::course>{c9, c10, c11});
+		entities::department d5("Dept. of Civil Engineering", std::vector<entities::course>{c12, c13, c14});
+		this->_depts = std::vector<entities::department>{d1, d2, d3, d4, d5};
 
 		for (const entities::department& dept: this->_depts) {
 			_classes_count += dept.get_courses().size();
