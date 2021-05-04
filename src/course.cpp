@@ -2,6 +2,8 @@
 
 #include "../inc/course.hpp"
 
+#include <algorithm>
+
 namespace entities {
 	course::course(std::string number, std::string name,
 					size_t max_students, std::vector<instructor>& instructors):
@@ -9,6 +11,28 @@ namespace entities {
 	course::course(std::string number, std::string name,
 					size_t max_students, std::vector<instructor>&& instructors):
 		_number{number}, _name{name}, _max_students(max_students), _instructors(instructors) {}
+
+	template<typename T>
+	bool is_equal(std::vector<T> const &v1, std::vector<T> const &v2) {
+		//std::pair<typename std::vector<T>::iterator, typename std::vector<T>::iterator> ppair =
+		auto ppair =
+			std::mismatch(v1.begin(), v1.end(), v2.begin());
+		return (ppair.first == v1.cend() && ppair.second == v2.cend());
+	}
+
+	bool course::operator==(const course& other) const {
+		bool res = true;
+		std::vector<entities::instructor> local_course_vec = this->_instructors;
+		if (this->_number != other.get_number())
+			res = false;
+		if (this->_name != other.get_name())
+			res = false;
+		if (this->_max_students != other.get_max_students())
+			res = false;
+		if (!is_equal(local_course_vec, other.get_instructors()))
+			res = false;
+		return res;
+	}
 
 	std::string course::get_number() const { return this->_number; }
 	std::string course::get_name() const { return this->_name; }
