@@ -42,8 +42,7 @@ namespace gen_algo {
 		entities::instructor i14("I14", "Dr. Agastya");
 		entities::instructor i15("I15", "Dr. Vajashrava");
 		this->_instructors = std::vector<entities::instructor>{
-			i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15
-		};
+			i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15 };
 
 		// courses running
 		entities::course c1("C1", "Automobile", 120, std::vector<entities::instructor>{i3, i5});
@@ -60,7 +59,7 @@ namespace gen_algo {
 		entities::course c12("C12", "Construction", 110, std::vector<entities::instructor>{i12, i15});
 		entities::course c13("C13", "Ceramic", 90, std::vector<entities::instructor>{i13});
 		entities::course c14("C14", "Mining", 100, std::vector<entities::instructor>{i12, i15});
-		this->_courses = std::vector<entities::course>{c1, c2, c3, c4, c5, c6, c7};
+		this->_courses = std::vector<entities::course>{c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14};
 
 		// departments available
 		entities::department d1("Dept. of Mechanincal Engineering",
