@@ -19,6 +19,9 @@
 #include <vector>
 #include <iomanip>
 #include <algorithm>
+#include <typeinfo>
+#include <cstdlib>
+#include <cxxabi.h>
 
 extern const int POPULATION_SIZE;
 extern const double MUTATION_RATE;
@@ -86,6 +89,30 @@ const std::string print_table_element(std::string t, const int& width, const cha
 	std::stringstream ss;
 	ss << std::right << std::setw(width) << std::setfill(cfill) << t;
 	return ss.str();
+}
+
+// return demangled type name of template typename
+template<typename T>
+std::string type_name() {
+	int status{};
+	std::string tname = typeid(T).name();
+	#if defined(__clang__) || defined(_GNUG__)
+	char *demangled_name = abi::__cxa_demangle(tname.c_str(), NULL, NULL, &status);
+	if (status == 0) {
+		tname = demangled_name;
+		std::free(demangled_name);
+	}
+	#endif
+	return tname;
+}
+
+template<typename T>
+void entity_existance_check(const std::vector<T>& from_entity,
+		const typename std::vector<T>::const_iterator& check_entity) {
+	if (check_entity == from_entity.cend()) {
+		std::cout << "\nERROR ==>  " << type_name<T>() << " doesn't exist\n";
+		exit(1);
+	}
 }
 
 void print_schedule_as_table(gen_algo::schedule& sch, int gen_number) {
