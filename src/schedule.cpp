@@ -51,9 +51,13 @@ namespace gen_algo {
 		return this;
 	}*/
 
+	bool schedule::get_fitness_state() const { return this->_is_fitness_changed; }
+
 	data schedule::get_data() const { return this->_gene_data; }
 
 	size_t schedule::get_number_of_conflicts() const { return this->_number_of_conflicts; }
+
+	size_t schedule::get_sec_class_number() const { return this->_sec_class_number; }
 
 	std::vector<entities::sec_class>& schedule::get_sec_classes() {
 		this->_is_fitness_changed = true;
@@ -129,6 +133,17 @@ namespace gen_algo {
 		}
 		return 1 / static_cast<double>(this->_number_of_conflicts + 1);
 	} */
+
+
+	schedule& schedule::operator=(schedule* other) {
+		this->_is_fitness_changed = other->get_fitness_state();
+		this->_fitness = other->get_fitness();
+		this->_sec_class_number = other->get_sec_class_number();
+		this->_number_of_conflicts = other->get_number_of_conflicts();
+		this->_sec_classes = other->get_sec_classes();
+		return *this;
+	}
+
 
 	/*std::ostream& schedule::dump(std::ostream& os) const {
 		std::string return_res;
