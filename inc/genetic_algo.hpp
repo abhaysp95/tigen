@@ -22,12 +22,12 @@ namespace gen_algo {
 		public:
 			explicit genetic_algo(data gene_data);
 
-			population* evolve(population& pop);
-			population* crossover_population(population& pop);
+			population* evolve(population* pop);
+			population* crossover_population(population* pop);
 			schedule* crossover_schedule(schedule& sch1, schedule& sch2);
 			population* mutate_population(population* pop);
 			void mutate_schedule(schedule& sch);
-			population* select_tournament_population(population& pop);
+			population* select_tournament_population(population* pop);
 	};
 };
 
