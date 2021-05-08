@@ -28,13 +28,17 @@ namespace gen_algo {
 
 			// accessors
 
+
+
+			bool get_fitness_state() const;
 			data get_data() const;
 			size_t get_number_of_conflicts() const;
 			double get_fitness();
+			size_t get_sec_class_number() const;
 			std::vector<entities::sec_class>& get_sec_classes();
 			const std::vector<entities::sec_class>& get_sec_classes() const;
 
-			//std::ostream& dump(std::ostream& os) const;
+			schedule& operator=(schedule* other);
 
 			friend std::ostream& operator<<(std::ostream& os, const schedule& other);
 	};

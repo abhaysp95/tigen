@@ -1523,6 +1523,7 @@ entities	src/department.cpp	/^namespace entities {$/;"	n	file:
 entities	src/instructor.cpp	/^namespace entities {$/;"	n	file:
 entities	src/room.cpp	/^namespace entities {$/;"	n	file:
 entities	src/sec_class.cpp	/^namespace entities {$/;"	n	file:
+entity_existance_check	src/main.cpp	/^void entity_existance_check(const std::vector<T>& from_entity,$/;"	f	typeref:typename:void
 enum_cast	inc/pprint/pprint.hpp	/^  [[nodiscard]] constexpr std::optional<E> enum_cast(std::string_view value) noexcept {$/;"	f	namespace:magic_enum	typeref:typename:std::optional<E>
 enum_cast	inc/pprint/pprint.hpp	/^  [[nodiscard]] constexpr std::optional<E> enum_cast(std::underlying_type_t<E> value) noexcept {$/;"	f	namespace:magic_enum	typeref:typename:std::optional<E>
 enum_cast	pprint/include/pprint.hpp	/^  [[nodiscard]] constexpr std::optional<E> enum_cast(std::string_view value) noexcept {$/;"	f	namespace:magic_enum	typeref:typename:std::optional<E>
@@ -3014,6 +3015,7 @@ type	pprint/test/external/catch/include/catch2/catch.hpp	/^  TokenType type;$/;"
 type	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto type() const -> ParseResultType { return m_type; }$/;"	f	class:Catch::clara::detail::ParseState	typeref:typename:ParseResultType
 type	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto type() const -> ResultBase::Type { return m_type; }$/;"	f	class:Catch::clara::detail::BasicResult	typeref:typename:ResultBase::Type
 type	pprint/test/external/catch/include/catch2/catch.hpp	/^  using type = T;$/;"	t	struct:Catch::Generators::Generators	typeref:typename:T
+type_name	src/main.cpp	/^std::string type_name() {$/;"	f	typeref:typename:std::string
 uchar	pprint/test/external/catch/include/catch2/catch.hpp	/^using uchar = unsigned char;$/;"	t	typeref:typename:unsigned char
 uncaught_exceptions	pprint/test/external/catch/include/catch2/catch.hpp	/^bool uncaught_exceptions()$/;"	f	namespace:Catch	typeref:typename:bool
 unexpectedExceptions	pprint/test/external/catch/include/catch2/catch.hpp	/^  unsigned int unexpectedExceptions = 0;$/;"	m	class:Catch::JunitReporter	typeref:typename:unsigned int

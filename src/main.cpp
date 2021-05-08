@@ -19,6 +19,9 @@
 #include <vector>
 #include <iomanip>
 #include <algorithm>
+#include <typeinfo>
+#include <cstdlib>
+#include <cxxabi.h>
 
 extern const int POPULATION_SIZE;
 extern const double MUTATION_RATE;
@@ -88,6 +91,30 @@ const std::string print_table_element(std::string t, const int& width, const cha
 	return ss.str();
 }
 
+// return demangled type name of template typename
+template<typename T>
+std::string type_name() {
+	int status{};
+	std::string tname = typeid(T).name();
+	#if defined(__clang__) || defined(_GNUG__)
+	char *demangled_name = abi::__cxa_demangle(tname.c_str(), NULL, NULL, &status);
+	if (status == 0) {
+		tname = demangled_name;
+		std::free(demangled_name);
+	}
+	#endif
+	return tname;
+}
+
+template<typename T>
+void entity_existance_check(const std::vector<T>& from_entity,
+		const typename std::vector<T>::const_iterator& check_entity) {
+	if (check_entity == from_entity.cend()) {
+		std::cout << "\nERROR ==>  " << type_name<T>() << " doesn't exist\n";
+		exit(1);
+	}
+}
+
 void print_schedule_as_table(gen_algo::schedule& sch, int gen_number) {
 	size_t class_number{};
 	std::vector<entities::sec_class> classes = sch.get_sec_classes();  // std::bad_alloc
@@ -108,22 +135,27 @@ void print_schedule_as_table(gen_algo::schedule& sch, int gen_number) {
 		std::vector<entities::department> vtdept = gene_data->get_deparatments();
 		std::vector<entities::department>::const_iterator citer_dept = std::find(
 				vtdept.cbegin(), vtdept.cend(), cls.get_deparatment());
+		entity_existance_check(vtdept, citer_dept);
 
 		std::vector<entities::course> vtcrs = gene_data->get_courses();
 		std::vector<entities::course>::const_iterator citer_course  = std::find(
 				vtcrs.cbegin(), vtcrs.cend(), cls.get_course());
+		entity_existance_check(vtcrs, citer_course);
 
 		std::vector<entities::room> vtroom = gene_data->get_rooms();
 		std::vector<entities::room>::const_iterator citer_room = std::find(
 				vtroom.cbegin(), vtroom.cend(), cls.get_room());
+		entity_existance_check(vtroom, citer_room);
 
 		std::vector<entities::instructor> vtinst = gene_data->get_instructors();
 		std::vector<entities::instructor>::const_iterator citer_instructor = std::find(
 				vtinst.cbegin(), vtinst.cend(), cls.get_instructor());
+		entity_existance_check(vtinst, citer_instructor);
 
 		std::vector<entities::class_time> vtctime = gene_data->get_class_times();
 		std::vector<entities::class_time>::const_iterator citer_class_time = std::find(
 				vtctime.cbegin(), vtctime.cend(), cls.get_class_time());
+		entity_existance_check(vtctime, citer_class_time);
 
 		std::cout << print_table_element(" ", 8);
 
@@ -161,16 +193,35 @@ int main(int argc, char **argv) {
 	std::cout << "-----------------------------------------------------------";
 	std::cout << "-----------------------------------------------------------\n";
 	gen_algo::genetic_algo ga(*gene_data);
-	gen_algo::population new_population(POPULATION_SIZE, *gene_data);
-	new_population.sort_by_fitness();
+	//gen_algo::population new_population(POPULATION_SIZE, *gene_data);
+	gen_algo::population *new_population = new gen_algo::population(POPULATION_SIZE, *gene_data);
+	new_population->sort_by_fitness();
 	std::cout << std::fixed;
 	std::cout << std::setprecision(5);
-	for (gen_algo::schedule& sch: new_population.get_schedules()) {
+	for (gen_algo::schedule& sch: new_population->get_schedules()) {
 		std::cout << "      " << schedule_number++ << "       | " << sch << " | "
 			<< sch.get_fitness() << " | " << sch.get_number_of_conflicts() << '\n';
 	}
 
-	print_schedule_as_table(new_population.get_schedules().at(0), generation_number);
+	print_schedule_as_table(new_population->get_schedules().at(0), generation_number);
+
+	new_population = ga.evolve(new_population);
+	new_population->sort_by_fitness();
+
+	std::cout << "\n\n\nAgain ----------------- \n\n";
+
+
+	std::cout << std::fixed;
+	std::cout << std::setprecision(5);
+	for (gen_algo::schedule& sch: new_population->get_schedules()) {
+		std::cout << "      " << schedule_number++ << "       | " << sch << " | "
+			<< sch.get_fitness() << " | " << sch.get_number_of_conflicts() << '\n';
+	}
+
+	print_schedule_as_table(new_population->get_schedules().at(0), generation_number);
+
+
+	delete new_population;
 	delete gene_data;
 	return 0;
 }
