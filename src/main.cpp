@@ -92,6 +92,8 @@ const std::string print_table_element(std::string t, const int& width, const cha
 }
 
 // return demangled type name of template typename
+// I should probably remove this(cause, it's compiler specific thing and would
+// give wrong results if user uses some other compilers)
 template<typename T>
 std::string type_name() {
 	int status{};
@@ -179,49 +181,50 @@ void print_schedule_as_table(gen_algo::schedule& sch, int gen_number) {
 	}
 }
 
+template<typename T>
+void free_obj(T* object) {
+	if (object) {
+		delete object;
+		object = nullptr;
+	}
+}
+
 int main(int argc, char **argv) {
-	// second run
+	// program starts here
 	gene_data = new gen_algo::data;
 	print_available_data(gene_data);
 
-	// print a population
 	size_t generation_number{};
-	std::cout << "> Generation #  " << generation_number << '\n';
-	std::cout << "  Schedule #  |            ";
-	std::cout << "Classes[dept,class,room,instructor,class_time]   ";
-	std::cout << "                  | Fitness | Conflicts \n";
-	std::cout << "-----------------------------------------------------------";
-	std::cout << "-----------------------------------------------------------\n";
 	gen_algo::genetic_algo ga(*gene_data);
-	//gen_algo::population new_population(POPULATION_SIZE, *gene_data);
-	gen_algo::population *new_population = new gen_algo::population(POPULATION_SIZE, *gene_data);
-	new_population->sort_by_fitness();
-	std::cout << std::fixed;
-	std::cout << std::setprecision(5);
-	for (gen_algo::schedule& sch: new_population->get_schedules()) {
-		std::cout << "      " << schedule_number++ << "       | " << sch << " | "
-			<< sch.get_fitness() << " | " << sch.get_number_of_conflicts() << '\n';
-	}
+	gen_algo::population *new_population = nullptr;
 
-	print_schedule_as_table(new_population->get_schedules().at(0), generation_number);
+	do {
+		std::cout << "> Generation #  " << ++generation_number << '\n';
+		std::cout << "  Schedule #  |            ";
+		std::cout << "Classes[dept,class,room,instructor,class_time]   ";
+		std::cout << "                  | Fitness | Conflicts \n";
+		std::cout << "-----------------------------------------------------------";
+		std::cout << "-----------------------------------------------------------\n";
+		// don't worry about freeing new_population here, cause the instance of
+		// new_population passed as parameter is freed in
+		// genetic_algo::crossover_population
+		if (!new_population)
+			new_population = new gen_algo::population(POPULATION_SIZE, *gene_data);
+		else
+			new_population = ga.evolve(new_population);  // get new scheduled and mutated data(population)
+		new_population->sort_by_fitness();
+		std::cout << std::fixed;
+		std::cout << std::setprecision(5);
+		schedule_number = 0;
+		for (gen_algo::schedule& sch: new_population->get_schedules()) {
+			std::cout << "      " << ++schedule_number << "       | " << sch << " | "
+				<< sch.get_fitness() << " | " << sch.get_number_of_conflicts() << '\n';
+		}
+		print_schedule_as_table(new_population->get_schedules().at(0), generation_number);
+	} while (new_population->get_schedules()[0].get_fitness() != 1.0);
+	// is comparing double a right thing ?
 
-	new_population = ga.evolve(new_population);
-	new_population->sort_by_fitness();
-
-	std::cout << "\n\n\nAgain ----------------- \n\n";
-
-
-	std::cout << std::fixed;
-	std::cout << std::setprecision(5);
-	for (gen_algo::schedule& sch: new_population->get_schedules()) {
-		std::cout << "      " << schedule_number++ << "       | " << sch << " | "
-			<< sch.get_fitness() << " | " << sch.get_number_of_conflicts() << '\n';
-	}
-
-	print_schedule_as_table(new_population->get_schedules().at(0), generation_number);
-
-
-	delete new_population;
-	delete gene_data;
+	free_obj(new_population);
+	free_obj(gene_data);
 	return 0;
 }
