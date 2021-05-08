@@ -20,12 +20,21 @@ namespace gen_algo {
 		for (entities::department& dept: data_depts) {
 			for (entities::course& crs: dept.get_courses()) {
 				entities::sec_class new_class(this->_sec_class_number++, dept, crs);
-				new_class.set_room(this->_gene_data.get_rooms().at(
-							util::get_random_num(this->_gene_data.get_rooms().size())));
-				new_class.set_instructor(crs.get_instructors().at(
-							util::get_random_num(crs.get_instructors().size())));
-				new_class.set_class_time(this->_gene_data.get_class_times().at(
-							util::get_random_num(this->_gene_data.get_class_times().size())));
+
+				//new_class.set_room(this->_gene_data.get_rooms().at(
+							//util::get_random_num(this->_gene_data.get_rooms().size())));
+				//new_class.set_instructor(crs.get_instructors().at(
+							//util::get_random_num(crs.get_instructors().size())));
+				//new_class.set_class_time(this->_gene_data.get_class_times().at(
+							//util::get_random_num(this->_gene_data.get_class_times().size())));
+
+				new_class.set_room(this->_gene_data.get_rooms()[
+						util::rngi(this->_gene_data.get_rooms().size())]);
+				new_class.set_instructor(crs.get_instructors()[
+						util::rngi(crs.get_instructors().size())]);
+				new_class.set_class_time(this->_gene_data.get_class_times()[
+						util::rngi(this->_gene_data.get_class_times().size())]);
+
 				this->_sec_classes.push_back(new_class);
 			}
 		}

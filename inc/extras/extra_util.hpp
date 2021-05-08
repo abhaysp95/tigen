@@ -6,7 +6,9 @@
 #include <vector>
 
 namespace util {
-	int get_random_num(size_t upto);
+	//int get_random_num(size_t upto);
+	int rngi(int limit);
+	double rngr(double limit);
 };
 
 #endif

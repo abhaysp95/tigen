@@ -37,7 +37,7 @@ namespace gen_algo {
 		entities::instructor i9("I9", "Dr. Kavya");
 		entities::instructor i10("I10", "Dr. Garg");
 		entities::instructor i11("I11", "Dr. Kapil");
-		entities::instructor i12("I12", "Dr. kanad");
+		entities::instructor i12("I12", "Dr. Kanad");
 		entities::instructor i13("I13", "Dr. Anusuya");
 		entities::instructor i14("I14", "Dr. Agastya");
 		entities::instructor i15("I15", "Dr. Vajashrava");
