@@ -22,6 +22,8 @@
 #include <typeinfo>
 #include <cstdlib>
 #include <cxxabi.h>
+#include <random>
+#include <chrono>
 
 extern const int POPULATION_SIZE;
 extern const double MUTATION_RATE;
@@ -191,6 +193,10 @@ void free_obj(T* object) {
 
 int main(int argc, char **argv) {
 	// program starts here
+
+	// set the seed
+	srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+
 	gene_data = new gen_algo::data;
 	print_available_data(gene_data);
 
