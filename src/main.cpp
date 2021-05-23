@@ -24,6 +24,7 @@
 #include <cxxabi.h>
 #include <random>
 #include <chrono>
+#include <stdexcept>
 
 extern const int POPULATION_SIZE;
 extern const double MUTATION_RATE;
@@ -106,6 +107,10 @@ std::string type_name() {
 		tname = demangled_name;
 		std::free(demangled_name);
 	}
+	#else
+	std::cout << "\ndemangling status: " << status << '\n';
+	std::cout <<
+		"Type Name demangling is not supported by Compiler[variable \"__clang__\" and \"__GNUG__\" undefined]\n";
 	#endif
 	return tname;
 }
@@ -203,6 +208,7 @@ int main(int argc, char **argv) {
 	size_t generation_number{};
 	gen_algo::genetic_algo ga(*gene_data);
 	gen_algo::population *new_population = nullptr;
+	double fittest_schedule_fitness{};
 
 	do {
 		std::cout << "> Generation #  " << ++generation_number << '\n';
@@ -219,16 +225,29 @@ int main(int argc, char **argv) {
 		else
 			new_population = ga.evolve(new_population);  // get new scheduled and mutated data(population)
 		new_population->sort_by_fitness();
-		std::cout << std::fixed;
-		std::cout << std::setprecision(5);
-		schedule_number = 0;
-		for (gen_algo::schedule& sch: new_population->get_schedules()) {
-			std::cout << "      " << ++schedule_number << "       | " << sch << " | "
-				<< sch.get_fitness() << " | " << sch.get_number_of_conflicts() << '\n';
+		try {
+			std::vector<gen_algo::schedule> np_schedules = new_population->get_schedules();
+			gen_algo::schedule fittest_schedule = np_schedules.at(0);
+			fittest_schedule_fitness = fittest_schedule.get_fitness();
+			std::cout << std::fixed;
+			std::cout << std::setprecision(5);
+			schedule_number = 0;
+			for (gen_algo::schedule& sch: new_population->get_schedules()) {
+				std::cout << "      " << ++schedule_number << "       | " << sch << " | "
+					<< sch.get_fitness() << " | " << sch.get_number_of_conflicts() << '\n';
+			}
+			print_schedule_as_table(fittest_schedule, generation_number);
 		}
-		print_schedule_as_table(new_population->get_schedules().at(0), generation_number);
-	} while (new_population->get_schedules()[0].get_fitness() != 1.0);
-	// is comparing double a right thing ?
+		catch (std::out_of_range& e) {
+			std::cout << e.what() << '\n';
+			std::cout << "Can't get new fittest schedule, exiting now !!!\n";
+			exit(1);
+		}
+	} while (fittest_schedule_fitness < 1.0);
+
+
+	//} while (new_population->get_schedules()[0].get_fitness() >= 1.0);
+	// >= instead of != is because just to be on the safer side of floating point value comparision
 
 	free_obj(new_population);
 	free_obj(gene_data);
