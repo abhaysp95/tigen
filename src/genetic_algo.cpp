@@ -14,7 +14,7 @@ namespace gen_algo {
 		population* crs_pop = new population(pop->get_schedules().size(), this->_gene_data);
 
 		for (size_t i = 0; i < NUMBER_OF_ELITE_SCHEDULES; ++i) {
-			crs_pop->get_schedules()[i] = pop->get_schedules()[i];
+			crs_pop->get_schedules()[i] = pop->get_schedules().at(i);
 		}
 
 		for (size_t i = NUMBER_OF_ELITE_SCHEDULES; i < pop->get_schedules().size(); ++i) {
@@ -30,22 +30,26 @@ namespace gen_algo {
 				trnmnt_pop2->sort_by_fitness();
 				//schedule sch1 = this->select_tournament_population(pop)->get_schedules().at(0);
 				//schedule sch2 = this->select_tournament_population(pop)->get_schedules().at(0);
-				schedule sch1 = trnmnt_pop1->get_schedules()[0];
-				schedule sch2 = trnmnt_pop2->get_schedules()[0];
+				schedule sch1 = trnmnt_pop1->get_schedules().at(0);
+				schedule sch2 = trnmnt_pop2->get_schedules().at(0);
 				// try deleting *trnmnt_pop here, since sch1 and sch2 are copied
-				delete trnmnt_pop1;
-				delete trnmnt_pop2;
+				if (trnmnt_pop1)
+					delete trnmnt_pop1;
+				if (trnmnt_pop2)
+					delete trnmnt_pop2;
 				schedule* crs_sch = crossover_schedule(sch1, sch2);
 				crs_pop->get_schedules()[i] = crs_sch;
-				delete crs_sch;  // trying to free crs_sch here
+				if (crs_sch)
+					delete crs_sch;  // trying to free crs_sch here
 			}
 			else {
-				crs_pop->get_schedules()[i] = pop->get_schedules()[i];
+				crs_pop->get_schedules()[i] = pop->get_schedules().at(i);
 			}
 		}
 
 		// I think, pop will also be not needed, so free that too
-		delete pop;
+		if (pop)
+			delete pop;
 		return crs_pop;
 	}
 
@@ -56,9 +60,9 @@ namespace gen_algo {
 		for (size_t i = 0; i < count_sec_classes; ++i) {
 			//if ((rand() / static_cast<double>(RAND_MAX)) > 0.5)
 			if (util::rngr(2.0) > 0.5)
-				sch->get_sec_classes()[i] = sch1.get_sec_classes()[i];
+				sch->get_sec_classes()[i] = sch1.get_sec_classes().at(i);
 			else
-				sch->get_sec_classes()[i] = sch2.get_sec_classes()[i];
+				sch->get_sec_classes()[i] = sch2.get_sec_classes().at(i);
 		}
 
 		return sch;
@@ -69,16 +73,17 @@ namespace gen_algo {
 		std::vector<schedule>& schedules = mutate_population->get_schedules();
 
 		for (size_t i = 0; i < NUMBER_OF_ELITE_SCHEDULES; ++i) {
-			schedules[i] = pop->get_schedules()[i];
+			schedules[i] = pop->get_schedules().at(i);
 		}
 
 		for (size_t i = NUMBER_OF_ELITE_SCHEDULES; i < pop->get_schedules().size(); ++i) {
-			mutate_schedule(pop->get_schedules()[i]);
-			schedules[i] = pop->get_schedules()[i];
+			mutate_schedule(pop->get_schedules().at(i));
+			schedules[i] = pop->get_schedules().at(i);
 		}
 
 		// now, there's no need for this *pop, delete it after calling this mutate_population
-		delete pop;
+		if (pop)
+			delete pop;
 		return mutate_population;
 	}
 
@@ -88,7 +93,7 @@ namespace gen_algo {
 		for (size_t i = 0; i < sch.get_sec_classes().size(); ++i) {
 			//if (MUTATION_RATE > (rand() / static_cast<double>(RAND_MAX)))
 			if (MUTATION_RATE > util::rngr(1.5))
-				sch.get_sec_classes()[i] = tsch.get_sec_classes()[i];
+				sch.get_sec_classes()[i] = tsch.get_sec_classes().at(i);
 		}
 
 	}
