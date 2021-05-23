@@ -136,9 +136,14 @@ namespace gen_algo {
 	//}
 
 	std::vector<entities::department> data::get_deparatments() const { return this->_depts; }
+
 	std::vector<entities::course> data::get_courses() const { return this->_courses; }
+
 	std::vector<entities::room> data::get_rooms() const { return this->_rooms; }
+
 	std::vector<entities::instructor> data::get_instructors() const { return this->_instructors; }
+
 	std::vector<entities::class_time> data::get_class_times() const { return this->_class_times; }
+
 	size_t data::get_classes_count() const { return this->_classes_count; }
 };
