@@ -16,6 +16,7 @@
 //#include <pprint.hpp>
 
 #include <iostream>
+#include <ios>
 #include <vector>
 #include <iomanip>
 #include <algorithm>
@@ -201,6 +202,11 @@ int main(int argc, char **argv) {
 
 	// set the seed
 	srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+
+	// comment these if you are going to use C based input/output methods
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL);
+	std::cout.tie(NULL);
 
 	gene_data = new gen_algo::data;
 	print_available_data(gene_data);
