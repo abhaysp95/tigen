@@ -1417,7 +1417,7 @@ create	pprint/test/external/catch/include/catch2/catch.hpp	/^IStreamingReporterP
 createContext	pprint/test/external/catch/include/catch2/catch.hpp	/^void IMutableContext::createContext()$/;"	f	class:Catch::IMutableContext	typeref:typename:void
 createReporter	pprint/test/external/catch/include/catch2/catch.hpp	/^IStreamingReporterPtr createReporter(std::string const &reporterName, IConfigPtr const &config)$/;"	f	namespace:Catch::__anon512022b41811	typeref:typename:IStreamingReporterPtr
 create_data	src/data.cpp	/^	void data::create_data() {$/;"	f	class:gen_algo::data	typeref:typename:void
-crossover_population	src/genetic_algo.cpp	/^	population* genetic_algo::crossover_population(population& pop) {$/;"	f	class:gen_algo::genetic_algo	typeref:typename:population *
+crossover_population	src/genetic_algo.cpp	/^	population* genetic_algo::crossover_population(population* pop) {$/;"	f	class:gen_algo::genetic_algo	typeref:typename:population *
 crossover_schedule	src/genetic_algo.cpp	/^	schedule* genetic_algo::crossover_schedule(schedule& sch1, schedule& sch2) {$/;"	f	class:gen_algo::genetic_algo	typeref:typename:schedule *
 currentContext	pprint/test/external/catch/include/catch2/catch.hpp	/^  static IMutableContext *currentContext;$/;"	m	struct:Catch::IMutableContext	typeref:typename:IMutableContext *
 currentContext	pprint/test/external/catch/include/catch2/catch.hpp	/^IMutableContext *IMutableContext::currentContext = nullptr;$/;"	m	class:Catch::IMutableContext	typeref:typename:IMutableContext *
@@ -1548,7 +1548,7 @@ error	pprint/test/external/catch/include/catch2/catch.hpp	/^  int error = 0;$/;"
 errorMessage	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto errorMessage() const -> std::string { return m_errorMessage; }$/;"	f	class:Catch::clara::detail::BasicResult	typeref:typename:std::string
 escape	pprint/test/external/catch/include/catch2/catch.hpp	/^void TestSpecParser::escape()$/;"	f	class:Catch::TestSpecParser	typeref:typename:void
 estimateClockResolution	pprint/test/external/catch/include/catch2/catch.hpp	/^auto estimateClockResolution() -> uint64_t$/;"	f	namespace:Catch::__anon512022b41f11	typeref:typename:uint64_t
-evolve	src/genetic_algo.cpp	/^	population* genetic_algo::evolve(population& pop) {$/;"	f	class:gen_algo::genetic_algo	typeref:typename:population *
+evolve	src/genetic_algo.cpp	/^	population* genetic_algo::evolve(population* pop) {$/;"	f	class:gen_algo::genetic_algo	typeref:typename:population *
 exceptionEarlyReported	pprint/test/external/catch/include/catch2/catch.hpp	/^void RunContext::exceptionEarlyReported()$/;"	f	class:Catch::RunContext	typeref:typename:void
 exceptionHandlerHandle	pprint/test/external/catch/include/catch2/catch.hpp	/^  static PVOID exceptionHandlerHandle;$/;"	m	struct:Catch::FatalConditionHandler	typeref:typename:PVOID
 exceptionHandlerHandle	pprint/test/external/catch/include/catch2/catch.hpp	/^PVOID FatalConditionHandler::exceptionHandlerHandle = nullptr;$/;"	m	class:Catch::FatalConditionHandler	typeref:typename:PVOID
@@ -1633,6 +1633,7 @@ foo	pprint/test/test_vector.hpp	/^  std::vector<int> foo {1};$/;"	v	typeref:type
 foo	pprint/test/test_vector.hpp	/^  std::vector<int> foo {};$/;"	v	typeref:typename:std::vector<int>
 formatReconstructedExpression	pprint/test/external/catch/include/catch2/catch.hpp	/^void formatReconstructedExpression(std::ostream &os, std::string const &lhs, StringRef op, std::/;"	f	namespace:Catch	typeref:typename:void
 fpToString	pprint/test/external/catch/include/catch2/catch.hpp	/^std::string fpToString(T value, int precision)$/;"	f	namespace:Catch	typeref:typename:std::string
+free_obj	src/main.cpp	/^void free_obj(T* object) {$/;"	f	typeref:typename:void
 fullConfig	pprint/test/external/catch/include/catch2/catch.hpp	/^IConfigPtr ReporterConfig::fullConfig() const { return m_fullConfig; }$/;"	f	class:Catch::ReporterConfig	typeref:typename:IConfigPtr
 gen_algo	inc/data.hpp	/^namespace gen_algo {$/;"	n
 gen_algo	inc/genetic_algo.hpp	/^namespace gen_algo {$/;"	n
@@ -1739,6 +1740,7 @@ get_data	src/schedule.cpp	/^	data schedule::get_data() const { return this->_gen
 get_deparatment	src/sec_class.cpp	/^	entities::department sec_class::get_deparatment() const { return this->_dept; }$/;"	f	class:entities::sec_class	typeref:typename:entities::department
 get_deparatments	src/data.cpp	/^	std::vector<entities::department> data::get_deparatments() const { return this->_depts; }$/;"	f	class:gen_algo::data	typeref:typename:std::vector<entities::department>
 get_fitness	src/schedule.cpp	/^	double schedule::get_fitness() {$/;"	f	class:gen_algo::schedule	typeref:typename:double
+get_fitness_state	src/schedule.cpp	/^	bool schedule::get_fitness_state() const { return this->_is_fitness_changed; }$/;"	f	class:gen_algo::schedule	typeref:typename:bool
 get_id	src/class_time.cpp	/^	std::string class_time::get_id() const { return this->_id; }$/;"	f	class:entities::class_time	typeref:typename:std::string
 get_id	src/instructor.cpp	/^	std::string instructor::get_id() const { return this->_id; }$/;"	f	class:entities::instructor	typeref:typename:std::string
 get_id	src/sec_class.cpp	/^	size_t sec_class::get_id() const { return this->_id; }$/;"	f	class:entities::sec_class	typeref:typename:size_t
@@ -1752,11 +1754,11 @@ get_name	src/instructor.cpp	/^	std::string instructor::get_name() const { return
 get_number	src/course.cpp	/^	std::string course::get_number() const { return this->_number; }$/;"	f	class:entities::course	typeref:typename:std::string
 get_number	src/room.cpp	/^	std::string room::get_number() const { return this->_number; }$/;"	f	class:entities::room	typeref:typename:std::string
 get_number_of_conflicts	src/schedule.cpp	/^	size_t schedule::get_number_of_conflicts() const { return this->_number_of_conflicts; }$/;"	f	class:gen_algo::schedule	typeref:typename:size_t
-get_random_num	src/extras/extra_util.cpp	/^	int get_random_num(size_t upto) {$/;"	f	namespace:util	typeref:typename:int
 get_room	src/sec_class.cpp	/^	entities::room sec_class::get_room() const { return this->_room; }$/;"	f	class:entities::sec_class	typeref:typename:entities::room
 get_rooms	src/data.cpp	/^	std::vector<entities::room> data::get_rooms() const { return this->_rooms; }$/;"	f	class:gen_algo::data	typeref:typename:std::vector<entities::room>
 get_schedules	src/population.cpp	/^	const std::vector<schedule>& population::get_schedules() const { return this->_schedules; }$/;"	f	class:gen_algo::population	typeref:typename:const std::vector<schedule> &
 get_schedules	src/population.cpp	/^	std::vector<schedule>& population::get_schedules() { return this->_schedules; }$/;"	f	class:gen_algo::population	typeref:typename:std::vector<schedule> &
+get_sec_class_number	src/schedule.cpp	/^	size_t schedule::get_sec_class_number() const { return this->_sec_class_number; }$/;"	f	class:gen_algo::schedule	typeref:typename:size_t
 get_sec_classes	src/schedule.cpp	/^	const std::vector<entities::sec_class>& schedule::get_sec_classes() const { return this->_sec_c/;"	f	class:gen_algo::schedule	typeref:typename:const std::vector<entities::sec_class> &
 get_sec_classes	src/schedule.cpp	/^	std::vector<entities::sec_class>& schedule::get_sec_classes() {$/;"	f	class:gen_algo::schedule	typeref:typename:std::vector<entities::sec_class> &
 get_time	src/class_time.cpp	/^	std::string class_time::get_time() const { return this->_time; }$/;"	f	class:entities::class_time	typeref:typename:std::string
@@ -2433,6 +2435,7 @@ operator =	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto operator
 operator =	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto operator=(StringRef const &other) noexcept -> StringRef &$/;"	f	class:Catch::StringRef	typeref:typename:auto
 operator =	pprint/test/external/catch/include/catch2/catch.hpp	/^Colour &Colour::operator=(Colour &&rhs) noexcept$/;"	f	class:Catch::Colour	typeref:typename:Colour &
 operator =	pprint/test/external/catch/include/catch2/catch.hpp	/^XmlWriter::ScopedElement &XmlWriter::ScopedElement::operator=(ScopedElement &&other) noexcept$/;"	f	class:Catch::XmlWriter::ScopedElement	typeref:typename:XmlWriter::ScopedElement &
+operator =	src/schedule.cpp	/^	schedule& schedule::operator=(schedule* other) {$/;"	f	class:gen_algo::schedule	typeref:typename:schedule &
 operator ==	pprint/test/external/catch/include/catch2/catch.hpp	/^    auto operator==(iterator const &other) const -> bool$/;"	f	class:Catch::clara::TextFlow::Column::iterator	typeref:typename:bool
 operator ==	pprint/test/external/catch/include/catch2/catch.hpp	/^    auto operator==(iterator const &other) const -> bool$/;"	f	class:Catch::clara::TextFlow::Columns::iterator	typeref:typename:bool
 operator ==	pprint/test/external/catch/include/catch2/catch.hpp	/^    bool operator==(SectionNode const &other) const$/;"	f	struct:Catch::CumulativeReporterBase::SectionNode	typeref:typename:bool
@@ -2636,6 +2639,7 @@ quotes_	pprint/include/pprint.hpp	/^    bool quotes_;$/;"	m	class:pprint::Pretty
 random	pprint/test/external/catch/include/catch2/catch.hpp	/^auto random(T const &first, T const &last) -> Generator<T>$/;"	f	namespace:Catch::Generators	typeref:typename:Generator<T>
 random	pprint/test/external/catch/include/catch2/catch.hpp	/^auto random(size_t size) -> Generator<T>$/;"	f	namespace:Catch::Generators	typeref:typename:Generator<T>
 randomiseIndices	pprint/test/external/catch/include/catch2/catch.hpp	/^std::vector<size_t> randomiseIndices(size_t selectionSize, size_t sourceSize)$/;"	f	namespace:Catch::Generators	typeref:typename:std::vector<size_t>
+rang	src/extras/extra_util.cpp	/^	std::mt19937_64 rang(std::chrono::high_resolution_clock::now().time_since_epoch().count());$/;"	v	namespace:util	typeref:typename:std::mt19937_64
 range	pprint/test/external/catch/include/catch2/catch.hpp	/^auto range(T const &first, T const &last) -> Generator<T>$/;"	f	namespace:Catch::Generators	typeref:typename:Generator<T>
 rangeToString	pprint/test/external/catch/include/catch2/catch.hpp	/^std::string rangeToString(InputIterator first, InputIterator last)$/;"	f	namespace:Catch::Detail	typeref:typename:std::string
 rangeToString	pprint/test/external/catch/include/catch2/catch.hpp	/^std::string rangeToString(Range const &range)$/;"	f	namespace:Catch	typeref:typename:std::string
@@ -2690,6 +2694,8 @@ rng	pprint/test/external/catch/include/catch2/catch.hpp	/^std::mt19937 &rng()$/;
 rngSeed	pprint/test/external/catch/include/catch2/catch.hpp	/^  unsigned int rngSeed = 0;$/;"	m	struct:Catch::ConfigData	typeref:typename:unsigned int
 rngSeed	pprint/test/external/catch/include/catch2/catch.hpp	/^unsigned int Config::rngSeed() const { return m_data.rngSeed; }$/;"	f	class:Catch::Config	typeref:typename:unsigned int
 rngSeed	pprint/test/external/catch/include/catch2/catch.hpp	/^unsigned int rngSeed()$/;"	f	namespace:Catch	typeref:typename:unsigned int
+rngi	src/extras/extra_util.cpp	/^	int rngi(int lim) {$/;"	f	namespace:util	typeref:typename:int
+rngr	src/extras/extra_util.cpp	/^	double rngr(double lim) {$/;"	f	namespace:util	typeref:typename:double
 room	inc/room.hpp	/^	class room {$/;"	c	namespace:entities
 room	src/room.cpp	/^	room::room() {}$/;"	f	class:entities::room
 room	src/room.cpp	/^	room::room(std::string number, size_t capacity):$/;"	f	class:entities::room
@@ -2736,7 +2742,7 @@ sectionStarting	pprint/test/external/catch/include/catch2/catch.hpp	/^void Liste
 sectionStarting	pprint/test/external/catch/include/catch2/catch.hpp	/^void XmlReporter::sectionStarting(SectionInfo const &sectionInfo)$/;"	f	class:Catch::XmlReporter	typeref:typename:void
 sectionsToRun	pprint/test/external/catch/include/catch2/catch.hpp	/^  std::vector<std::string> sectionsToRun;$/;"	m	struct:Catch::ConfigData	typeref:typename:std::vector<std::string>
 seedRng	pprint/test/external/catch/include/catch2/catch.hpp	/^void seedRng(IConfig const &config)$/;"	f	namespace:Catch	typeref:typename:void
-select_tournament_population	src/genetic_algo.cpp	/^	population* genetic_algo::select_tournament_population(population& pop) {$/;"	f	class:gen_algo::genetic_algo	typeref:typename:population *
+select_tournament_population	src/genetic_algo.cpp	/^	population* genetic_algo::select_tournament_population(population* pop) {$/;"	f	class:gen_algo::genetic_algo	typeref:typename:population *
 seq	inc/pprint/pprint.hpp	/^  template<std::size_t...> struct seq{};$/;"	s	namespace:pprint
 seq	pprint/include/pprint.hpp	/^  template<std::size_t...> struct seq{};$/;"	s	namespace:pprint
 sequence	pprint/test/external/catch/include/catch2/catch.hpp	/^  unsigned int sequence;$/;"	m	struct:Catch::MessageInfo	typeref:typename:unsigned int
@@ -2967,12 +2973,13 @@ testRunStarting	pprint/test/external/catch/include/catch2/catch.hpp	/^void Liste
 testRunStarting	pprint/test/external/catch/include/catch2/catch.hpp	/^void XmlReporter::testRunStarting(TestRunInfo const &testInfo)$/;"	f	class:Catch::XmlReporter	typeref:typename:void
 testSpec	pprint/test/external/catch/include/catch2/catch.hpp	/^TestSpec TestSpecParser::testSpec()$/;"	f	class:Catch::TestSpecParser	typeref:typename:TestSpec
 testSpec	pprint/test/external/catch/include/catch2/catch.hpp	/^TestSpec const &Config::testSpec() const { return m_testSpec; }$/;"	f	class:Catch::Config	typeref:typename:TestSpec const &
+test_function	src/main.cpp	/^double test_function(gen_algo::genetic_algo& ga, gen_algo::population* new_population) {$/;"	f	typeref:typename:double
 testsOrTags	pprint/test/external/catch/include/catch2/catch.hpp	/^  std::vector<std::string> testsOrTags;$/;"	m	struct:Catch::ConfigData	typeref:typename:std::vector<std::string>
 throw_exception	pprint/test/external/catch/include/catch2/catch.hpp	/^[[noreturn]] void throw_exception(Ex const &e) {$/;"	f	namespace:Catch	typeref:typename:void
 throw_exception	pprint/test/external/catch/include/catch2/catch.hpp	/^[[noreturn]] void throw_exception(std::exception const &e) {$/;"	f	namespace:Catch	typeref:typename:void
 throws	pprint/test/external/catch/include/catch2/catch.hpp	/^bool TestCaseInfo::throws() const$/;"	f	class:Catch::TestCaseInfo	typeref:typename:bool
 tigen	CMakeLists.txt	/^add_executable(tigen "${SOURCES}")$/;"	t
-tigen	CMakeLists.txt	/^project(tigen LANGUAGES CXX VERSION 0.1)$/;"	p
+tigen	CMakeLists.txt	/^project(tigen LANGUAGES CXX VERSION 1.0)$/;"	p
 tigen	README.md	/^# tigen$/;"	c
 tigen	build_debug/Makefile	/^tigen: cmake_check_build_system$/;"	t
 tigen/fast	build_debug/Makefile	/^tigen\/fast:$/;"	t

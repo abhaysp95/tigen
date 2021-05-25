@@ -16,6 +16,7 @@
 //#include <pprint.hpp>
 
 #include <iostream>
+#include <ios>
 #include <vector>
 #include <iomanip>
 #include <algorithm>
@@ -196,11 +197,51 @@ void free_obj(T* object) {
 	}
 }
 
-int main(int argc, char **argv) {
-	// program starts here
+/** if there's no population yet, make new, else evolve the population for next
+ * generation */
+double calculate_population(gen_algo::genetic_algo& ga, gen_algo::population** new_population) {
+	double fittest_schedule_fitness{};
 
+	if ((*new_population) == nullptr)
+		*new_population = new gen_algo::population(POPULATION_SIZE, *gene_data);
+	else
+		*new_population = ga.evolve(*new_population);
+	(*new_population)->sort_by_fitness();
+	std::vector<gen_algo::schedule>& np_schedules = (*new_population)->get_schedules();
+	gen_algo::schedule& fittest_schedule = np_schedules.at(0);
+
+	fittest_schedule_fitness = fittest_schedule.get_fitness();
+	return fittest_schedule_fitness;
+}
+
+void print_generation_table(gen_algo::population* new_population,
+		size_t& generation_number, double fittest_schedule_fitness) {
+		std::cout << "> Generation #  " << ++generation_number << '\n';
+		std::cout << "  Schedule #  |            ";
+		std::cout << "Classes[dept,class,room,instructor,class_time]   ";
+		std::cout << "                  | Fitness | Conflicts \n";
+		std::cout << "-----------------------------------------------------------";
+		std::cout << "-----------------------------------------------------------\n";
+		std::cout << std::fixed;
+		std::cout << std::setprecision(5);
+		schedule_number = 0;
+		for (gen_algo::schedule& sch: new_population->get_schedules()) {
+			std::cout << "      " << ++schedule_number << "       | " << sch << " | "
+				<< sch.get_fitness() << " | " << sch.get_number_of_conflicts() << '\n';
+		}
+		std::vector<gen_algo::schedule>& np_schedules = new_population->get_schedules();
+		gen_algo::schedule& fittest_schedule = np_schedules.at(0);
+		print_schedule_as_table(fittest_schedule, generation_number);
+}
+
+int main(int argc, char **argv) {
 	// set the seed
 	srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+
+	// comment these if you are going to use C based input/output methods
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL);
+	std::cout.tie(NULL);
 
 	gene_data = new gen_algo::data;
 	print_available_data(gene_data);
@@ -210,44 +251,11 @@ int main(int argc, char **argv) {
 	gen_algo::population *new_population = nullptr;
 	double fittest_schedule_fitness{};
 
+	/** do calculation and print generation */
 	do {
-		std::cout << "> Generation #  " << ++generation_number << '\n';
-		std::cout << "  Schedule #  |            ";
-		std::cout << "Classes[dept,class,room,instructor,class_time]   ";
-		std::cout << "                  | Fitness | Conflicts \n";
-		std::cout << "-----------------------------------------------------------";
-		std::cout << "-----------------------------------------------------------\n";
-		// don't worry about freeing new_population here, cause the instance of
-		// new_population passed as parameter is freed in
-		// genetic_algo::crossover_population
-		if (!new_population)
-			new_population = new gen_algo::population(POPULATION_SIZE, *gene_data);
-		else
-			new_population = ga.evolve(new_population);  // get new scheduled and mutated data(population)
-		new_population->sort_by_fitness();
-		try {
-			std::vector<gen_algo::schedule> np_schedules = new_population->get_schedules();
-			gen_algo::schedule fittest_schedule = np_schedules.at(0);
-			fittest_schedule_fitness = fittest_schedule.get_fitness();
-			std::cout << std::fixed;
-			std::cout << std::setprecision(5);
-			schedule_number = 0;
-			for (gen_algo::schedule& sch: new_population->get_schedules()) {
-				std::cout << "      " << ++schedule_number << "       | " << sch << " | "
-					<< sch.get_fitness() << " | " << sch.get_number_of_conflicts() << '\n';
-			}
-			print_schedule_as_table(fittest_schedule, generation_number);
-		}
-		catch (std::out_of_range& e) {
-			std::cout << e.what() << '\n';
-			std::cout << "Can't get new fittest schedule, exiting now !!!\n";
-			exit(1);
-		}
+		fittest_schedule_fitness = calculate_population(ga, &new_population);
+		print_generation_table(new_population, generation_number, fittest_schedule_fitness);
 	} while (fittest_schedule_fitness < 1.0);
-
-
-	//} while (new_population->get_schedules()[0].get_fitness() >= 1.0);
-	// >= instead of != is because just to be on the safer side of floating point value comparision
 
 	free_obj(new_population);
 	free_obj(gene_data);
