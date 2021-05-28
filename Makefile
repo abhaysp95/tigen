@@ -1,11 +1,14 @@
 # /* --- Makefile --- */
 
-CC     = clang++
-CFLAG  = -Wall -std=c++14
-CDFLAG = -Wall -std=c++14 -g
-LD     = clang++
-LDFLAG = -v
-LFLAG  =
+CXXC      = clang++
+CXXFLAG   = -Wall -std=c++14
+CXXDFLAG := ${CXXFLAG} -g
+CC        = clang
+CFLAG     = -Wall -std=c99
+CDFLAG   := ${CFLAG} -g
+LD        = clang++
+LFLAG     = -pthread
+LDFLAG   := ${LFLAG} -v
 
 
 SRC_DIR         = src
@@ -20,12 +23,13 @@ DEBUG_EXT_DIR   = debug/extras
 DIRS            = ${BIN_DIR} ${OBJ_DIR} ${DEBUG_DIR}
 
 
-SRC           =  $(wildcard ${SRC_DIR}/*.cpp)
-SRC           := ${SRC} $(wildcard ${SRC_EXT_DIR}/*.cpp)
-OBJ           =  $(addprefix ${OBJ_DIR}/, $(notdir ${SRC:.cpp=.o}) $(notdir ${SRC_EXT:.cpp=.o}))
-BIN           =  ${BIN_DIR}/$(notdir $(realpath .))
-DEBUG_OBJ     =  $(addprefix ${DEBUG_DIR}/, $(notdir ${SRC:.cpp=.o}) $(notdir ${SRC_EXT:.cpp=.o}))
-DEBUG_BIN     =  $(addprefix ${DEBUG_DIR}/, $(notdir $(realpath .)))
+SRCXX     = $(wildcard ${SRC_DIR}/*.cpp)
+SRCXX    := ${SRCXX} $(wildcard ${SRC_EXT_DIR}/*.cpp)
+SRC       = $(wildcard ${SRC_EXT_DIR}/*.c)
+OBJ       = $(addprefix ${OBJ_DIR}/, $(notdir ${SRCXX:.cpp=.o}) $(notdir ${SRC:.c=.o}))
+BIN       = ${BIN_DIR}/$(notdir $(realpath .))
+DEBUG_OBJ = $(addprefix ${DEBUG_DIR}/, $(notdir ${SRCXX:.cpp=.o}) $(notdir ${SRC:.c=.o}))
+DEBUG_BIN = $(addprefix ${DEBUG_DIR}/, $(notdir $(realpath .)))
 
 
 all: dir ${BIN}
@@ -36,9 +40,13 @@ dir:
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp
 	-@echo "compiling $? -> $@"
-	${CC} ${CFLAG} -I ${INC_DIR} -c -o $@ $^
+	${CXXC} ${CXXFLAG} -I ${INC_DIR} -c -o $@ $^
 
 ${OBJ_DIR}/%.o: ${SRC_EXT_DIR}/%.cpp
+	-@echo "compiling $? -> $@"
+	${CXXC} ${CXXFLAG} -I ${INC_EXT_DIR} -c -o $@ $^
+
+${OBJ_DIR}/%.o: ${SRC_EXT_DIR}/%.c
 	-@echo "compiling $? -> $@"
 	${CC} ${CFLAG} -I ${INC_EXT_DIR} -c -o $@ $^
 
@@ -53,11 +61,15 @@ debug: dir ${DEBUG_BIN}
 
 ${DEBUG_DIR}/%.o: ${SRC_DIR}/%.cpp
 	-@echo "compiling $? -> $@"
-	${CC} ${CDFLAG} -I ${INC_DIR} -c -o $@ $^
+	${CXXC} ${CXXDFLAG} -I ${INC_DIR} -c -o $@ $^
 
 ${DEBUG_DIR}/%.o: ${SRC_EXT_DIR}/%.cpp
 	-@echo "compiling $? -> $@"
-	${CC} ${CDFLAG} -I ${INC_EXT_DIR} -c -o $@ $^
+	${CXXC} ${CXXDFLAG} -I ${INC_EXT_DIR} -c -o $@ $^
+
+${DEBUG_DIR}/%.o: ${SRC_EXT_DIR}/%.c
+	-@echo "compiling $? -> $@"
+	${CXXC} ${CXXDFLAG} -I ${INC_EXT_DIR} -c -o $@ $^
 
 ${DEBUG_BIN}: ${DEBUG_OBJ}
 	-@echo "Linking to -> $@"
@@ -68,9 +80,9 @@ clean:
 	rm -rf ${DIRS} $(notdir $(realpath .))
 
 help:
+	-@echo "srcxx: ${SRCXX}"
 	-@echo "src: ${SRC}"
 	-@echo "src_dir: ${SRC_DIR}"
-	-@echo "src_ext: ${SRC_EXT}"
 	-@echo "src_ext_dir: ${SRC_EXT_DIR}"
 	-@echo "obj: ${OBJ}"
 	-@echo "obj_dir: ${OBJ_DIR}"
