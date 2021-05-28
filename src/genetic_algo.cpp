@@ -3,6 +3,12 @@
 #include "../inc/genetic_algo.hpp"
 #include "../inc/extras/extra_util.hpp"
 
+const int POPULATION_SIZE = 9;
+const double MUTATION_RATE = 0.1;
+const double CROSSOVER_RATE = 0.9;
+const int TOURNAMENT_SELECTION_SIZE = 3;
+const int NUMBER_OF_ELITE_SCHEDULES = 1;
+
 namespace gen_algo {
 	genetic_algo::genetic_algo(data gene_data): _gene_data{gene_data} {}
 
