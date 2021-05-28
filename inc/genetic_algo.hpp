@@ -9,11 +9,11 @@
 
 #include <vector>
 
-const int POPULATION_SIZE = 9;
-const double MUTATION_RATE = 0.1;
-const double CROSSOVER_RATE = 0.9;
-const int TOURNAMENT_SELECTION_SIZE = 3;
-const int NUMBER_OF_ELITE_SCHEDULES = 1;
+extern const int POPULATION_SIZE;
+extern const double MUTATION_RATE;
+extern const double CROSSOVER_RATE;
+extern const int TOURNAMENT_SELECTION_SIZE;
+extern const int NUMBER_OF_ELITE_SCHEDULES;
 
 namespace gen_algo {
 	class genetic_algo {
