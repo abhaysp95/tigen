@@ -1,6 +1,7 @@
 // cpp file for "driver.hpp"
 
 #include "../inc/driver.hpp"
+#include "../inc/extras/extra_util.hpp"
 
 #include <iostream>
 #include <ios>
@@ -12,10 +13,11 @@
 #include <cxxabi.h>
 #include <random>
 #include <chrono>
+#include <exception>
 #include <stdexcept>
 
 int schedule_number = 0;
-int generation_number = 1;
+int generation_number = 0;
 gen_algo::data *gene_data;
 
 std::vector<std::string> data_avail_to_print;
@@ -35,7 +37,7 @@ std::string vec_to_str(const std::vector<T>& vec) {
 	}
 	if (vec.size() > 1)
 		res += '\n';
-	res += "]";
+	res += "]\n";
 	return res;
 }
 
@@ -49,27 +51,31 @@ void print_available_data(gen_algo::data* d) {
 				+ ", courses: "
 				+ vec_to_str(dept.get_courses())});
 
-	data_avail_to_print.push_back("\nAvailable Courses ===>\n");
+	data_avail_to_print.push_back("\n");
+	data_avail_to_print.push_back("Available Courses ===>\n");
 	for (const entities::course& crs: d->get_courses())
 		data_avail_to_print.push_back(std::string{"course #: " + crs.get_number()
 				+ ", name: " + crs.get_name()
 				+ ", max students #: " + std::to_string(crs.get_max_students())
 				+ ", instructors: " + vec_to_str(crs.get_instructors())});
 
-	data_avail_to_print.push_back("\nAvailabe Rooms ===>\n");
+	data_avail_to_print.push_back("\n");
+	data_avail_to_print.push_back("Availabe Rooms ===>\n");
 	for (const entities::room& room: d->get_rooms())
 		data_avail_to_print.push_back("room #: " + room.get_number()
-				+ ", seating capacity: " + std::to_string(room.get_capacity()));
+				+ ", seating capacity: " + std::to_string(room.get_capacity()) + "\n");
 
-	data_avail_to_print.push_back("\nAvailabe Instructors ===>\n");
+	data_avail_to_print.push_back("\n");
+	data_avail_to_print.push_back("Availabe Instructors ===>\n");
 	for (const entities::instructor& inst: d->get_instructors())
 		data_avail_to_print.push_back(std::string{"id #: " + inst.get_id()
-				+ ", name: " + inst.get_name()});
+				+ ", name: " + inst.get_name()} + "\n");
 
-	data_avail_to_print.push_back("\nClass Timings ===>\n");
+	data_avail_to_print.push_back("\n");
+	data_avail_to_print.push_back("Class Timings ===>\n");
 	for (const entities::class_time& clstime: d->get_class_times())
 		data_avail_to_print.push_back(std::string{"id #: " + clstime.get_id()
-				+ ", class time: " + clstime.get_time()});
+				+ ", class time: " + clstime.get_time()} + "\n");
 }
 
 const std::string print_table_element(std::string t, const int& width, const char cfill) {
@@ -77,6 +83,15 @@ const std::string print_table_element(std::string t, const int& width, const cha
 	ss << std::right << std::setw(width) << std::setfill(cfill) << t;
 	return ss.str();
 }
+
+template<typename T>
+void free_obj(T* object) {
+	if (object) {
+		delete object;
+		object = nullptr;
+	}
+}
+
 
 // return demangled type name of template typename
 // I should probably remove this(cause, it's compiler specific thing and would
@@ -103,14 +118,8 @@ template<typename T>
 void entity_existance_check(const std::vector<T>& from_entity,
 		const typename std::vector<T>::const_iterator& check_entity) {
 	if (check_entity == from_entity.cend()) {
-
-		// first do cleanup here and then print
-
-		// or better throw a exception here(ofcourse after cleanup), and it'll be handled in main
-
-
-		std::cout << "\nERROR ==>  " << type_name<T>() << " doesn't exist\n";
-		exit(1);
+		std::string msg = type_name<T>() + " not found!!!\n";
+		throw util::entitity_not_found(std::move(msg));
 	}
 }
 
@@ -121,16 +130,17 @@ void print_schedule_as_table(gen_algo::schedule& sch) {
 	std::vector<entities::sec_class>::size_type res_size = classes.size();
 	fittest_schedule_to_print.reserve(res_size + 2);
 
+	fittest_schedule_to_print.push_back("\n");
 	fittest_schedule_to_print.push_back(std::string{print_table_element(" ", 8)
 		+ print_table_element("Class #", 7) + " | "
 		+ print_table_element("Department", 33) + " | "
 		+ print_table_element("Course (#, max students #)", 31) + " | "
 		+ print_table_element("Room (capacity)", 15) + " | "
 		+ print_table_element("Instructor (id)", 20) + " | "
-		+ print_table_element("Meeting Time (id)", 23)});
+		+ print_table_element("Meeting Time (id)", 23)} + "\n");
 
 	fittest_schedule_to_print.push_back(print_table_element(" ", 8)
-			+ print_table_element(" ", 145, '-'));
+			+ print_table_element(" ", 145, '-') + "\n");
 
 	/** Question: Are these iterators really needed ?  Confirm with classes */
 
@@ -175,17 +185,8 @@ void print_schedule_as_table(gen_algo::schedule& sch) {
 			+ print_table_element(std::string(citer_instructor->get_name() +
 					" (" + citer_instructor->get_id() + ')'), 20) + " | "
 			+ print_table_element(std::string(citer_class_time->get_time() +
-					" (" + citer_class_time->get_id() + ')'), 23));
+					" (" + citer_class_time->get_id() + ')'), 23) + "\n");
 
-	}
-	//print_fittest_schedule(ss.str().c_str());
-}
-
-template<typename T>
-void free_obj(T* object) {
-	if (object) {
-		delete object;
-		object = nullptr;
 	}
 }
 
@@ -209,9 +210,10 @@ double calculate_population(gen_algo::genetic_algo& ga, gen_algo::population** n
 void print_generation_table(gen_algo::population* new_population, double fittest_schedule_fitness) {
 	std::stringstream ss;
 
-	gen_data_to_print.reserve(32);  // give a thought to this number
+	//gen_data_to_print.reserve(32);  // give a thought to this number
 
-	ss << "\n> Generation #  " << ++generation_number << '\n';
+	gen_data_to_print.push_back("\n");
+	ss << "> Generation #  " << ++generation_number << '\n';
 	ss << "  Schedule #  |            ";
 	ss << "Classes[dept,class,room,instructor,class_time]   ";
 	ss << "                  | Fitness | Conflicts \n";
@@ -227,12 +229,10 @@ void print_generation_table(gen_algo::population* new_population, double fittest
 		ss << std::fixed;
 		ss << std::setprecision(5);
 		ss << "      " << ++schedule_number << "       | " << sch << " | "
-			<< sch.get_fitness() << " | " << sch.get_number_of_conflicts();
+			<< sch.get_fitness() << " | " << sch.get_number_of_conflicts() << '\n';
 		gen_data_to_print.push_back(ss.str());
 		ss.str(std::string());
 	}
-	//print_generation_details(ss.str().c_str());
-
 }
 
 int driver() {
@@ -261,9 +261,16 @@ int driver() {
 		std::cout << "Generation Number " << generation_number << " generated!!!\n";
 	} while (fittest_schedule_fitness < 1.0);
 
-	std::vector<gen_algo::schedule>& np_schedules = new_population->get_schedules();
-	gen_algo::schedule& fittest_schedule = np_schedules.at(0);
-	print_schedule_as_table(fittest_schedule);
+	try {
+		std::vector<gen_algo::schedule>& np_schedules = new_population->get_schedules();
+		gen_algo::schedule& fittest_schedule = np_schedules.at(0);
+		print_schedule_as_table(fittest_schedule);
+	}
+	catch (util::entitity_not_found& e) {
+		free_obj(new_population);
+		free_obj(gene_data);
+		throw;
+	}
 
 	free_obj(new_population);
 	free_obj(gene_data);
