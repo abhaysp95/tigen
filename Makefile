@@ -7,7 +7,7 @@ CC        = clang
 CFLAG     = -Wall -std=c99
 CDFLAG   := ${CFLAG} -g
 LD        = clang++
-LFLAG     = -pthread
+LFLAG     = -pthread -lncurses
 LDFLAG   := ${LFLAG} -v
 
 
