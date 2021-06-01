@@ -1,6 +1,7 @@
 // main file
 
 #include "../inc/driver.hpp"
+#include "../inc/extras/curses_util.hpp"
 
 #include <iostream>
 #include <ios>
@@ -16,14 +17,31 @@
 #include <cstring>
 
 #include <ncurses.h>
+#include <panel.h>
 
-#define VERSION 1.1
+#define VERSION 1.2
+#define DSIZE 3
+
+// use this when you want info for ncurses printing
+//#define DEBUG_CURSES
+
+std::vector<std::string> tab_names = {
+	"[Data]",
+	"[Generations]",
+	"[Result]"
+};
 
 std::vector<std::string> new_lines;
 
 void run_driver();
 void print_help();
 int print_with_ncurses();
+void print_title_desc();
+void init_pads(std::vector<util::WIN>& wins, const std::vector<std::vector<std::string>::size_type>& pheights,
+		const std::vector<std::vector<std::string>::size_type>& pwidths);
+void init_win(util::WIN& win, const int pheight, const int pwidth);
+void print_tab_names(std::vector<util::WIN>& wins, int cur_tab_num);
+void write_data_to_pads(std::vector<util::WIN>& wins, const std::vector<std::vector<std::string>>& result_data);
 void write_to_pad(WINDOW* win, const std::vector<std::string>& vec_str);
 
 template <typename T>
@@ -33,28 +51,37 @@ void print_vec(const std::vector<T>& vec) {
 }
 
 int main(int argc, char** argv) {
-	if (argc == 2) {
-		if (strncmp(*(argv + 1), "--term", 6) == 0) {
-			run_driver();
-			print_vec(data_avail_to_print);
-			print_vec(gen_data_to_print);
-			print_vec(fittest_schedule_to_print);
-		}
-		else if (strncmp(*(argv + 1), "--help", 6) == 0) {
+	if (argc >= 2) {
+		if (strncmp(*(argv + 1), "--help", 6) == 0) {
 			print_help();
 		}
 		else if (strncmp(*(argv + 1), "--version", 9) == 0) {
 			std::cout << "tigen-" << VERSION << '\n';
 		}
-	}
-	else {
-		run_driver();
-		int status = print_with_ncurses();
-		if (status == -1) {
+		else if (strncmp(*(argv + 1), "--term", 6) == 0) {
+			run_driver();
 			print_vec(data_avail_to_print);
 			print_vec(gen_data_to_print);
 			print_vec(fittest_schedule_to_print);
 		}
+		else if (strncmp(*(argv + 1), "--tui", 5) == 0) {
+			run_driver();
+			if (argc == 3) {
+				if (strncmp(*(argv + 2), "--debug", 7) == 0) {
+					std::cout << "specification for flag not provided yet\n";
+					return -1;
+				}
+			}
+			int status = print_with_ncurses();
+			if (status == -1) {
+				print_vec(data_avail_to_print);
+				print_vec(gen_data_to_print);
+				print_vec(fittest_schedule_to_print);
+			}
+		}
+	}
+	else {
+		print_help();
 	}
 
 	return 0;
@@ -75,142 +102,287 @@ void run_driver() {
 int print_with_ncurses() {
 	/** start ncurses from here */
 
-	WINDOW* pad;
-	size_t pad_height{}, pad_width{0};
-	pad_height = data_avail_to_print.size()
-		+ gen_data_to_print.size()
-		+ fittest_schedule_to_print.size();
-	pad_height *= 2;
+	std::vector<std::vector<std::string>> result_data(DSIZE);
+	result_data[0] = std::move(data_avail_to_print);
+	result_data[1] = std::move(gen_data_to_print);
+	result_data[2] = std::move(fittest_schedule_to_print);
 
-	/** max width could only be from gen_data_to_print */
-	std::for_each(gen_data_to_print.begin(), gen_data_to_print.end(), [&pad_width](const std::string& str) {
-				pad_width = std::max(pad_width, str.size());
-			});
-	pad_width += 10;
+	std::vector<std::vector<std::string>::size_type> pheights(DSIZE);
+	std::vector<std::vector<std::string>::size_type> pwidths(DSIZE);
 
-	//std::cout << "pad_height & pad_width: " << pad_height << ", " << pad_width << '\n';
+	// you have to make data string in such a way that this should give a accurate number ( no extra 1000 )
+	for (int i = 0; i < DSIZE; i++) pheights[i] = (result_data[i].size() * 2);
 
-	if (initscr() == NULL) {
+	for (int i = 0; i < DSIZE; i++) {
+		std::for_each(result_data[i].begin(), result_data[i].end(), [&pwidths, &i](const std::string& str) {
+					pwidths[i] = std::max(pwidths[i], str.size());
+				});
+		pwidths[i] += COLS;
+	}
+
+	/*for (const std::vector<std::string>::size_type& x: pheights) std::cout << x << ' ';
+	std::cout << '\n';*/
+
+	/*for (const std::vector<std::string>::size_type& x: pwidths) std::cout << x << ' ';
+	std::cout << '\n';*/
+
+	std::vector<util::WIN> wins(DSIZE);
+	std::vector<PANEL*> panels(DSIZE);
+	PANEL* top;
+
+	/*if (initscr() == NULL) {
 		std::cout << "Warning!!! Ncurses not supported\n";
 		return -1;
-	}
+	}*/
+	initscr();
 	cbreak();
 	noecho();
+#ifdef DEBUG_CURSES
+	curs_set(1);
+#else
 	curs_set(0);
+#endif
+	keypad(stdscr, TRUE);
 	start_color();  // add check here
 
-	pad = newpad(pad_height, pad_width);
-	keypad(pad, TRUE);
+	print_title_desc();
 
-	new_lines.resize(4, std::string("\n"));
+	init_pads(wins, pheights, pwidths);
 
-	// write all three data
-	write_to_pad(pad, data_avail_to_print);
-	write_to_pad(pad, new_lines);
-	write_to_pad(pad, gen_data_to_print);
-	write_to_pad(pad, new_lines);
-	write_to_pad(pad, fittest_schedule_to_print);
+	for (int i = 0; i < DSIZE; i++) panels[i] = new_panel(wins[i]._win);
+	top = panels[0];
 
-	size_t pad_posy{}, pad_posx{};
-	prefresh(pad, pad_posy, pad_posx, 0, 0, LINES - 1, COLS - 1);
+	write_data_to_pads(wins, result_data);
 
-	int ch{};
-	while ((ch = wgetch(pad)) != 'q') {
+	prefresh(wins[0]._win, wins[0]._rpos, wins[0]._cpos, wins[0]._starty + 3,
+			wins[0]._startx + 2, wins[0]._endy - 2, wins[0]._endx - 1);
+
+
+	set_panel_userptr(panels[0], panels[1]);
+	set_panel_userptr(panels[1], panels[2]);
+	set_panel_userptr(panels[2], panels[0]);
+
+	top_panel(panels[0]);
+	update_panels();
+	doupdate();
+
+	mvprintw(LINES - 1, 4, "Press <tab> and <\\> key for tab cycle, and arrow keys to scroll(vertical and horizontal)[press 'q' to exit]");
+	refresh();
+
+	int ch{}, cur_win{};
+#ifdef DEBUG_CURSES
+	std::string info = "key pressed: " + std::to_string(ch) + ", cur_pad: " + std::to_string(cur_win)
+			+ ", LINES: " + std::to_string(LINES) + ", COLS: " + std::to_string(COLS)
+			+ ", rpos: " + std::to_string(wins[cur_win]._rpos) + ", cpos: " + std::to_string(wins[cur_win]._cpos);
+	move(LINES - 2, 4);
+	clrtoeol();
+	mvprintw(LINES - 2, 4, info.c_str());
+#endif
+	bool clrpad = false;
+
+	int height = wins[cur_win]._endy - wins[cur_win]._starty;
+	int width = wins[cur_win]._endx - wins[cur_win]._startx;
+	while ((ch = getch()) != 'q') {
 		switch (ch) {
+			case 9:
+				top = (PANEL*)panel_userptr(top);
+				top_panel(top);
+				cur_win = (cur_win == DSIZE - 1) ? 0 : ++cur_win;
+				if (!clrpad) {
+					erase();
+					clrpad = !clrpad;
+				}
+				break;
+			case 92:
+				top = (PANEL*)panel_userptr(top);
+				bottom_panel(top);
+				cur_win = (cur_win == 0) ? DSIZE - 1 : --cur_win;
+				if (!clrpad) {
+					erase();
+					clrpad = !clrpad;
+				}
+				break;
 			case 'k':
 			case KEY_UP:
-				if (pad_posy > 0) {
-					pad_posy--;
-					prefresh(pad, pad_posy, pad_posx, 0, 0, LINES - 1, COLS - 1);
-				}
+				if (wins[cur_win]._rpos > 0) wins[cur_win]._rpos--;
 				break;
 			case 'j':
 			case KEY_DOWN:
-				if (pad_posy < pad_height) {
-					pad_posy++;
-					prefresh(pad, pad_posy, pad_posx, 0, 0, LINES - 1, COLS - 1);
-				}
+				if (wins[cur_win]._rpos <= pheights[cur_win] - height) wins[cur_win]._rpos++;
 				break;
 			case (('u' & 0x1F)):
 			case KEY_PPAGE:
-				if (pad_posy > 0) {
-					if (pad_posy > LINES)
-						pad_posy -= (LINES - 1);
-					else
-						pad_posy = 0;
-					prefresh(pad, pad_posy, pad_posx, 0, 0, LINES - 1, COLS - 1);
+				if (wins[cur_win]._rpos > 0) {
+					if (wins[cur_win]._rpos < height - 2) wins[cur_win]._rpos = 0;
+					else wins[cur_win]._rpos -= (height - 2);
 				}
 				break;
 			case (('d' & 0x1F)):
 			case KEY_NPAGE:
-				if (pad_posy < pad_height) {
-					pad_posy += (LINES - 1);
-					prefresh(pad, pad_posy, pad_posx, 0, 0, LINES - 1, COLS - 1);
+				if (wins[cur_win]._rpos <= pheights[cur_win] - height) {
+					// refresh this logic when you have figured out the way of
+					// getting correct pheights for result_data
+					wins[cur_win]._rpos += (height - 2);
 				}
 				break;
 			case 'h':
 			case KEY_LEFT:
-				if (pad_posx > 0) {
-					if (pad_posx < 4)
-						pad_posx = 0;
-					else
-						pad_posx -= 4;
-					prefresh(pad, pad_posy, pad_posx, 0, 0, LINES - 1, COLS - 1);
-				}
+				if (wins[cur_win]._cpos > 0) wins[cur_win]._cpos--;
 				break;
 			case 'l':
 			case KEY_RIGHT:
-				if (pad_posx < (pad_width - COLS)) {
-					pad_posx += 4;
-					prefresh(pad, pad_posy, pad_posx, 0, 0, LINES - 1, COLS - 1);
+				{
+					int width = wins[cur_win]._endx - wins[cur_win]._endy;
+					if (wins[cur_win]._cpos <= pwidths[cur_win] - width + 2) wins[cur_win]._cpos++;
 				}
 				break;
 			case 'b':
 			case KEY_HOME:  // KEY_HOME not working
-				if (pad_posx > 0) {
-					if (pad_posx > COLS)
-						pad_posx -= (COLS - 1);
-					else
-						pad_posx = 0;
-					prefresh(pad, pad_posy, pad_posx, 0, 0, LINES - 1, COLS - 1);
+				if (wins[cur_win]._cpos > 0) {
+					if (wins[cur_win]._cpos < width - 2) wins[cur_win]._cpos = 0;
+					else wins[cur_win]._cpos -= (width - 2);
 				}
 				break;
 			case 'w':
 			case KEY_END:  // KEY_END not working
-				if (pad_posx < (pad_width - COLS)) {
-					if ((pad_width - pad_posx) > COLS) {
-						if ((pad_posx + COLS) > (pad_width - COLS))
-							pad_posx += (pad_width - pad_posx - COLS);
-						else
-						pad_posx += (COLS - 1);
-						prefresh(pad, pad_posy, pad_posx, 0, 0, LINES - 1, COLS - 1);
+				if (wins[cur_win]._cpos <= pwidths[cur_win] - width + 2) {
+					move(LINES - 3, 4);
+					clrtoeol();
+					if (wins[cur_win]._cpos > pwidths[cur_win] - width + 2) {
+						wins[cur_win]._cpos = pwidths[cur_win] - width + 2;
 					}
+					else {
+						wins[cur_win]._cpos += (width - 2); {}
+					}
+					refresh();
 				}
 				break;
+			case 'g':
+				if (wins[cur_win]._rpos > 0) wins[cur_win]._rpos = 0;
+				break;
+			case 'G':
+				if (wins[cur_win]._rpos < pheights[cur_win] - height + 2)
+					wins[cur_win]._rpos = pheights[cur_win] - height + 2;
+				break;
+			case 'B':
+				if (wins[cur_win]._cpos > 0) wins[cur_win]._cpos = 0;
+				break;
+			case 'W':
+				if (wins[cur_win]._cpos < pwidths[cur_win] - width + 2)
+					wins[cur_win]._cpos = pwidths[cur_win] - width + 2;
+				break;
+			default:
+				break;  // currently, can't think of anything to put here
 		}
+		if (clrpad) wins[cur_win].create_box();
+		prefresh(wins[cur_win]._win, wins[cur_win]._rpos, wins[cur_win]._cpos, wins[cur_win]._starty + 3,
+				wins[cur_win]._startx + 2, wins[cur_win]._endy - 2, wins[cur_win]._endx - 1);
+		print_tab_names(wins, cur_win);
+		if (clrpad) {
+			print_title_desc();
+			mvprintw(LINES - 1, 4, "Press <tab> and <\\> key for tab cycle, and arrow keys to scroll(vertical and horizontal)[press 'q' to exit]");
+			clrpad = !clrpad;
+		}
+#ifdef DEBUG_CURSES
+		info = "key pressed: " + std::to_string(ch) + ", cur_pad: " + std::to_string(cur_win)
+			+ ", LINES: " + std::to_string(LINES) + ", COLS: " + std::to_string(COLS)
+			+ ", rpos: " + std::to_string(wins[cur_win]._rpos) + ", cpos: " + std::to_string(wins[cur_win]._cpos);
+		move(LINES - 2, 4);
+		clrtoeol();
+		mvprintw(LINES - 2, 4, info.c_str());
+		refresh();
+#endif
+		update_panels();
+		doupdate();
 	}
 
-	delwin(pad);
+
+	for (int i = 0; i < DSIZE; i++) {
+		if (NULL != panels[i]) del_panel(panels[i]);
+		//if (nullptr != wins[i]._win) delwin(wins[i]._win);
+	}
+
 	endwin();
 	return 0;
 }
 
+#define MAX_TITLE_LEN 21
 
+void print_title_desc() {
+	for (int i = 0; i < 5; i++) {
+		move(i, (COLS - MAX_TITLE_LEN) / 2);
+		clrtoeol();
+	}
+	mvprintw(0, (COLS - MAX_TITLE_LEN) / 2, "  __  _");
+	mvprintw(1, (COLS - MAX_TITLE_LEN) / 2, " / /_(_)__ ____ ___ ");
+	mvprintw(2, (COLS - MAX_TITLE_LEN) / 2, "/ __/ / _ `/ -_) _ \\ ");
+	mvprintw(3, (COLS - MAX_TITLE_LEN) / 2, "\\__/_/\\_, /\\__/_//_/ ");
+	mvprintw(4, (COLS - MAX_TITLE_LEN) / 2, "     /___/ ");
+
+	std::string desc{"Time-Table generation using Genetic Algorithm"};
+	move(6, (COLS - desc.size()) / 2);
+	clrtoeol();
+	mvprintw(6, (COLS - desc.size()) / 2, desc.c_str());
+	refresh();
+}
+
+/** start from here tomorrow */
+void init_pads(std::vector<util::WIN>& wins, const std::vector<std::vector<std::string>::size_type>& pheights,
+		const std::vector<std::vector<std::string>::size_type>& pwidths) {
+	//for (int i = 0; i < DSIZE; i++) init_win(wins[i], pheights[i], pwidths[i]);
+	for (int i = 0; i < DSIZE; i++) wins[i].init_win(pheights[i], pwidths[i]);
+	print_tab_names(wins, 0);
+}
+
+void write_data_to_pads(std::vector<util::WIN>& wins, const std::vector<std::vector<std::string>>& result_data) {
+	for (int i = 0; i < DSIZE; i++) {
+		std::vector<std::string>::const_iterator citer = result_data[i].cbegin();
+		while (citer != result_data[i].cend()) {
+			wprintw(wins[i]._win, (*citer).c_str());
+			citer++;
+		}
+	}
+}
+
+/** currently not in use */
 void write_to_pad(WINDOW* win, const std::vector<std::string>& vec_str) {
 	std::vector<std::string>::const_iterator citer = vec_str.cbegin();
 	for (; citer != vec_str.cend(); citer++)
 		wprintw(win, (*citer).c_str());
 }
 
+void print_tab_names(std::vector<util::WIN>& wins, int cur_tab_num) {
+	util::WIN& temp_win = wins[0];
+
+	std::vector<std::string>::size_type n = tab_names.size();
+	int d = 4;
+	int x = temp_win._startx + d;
+	int y = temp_win._starty + (temp_win._endy - temp_win._starty);
+	for (int i = 0; i < n; i++) {
+		if (i == cur_tab_num) attron(A_REVERSE);
+		mvprintw(y, x, tab_names[i].c_str());
+		if (i == cur_tab_num) attroff(A_REVERSE);
+		x += (tab_names[i].size() + d);
+	}
+	refresh();
+}
+
 void print_help() {
 	std::cout << "Help for tigen:\n\
-	When \"no argument\" is provided, it will run the algorithm and will show the output using ncurses.\n\
+	When \"no argument\" is provided, it will show this help.\n\
 	Following are the extra arguments you can provide:\n\
+		--tui [--debug]   : show output in curses mode.\n\
 		--term            : Run algo and print output in terminal.\n\
 		--version         : Show version of tigen.\n\
 		--help            : Show this help.\n\n\
 	Key combinations to navigate through ncurses window:\n\
 		  <keys>                      <movement>\n\
+		tab                    : go to next tab(clockwise movement)\n\
+		(back-slash)<\\>        : go to previous tab(anti-clockwise moment)\n\
+		g                      : move to top-most line in result window(vertical)\n\
+		G                      : move to bottom-most line in result window(vertical)\n\
+		B                      : move to begin of the current result window(horiontal)\n\
+		W                      : move to end of the current result window(horizontal)\n\
 		h/left arrow           : move left(by 4 char)\n\
 		l/right arrow          : move right(by 4 char)\n\
 		k/up arrow             : move up(one row at a time)\n\
