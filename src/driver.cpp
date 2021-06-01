@@ -2,6 +2,7 @@
 
 #include "../inc/driver.hpp"
 #include "../inc/extras/extra_util.hpp"
+#include "../inc/extras/exception_util.hpp"
 
 #include <iostream>
 #include <ios>
@@ -214,11 +215,12 @@ void print_generation_table(gen_algo::population* new_population, double fittest
 
 	gen_data_to_print.push_back("\n");
 	ss << "> Generation #  " << ++generation_number << '\n';
-	ss << "  Schedule #  |            ";
-	ss << "Classes[dept,class,room,instructor,class_time]   ";
-	ss << "                  | Fitness | Conflicts \n";
-	ss << "-----------------------------------------------------------";
-	ss << "-----------------------------------------------------------\n";
+	ss << "  Schedule #  ";
+	ss << "| Fitness | Conflicts | ";
+	ss << "                  Classes[dept,class,room,instructor,class_time]   \n";
+	ss << std::setw(750) << std::setfill('-') << '\n';
+	//ss << "-----------------------------------------------------------";
+	//ss << "-----------------------------------------------------------\n";
 	gen_data_to_print.push_back(ss.str());
 	ss.str(std::string());
 
@@ -228,8 +230,9 @@ void print_generation_table(gen_algo::population* new_population, double fittest
 	for (gen_algo::schedule& sch: new_population->get_schedules()) {
 		ss << std::fixed;
 		ss << std::setprecision(5);
-		ss << "      " << ++schedule_number << "       | " << sch << " | "
-			<< sch.get_fitness() << " | " << sch.get_number_of_conflicts() << '\n';
+		ss << "      " << ++schedule_number << "       | ";
+		ss << sch.get_fitness() << " | " << std::right << std::setw(9) << std::setfill(' ') << sch.get_number_of_conflicts();
+		ss << " | " << sch << '\n';
 		gen_data_to_print.push_back(ss.str());
 		ss.str(std::string());
 	}
