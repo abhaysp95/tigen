@@ -109,7 +109,8 @@ namespace gen_algo {
 
 		for (size_t i = 0; i < TOURNAMENT_SELECTION_SIZE; ++i) {
 			tournament_population->get_schedules()[i] = pop->get_schedules()[
-				util::rngi(pop->get_schedules().size())];
+				util::rngi( pop->get_schedules().size() ) ];
+				//util::rngr( pop->get_schedules().size() ) ];
 		}
 
 		return tournament_population;
