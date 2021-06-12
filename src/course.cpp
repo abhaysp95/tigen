@@ -5,12 +5,12 @@
 #include <algorithm>
 
 namespace entities {
-	course::course(std::string number, std::string name,
-					size_t max_students, std::vector<instructor>& instructors):
-		_number{number}, _name{name}, _max_students(max_students), _instructors(instructors) {}
-	course::course(std::string number, std::string name,
-					size_t max_students, std::vector<instructor>&& instructors):
-		_number{number}, _name{name}, _max_students(max_students), _instructors(instructors) {}
+	course::course( std::string number, std::string name, size_t max_students )
+		: _number{ number }, _name{ name }, _max_students{ max_students } {  }
+	course::course( std::string number, std::string name, size_t max_students, const std::vector<instructor>& instructors )
+		: _number{ number }, _name{ name }, _max_students{ max_students }, _instructors{ instructors } {  }
+	course::course( std::string number, std::string name, size_t max_students, std::vector<instructor>&& instructors )
+		: _number{ number }, _name{ name }, _max_students{ max_students }, _instructors{ std::move( instructors ) } {  }
 
 	template<typename T> struct TD;  // just to check auto decltype
 
@@ -35,6 +35,14 @@ namespace entities {
 		if (!is_equal(this->_instructors, other.get_instructors()))
 			res = false;
 		return res;
+	}
+
+	void course::set_instructors( const std::vector<instructor>& instructors ) {
+		this->_instructors = instructors;  // reivew this again( want to copy from rhs to lhs )
+	}
+
+	void course::set_instructors( std::vector<instructor>&& instructors ) {
+		this->_instructors = std::move( instructors );
 	}
 
 	std::string course::get_number() const { return this->_number; }

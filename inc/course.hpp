@@ -20,8 +20,10 @@ namespace entities {
 			size_t _max_students;
 			std::vector<instructor> _instructors;
 		public:
+			explicit course( std::string number, std::string name, size_t max_students );
+
 			explicit course(std::string number, std::string name,
-					size_t max_students, std::vector<instructor>& instructors);
+					size_t max_students, const std::vector<instructor>& instructors);
 			explicit course(std::string number, std::string name,
 					size_t max_students, std::vector<instructor>&& instructors);
 
@@ -32,6 +34,10 @@ namespace entities {
 			// move constructor and move assignment
 			course(course&& other) = default;
 			course& operator=(course&& other) = default;
+
+			// mutator
+			void set_instructors( const std::vector<instructor>& instructors );
+			void set_instructors( std::vector<instructor>&& instructors );
 
 			// accessors
 			std::string get_number() const;
