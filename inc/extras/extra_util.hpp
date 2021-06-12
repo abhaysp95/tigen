@@ -3,11 +3,16 @@
 
 #include <ctime>
 #include <cstdlib>
+#include <random>
+#include <chrono>
 
 namespace util {
-	//int get_random_num(size_t upto);
+
+	extern std::mt19937_64 rang;
+
 	int rngi(int limit);
 	double rngr(double limit);
+
 };
 
 #endif

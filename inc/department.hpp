@@ -18,7 +18,9 @@ namespace entities {
 			std::string _name;
 			std::vector<course> _courses;
 		public:
-			explicit department(std::string name, std::vector<course>& courses);
+			explicit department( std::string name );
+
+			explicit department(std::string name, const std::vector<course>& courses);
 			explicit department(std::string name, std::vector<course>&& courses);
 
 			// copy constructor and copy assignment
@@ -28,6 +30,10 @@ namespace entities {
 			// move constructor and move assignment
 			department(department&& other) = default;
 			department& operator=(department&& other) = default;
+
+			// mutator
+			void set_courses( const std::vector<course>& courses );
+			void set_courses( std::vector<course>&& courses );
 
 			// accessors
 			std::string get_name() const;

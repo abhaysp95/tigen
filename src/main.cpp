@@ -33,7 +33,7 @@ std::vector<std::string> tab_names = {
 
 std::vector<std::string> new_lines;
 
-void run_driver();
+void run_driver( std::string&& type="demo" );
 void print_help();
 int print_with_ncurses();
 void print_title_desc();
@@ -58,27 +58,47 @@ int main(int argc, char** argv) {
 		else if (strncmp(*(argv + 1), "--version", 9) == 0) {
 			std::cout << "tigen-" << VERSION << '\n';
 		}
-		else if (strncmp(*(argv + 1), "--term", 6) == 0) {
-			run_driver();
-			print_vec(data_avail_to_print);
-			print_vec(gen_data_to_print);
-			print_vec(fittest_schedule_to_print);
-		}
 		else if (strncmp(*(argv + 1), "--tui", 5) == 0) {
-			run_driver();
-			if (argc == 3) {
-				if (strncmp(*(argv + 2), "--debug", 7) == 0) {
-					std::cout << "specification for flag not provided yet\n";
-					return -1;
-				}
-			}
+			/***********************************************************
+			* Update this part for ncurses selection and printing both *
+			************************************************************/
+			/*run_driver();
 			int status = print_with_ncurses();
 			if (status == -1) {
 				print_vec(data_avail_to_print);
 				print_vec(gen_data_to_print);
 				print_vec(fittest_schedule_to_print);
+			}*/
+		}
+		/** --demo will have two option, either --term or --tui */
+		else if( strncmp( *( argv + 1 ), "--demo", 6 ) == 0 ) {
+			if( argc < 3 ) {
+				print_help();
+				exit(1);
+			}
+			else {
+				run_driver( "demo" );
+				if( strncmp( *( argv + 2 ), "--term", 6 )  == 0 ) {
+					print_vec(data_avail_to_print);
+					print_vec(gen_data_to_print);
+					print_vec(fittest_schedule_to_print);
+				}
+				else if( strncmp( *( argv + 2 ), "--tui", 5 ) == 0 ) {
+					int status = print_with_ncurses();
+					if( -1 == status ) {
+						print_vec( data_avail_to_print );
+						print_vec( gen_data_to_print );
+						print_vec( fittest_schedule_to_print );
+					}
+				}
 			}
 		}
+		/*else if (strncmp(*(argv + 1), "--term", 6) == 0) {
+			run_driver();
+			print_vec(data_avail_to_print);
+			print_vec(gen_data_to_print);
+			print_vec(fittest_schedule_to_print);
+		}*/
 	}
 	else {
 		print_help();
@@ -87,10 +107,10 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-void run_driver() {
+void run_driver( std::string&& type ) {
 	std::cout << "Generating time-table...\n";
 	try {
-		driver();
+		driver( std::move(type) );
 	}
 	catch(std::exception& e) {
 		std::cout << e.what();
@@ -111,7 +131,7 @@ int print_with_ncurses() {
 	std::vector<std::vector<std::string>::size_type> pwidths(DSIZE);
 
 	// you have to make data string in such a way that this should give a accurate number ( no extra 1000 )
-	for (int i = 0; i < DSIZE; i++) pheights[i] = (result_data[i].size() * 2);
+	for (int i = 0; i < DSIZE; i++) pheights[i] = 100 + (result_data[i].size() * 2);
 
 	for (int i = 0; i < DSIZE; i++) {
 		std::for_each(result_data[i].begin(), result_data[i].end(), [&pwidths, &i](const std::string& str) {

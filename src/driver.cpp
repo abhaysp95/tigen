@@ -20,6 +20,7 @@
 int schedule_number = 0;
 int generation_number = 0;
 gen_algo::data *gene_data;
+gen_algo::data *choice_data;
 
 std::vector<std::string> data_avail_to_print;
 std::vector<std::string> fittest_schedule_to_print;
@@ -87,7 +88,7 @@ const std::string print_table_element(std::string t, const int& width, const cha
 
 template<typename T>
 void free_obj(T* object) {
-	if (object) {
+	if ( nullptr != object ) {
 		delete object;
 		object = nullptr;
 	}
@@ -146,27 +147,27 @@ void print_schedule_as_table(gen_algo::schedule& sch) {
 	/** Question: Are these iterators really needed ?  Confirm with classes */
 
 	for (const entities::sec_class& cls: classes) {
-		std::vector<entities::department> vtdept = gene_data->get_deparatments();
+		std::vector<entities::department> vtdept = choice_data->get_deparatments();
 		std::vector<entities::department>::const_iterator citer_dept = std::find(
 				vtdept.cbegin(), vtdept.cend(), cls.get_deparatment());
 		entity_existance_check(vtdept, citer_dept);
 
-		std::vector<entities::course> vtcrs = gene_data->get_courses();
+		std::vector<entities::course> vtcrs = choice_data->get_courses();
 		std::vector<entities::course>::const_iterator citer_course  = std::find(
 				vtcrs.cbegin(), vtcrs.cend(), cls.get_course());
 		entity_existance_check(vtcrs, citer_course);
 
-		std::vector<entities::room> vtroom = gene_data->get_rooms();
+		std::vector<entities::room> vtroom = choice_data->get_rooms();
 		std::vector<entities::room>::const_iterator citer_room = std::find(
 				vtroom.cbegin(), vtroom.cend(), cls.get_room());
 		entity_existance_check(vtroom, citer_room);
 
-		std::vector<entities::instructor> vtinst = gene_data->get_instructors();
+		std::vector<entities::instructor> vtinst = choice_data->get_instructors();
 		std::vector<entities::instructor>::const_iterator citer_instructor = std::find(
 				vtinst.cbegin(), vtinst.cend(), cls.get_instructor());
 		entity_existance_check(vtinst, citer_instructor);
 
-		std::vector<entities::class_time> vtctime = gene_data->get_class_times();
+		std::vector<entities::class_time> vtctime = choice_data->get_class_times();
 		std::vector<entities::class_time>::const_iterator citer_class_time = std::find(
 				vtctime.cbegin(), vtctime.cend(), cls.get_class_time());
 		entity_existance_check(vtctime, citer_class_time);
@@ -197,7 +198,7 @@ double calculate_population(gen_algo::genetic_algo& ga, gen_algo::population** n
 	double fittest_schedule_fitness{};
 
 	if ((*new_population) == nullptr)
-		*new_population = new gen_algo::population(POPULATION_SIZE, *gene_data);
+		*new_population = new gen_algo::population(POPULATION_SIZE, *choice_data);
 	else
 		*new_population = ga.evolve(*new_population);
 	(*new_population)->sort_by_fitness();
@@ -238,22 +239,33 @@ void print_generation_table(gen_algo::population* new_population, double fittest
 	}
 }
 
-int driver() {
+int driver( std::string&& dtype ) {
 	// set the seed
 	srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-
-	//int x = func(10);  // just for test
-	//std::cout << "x is " << x << '\n';
 
 	// comment these if you are going to use C based input/output methods
 	//std::ios_base::sync_with_stdio(false);
 	//std::cin.tie(NULL);
 	//std::cout.tie(NULL);
 
-	gene_data = new gen_algo::data;
-	print_available_data(gene_data);
+	/** choice_data would either be selectable data or demo data( use "dtype" for checking ) */
+	gene_data = new gen_algo::data( NULL );
+	if( 0 == dtype.compare( "demo" ) ) {
+		choice_data = new gen_algo::demo_data( gene_data );
+	}
+	else if( 0 == dtype.compare("select") ) {
+		/** here will also exist the logic for selection from gene_data and
+		 * then creating selection_data from it */
+		choice_data = new gen_algo::selection_data( gene_data );
+	}
+	/**********************************************************/
 
-	gen_algo::genetic_algo ga(*gene_data);
+
+	//print_available_data(gene_data);
+	print_available_data( choice_data );
+
+	//gen_algo::genetic_algo ga(*gene_data);
+	gen_algo::genetic_algo ga( *choice_data );
 	gen_algo::population *new_population = nullptr;
 	double fittest_schedule_fitness{};
 
@@ -270,12 +282,16 @@ int driver() {
 		print_schedule_as_table(fittest_schedule);
 	}
 	catch (util::entitity_not_found& e) {
-		free_obj(new_population);
-		free_obj(gene_data);
+		/** checkout this section again to see if resources are getting freed properly or not */
+		free_obj( new_population );
+		free_obj( gene_data );
+		free_obj( choice_data );
 		throw;
+		/************************************************************************************/
 	}
 
-	free_obj(new_population);
-	free_obj(gene_data);
+	free_obj( new_population );
+	free_obj( gene_data );
+	free_obj( choice_data );
 	return 0;
 }
