@@ -20,8 +20,6 @@ extern const size_t DEMO_CLASS_TIMES_SIZE;
 
 namespace gen_algo {
 	class data {   // <-- PARENT CLASS
-		//private:
-			//void create_data();
 		protected:
 			std::vector<entities::department> _depts;
 			std::vector<entities::course> _courses;
@@ -31,7 +29,7 @@ namespace gen_algo {
 			size_t _classes_count;
 		public:
 			data();
-			void create_data();
+			data( long get_null );
 			// accessors
 			std::vector<entities::department> get_deparatments() const;
 			std::vector<entities::course> get_courses() const;
