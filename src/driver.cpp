@@ -249,8 +249,7 @@ int driver( std::string&& dtype ) {
 	//std::cout.tie(NULL);
 
 	/** choice_data would either be selectable data or demo data( use "dtype" for checking ) */
-	gene_data = new gen_algo::data;
-	gene_data->create_data();
+	gene_data = new gen_algo::data( NULL );
 	if( 0 == dtype.compare( "demo" ) ) {
 		choice_data = new gen_algo::demo_data( gene_data );
 	}
