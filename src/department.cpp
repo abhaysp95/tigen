@@ -3,10 +3,12 @@
 #include "../inc/department.hpp"
 
 namespace entities {
-	department::department(std::string name, std::vector<course>& courses):
-		_name{name}, _courses{courses} {}
-	department::department(std::string name, std::vector<course>&& courses):
-		_name{name}, _courses{courses} {}
+	department::department( std::string name )
+		: _name{ name } {  }
+	department::department( std::string name, const std::vector<course>& courses )
+		: _name{ name }, _courses{ courses } {  }
+	department::department( std::string name, std::vector<course>&& courses )
+		: _name{ name }, _courses{ std::move( courses ) } {  }
 
 	template<typename T>
 	bool is_equal(const std::vector<T>& v1, const std::vector<T>& v2) {
@@ -24,6 +26,9 @@ namespace entities {
 			res = false;
 		return res;
 	}
+
+	void department::set_courses( const std::vector<course>& courses ) { this->_courses = courses; }
+	void department::set_courses( std::vector<course>&& courses ) { this->_courses = std::move( courses ); }
 
 	std::string department::get_name() const { return this->_name; }
 	std::vector<course> department::get_courses() const { return this->_courses; }
