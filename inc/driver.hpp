@@ -32,7 +32,7 @@ extern std::vector<std::string> data_avail_to_print;
 extern std::vector<std::string> fittest_schedule_to_print;
 extern std::vector<std::string> gen_data_to_print;
 
-int driver();
+int driver( std::string&& dtype="demo" );
 void print_available_data(gen_algo::data* d);
 const std::string print_table_element(std::string t, const int& width, const char cfill=' ');
 void print_schedule_as_table(gen_algo::schedule& sch);
