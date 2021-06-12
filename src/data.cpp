@@ -17,8 +17,11 @@ namespace gen_algo {
 
 	data::data(): _classes_count{ 0 } {  }
 
-	/** data::create_data() will create entities for data, but will not make any connection between entities( as for now ) */
-	void data::create_data() {
+	/** data::data( NULL ) will create entities for data, but will not make any connection between entities( as for now ) */
+	data::data( long get_null ): _classes_count{ 0 } {
+		if( static_cast<long>( NULL ) != get_null ) {
+			// write a logic here to terminate the program, until you haven't written a logic to use something instead of NULL
+		}
 		entities::room r1  ( "R1", 155 );
 		entities::room r2  ( "R2", 170 );
 		entities::room r3  ( "R3", 160 );
