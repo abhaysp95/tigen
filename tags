@@ -119,6 +119,7 @@ BrightGreen	pprint/test/external/catch/include/catch2/catch.hpp	/^    BrightGree
 BrightRed	pprint/test/external/catch/include/catch2/catch.hpp	/^    BrightRed = Bright | Red,$/;"	e	enum:Catch::Colour::Code
 BrightWhite	pprint/test/external/catch/include/catch2/catch.hpp	/^    BrightWhite = Bright | White,$/;"	e	enum:Catch::Colour::Code
 BrightYellow	pprint/test/external/catch/include/catch2/catch.hpp	/^    BrightYellow = Bright | Yellow,$/;"	e	enum:Catch::Colour::Code
+Build:	README.md	/^## Build:$/;"	s	chapter:tigen
 BySectionInfo	pprint/test/external/catch/include/catch2/catch.hpp	/^    BySectionInfo(BySectionInfo const &other) : m_other(other.m_other) {}$/;"	f	struct:Catch::CumulativeReporterBase::BySectionInfo
 BySectionInfo	pprint/test/external/catch/include/catch2/catch.hpp	/^    BySectionInfo(SectionInfo const &other) : m_other(other) {}$/;"	f	struct:Catch::CumulativeReporterBase::BySectionInfo
 BySectionInfo	pprint/test/external/catch/include/catch2/catch.hpp	/^  struct BySectionInfo$/;"	s	struct:Catch::CumulativeReporterBase
@@ -433,7 +434,7 @@ ContainsMatcher	pprint/test/external/catch/include/catch2/catch.hpp	/^struct Con
 ContainsMatcher	pprint/test/external/catch/include/catch2/catch.hpp	/^struct ContainsMatcher : StringMatcherBase$/;"	s	namespace:Catch::Matchers::StdString
 Context	pprint/test/external/catch/include/catch2/catch.hpp	/^class Context : public IMutableContext, NonCopyable$/;"	c	namespace:Catch
 ContinueOnFailure	pprint/test/external/catch/include/catch2/catch.hpp	/^    ContinueOnFailure = 0x02, \/\/ Failures fail test, but execution continues$/;"	e	enum:Catch::ResultDisposition::Flags
-Contributors of the project	README.md	/^### Contributors of the project$/;"	S	chapter:tigen
+Contributors of the project	README.md	/^## Contributors of the project$/;"	s	chapter:tigen
 Converter	pprint/test/external/catch/include/catch2/catch.hpp	/^  Converter(double d)$/;"	f	struct:__anon512022b41611::Converter
 Converter	pprint/test/external/catch/include/catch2/catch.hpp	/^  Converter(float f)$/;"	f	struct:__anon512022b41611::Converter
 Converter	pprint/test/external/catch/include/catch2/catch.hpp	/^struct Converter<double>$/;"	s	namespace:__anon512022b41611
@@ -450,6 +451,11 @@ DEBUG_DIR	Makefile	/^DEBUG_DIR       = debug$/;"	m
 DEBUG_EXT_DIR	Makefile	/^DEBUG_EXT_DIR   = debug\/extras$/;"	m
 DEBUG_OBJ	Makefile	/^DEBUG_OBJ = $(addprefix ${DEBUG_DIR}\/, $(notdir ${SRCXX:.cpp=.o}) $(notdir ${SRC:.c=.o}))$/;"	m
 DEC	build_debug/CMakeFiles/3.20.1/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define DEC(/;"	d	file:
+DEMO_CLASS_TIMES_SIZE	src/data.cpp	/^const size_t DEMO_CLASS_TIMES_SIZE = 6;$/;"	v	typeref:typename:const size_t
+DEMO_COURSES_SIZE	src/data.cpp	/^const size_t DEMO_COURSES_SIZE = 14;$/;"	v	typeref:typename:const size_t
+DEMO_DEPTS_SIZE	src/data.cpp	/^const size_t DEMO_DEPTS_SIZE = 5;$/;"	v	typeref:typename:const size_t
+DEMO_INSTRUCTORS_SIZE	src/data.cpp	/^const size_t DEMO_INSTRUCTORS_SIZE = 15	;$/;"	v	typeref:typename:const size_t
+DEMO_ROOMS_SIZE	src/data.cpp	/^const size_t DEMO_ROOMS_SIZE = 5;$/;"	v	typeref:typename:const size_t
 DIRS	Makefile	/^DIRS            = ${BIN_DIR} ${OBJ_DIR} ${DEBUG_DIR}$/;"	m
 DSIZE	src/main.cpp	/^#define DSIZE /;"	d	file:
 DYNAMIC_SECTION	pprint/test/external/catch/include/catch2/catch.hpp	/^#define DYNAMIC_SECTION(/;"	d
@@ -557,6 +563,7 @@ Help	pprint/test/external/catch/include/catch2/catch.hpp	/^struct Help : Opt$/;"
 HelpColumns	pprint/test/external/catch/include/catch2/catch.hpp	/^struct HelpColumns$/;"	s	namespace:Catch::clara::detail
 High	pprint/test/external/catch/include/catch2/catch.hpp	/^  High$/;"	e	enum:Catch::Verbosity
 Highlights	pprint/README.md	/^## Highlights$/;"	s
+How to use	README.md	/^## How to use$/;"	s	chapter:tigen
 IColourImpl	pprint/test/external/catch/include/catch2/catch.hpp	/^struct IColourImpl$/;"	s	namespace:Catch::__anon512022b41211
 IConfig	pprint/test/external/catch/include/catch2/catch.hpp	/^struct IConfig : NonCopyable$/;"	s	namespace:Catch
 IConfigPtr	pprint/test/external/catch/include/catch2/catch.hpp	/^using IConfigPtr = std::shared_ptr<IConfig const>;$/;"	t	namespace:Catch	typeref:typename:std::shared_ptr<IConfig const>
@@ -665,6 +672,7 @@ MAGIC_ENUM_RANGE_MAX	inc/pprint/pprint.hpp	/^#  define MAGIC_ENUM_RANGE_MAX /;"	
 MAGIC_ENUM_RANGE_MAX	pprint/include/pprint.hpp	/^#  define MAGIC_ENUM_RANGE_MAX /;"	d
 MAGIC_ENUM_RANGE_MIN	inc/pprint/pprint.hpp	/^#  define MAGIC_ENUM_RANGE_MIN /;"	d
 MAGIC_ENUM_RANGE_MIN	pprint/include/pprint.hpp	/^#  define MAGIC_ENUM_RANGE_MIN /;"	d
+MAX_TITLE_LEN	src/main.cpp	/^#define MAX_TITLE_LEN /;"	d	file:
 METHOD_AS_TEST_CASE	pprint/test/external/catch/include/catch2/catch.hpp	/^#define METHOD_AS_TEST_CASE(/;"	d
 MINGW	build_debug/CMakeFiles/3.20.1/CMakeCXXCompiler.cmake	/^  set(MINGW 1)$/;"	v
 MUTATION_RATE	src/genetic_algo.cpp	/^const double MUTATION_RATE = 0.1;$/;"	v	typeref:typename:const double
@@ -877,6 +885,7 @@ ScopedElement	pprint/test/external/catch/include/catch2/catch.hpp	/^XmlWriter::S
 ScopedElement	pprint/test/external/catch/include/catch2/catch.hpp	/^XmlWriter::ScopedElement::ScopedElement(XmlWriter *writer)$/;"	f	class:Catch::XmlWriter::ScopedElement
 ScopedMessage	pprint/test/external/catch/include/catch2/catch.hpp	/^ScopedMessage::ScopedMessage(MessageBuilder const &builder)$/;"	f	class:Catch::ScopedMessage
 ScopedMessage	pprint/test/external/catch/include/catch2/catch.hpp	/^class ScopedMessage$/;"	c	namespace:Catch
+Screenshots:	README.md	/^## Screenshots:$/;"	s	chapter:tigen
 SecondaryText	pprint/test/external/catch/include/catch2/catch.hpp	/^    SecondaryText = LightGrey,$/;"	e	enum:Catch::Colour::Code
 Seconds	pprint/test/external/catch/include/catch2/catch.hpp	/^    Seconds,$/;"	e	enum:Catch::__anon512022b42411::Duration::Unit
 Section	pprint/test/external/catch/include/catch2/catch.hpp	/^Section::Section(SectionInfo const &info)$/;"	f	class:Catch::Section
@@ -1070,13 +1079,13 @@ Version	pprint/test/external/catch/include/catch2/catch.hpp	/^Version::Version(u
 Version	pprint/test/external/catch/include/catch2/catch.hpp	/^struct Version$/;"	s	namespace:Catch
 WARN	pprint/test/external/catch/include/catch2/catch.hpp	/^#define WARN(/;"	d
 WHEN	pprint/test/external/catch/include/catch2/catch.hpp	/^#define WHEN(/;"	d
-WIN	src/main.cpp	/^		WIN() { init(); }$/;"	f	class:WIN	file:
-WIN	src/main.cpp	/^		WIN(WIN&& rhs): _win{rhs._win}, _cpos{rhs._cpos}, _rpos{rhs._rpos}, _startx{rhs._startx},$/;"	f	class:WIN	file:
-WIN	src/main.cpp	/^		WIN(const WIN& rhs): _win{rhs._win}, _cpos{rhs._cpos}, _rpos{rhs._rpos}, _startx{rhs._startx},$/;"	f	class:WIN	file:
-WIN	src/main.cpp	/^		WIN(int pheight, int pwidth) {$/;"	f	class:WIN	file:
-WIN	src/main.cpp	/^class WIN {$/;"	c	file:
+WIN	inc/extras/curses_util.hpp	/^	class WIN {$/;"	c	namespace:util
+WIN	src/extras/curses_util.cpp	/^	WIN::WIN() { this->init(); }$/;"	f	class:util::WIN
+WIN	src/extras/curses_util.cpp	/^	WIN::WIN(WIN&& rhs): _win{rhs._win}, _cpos{rhs._cpos}, _rpos{rhs._rpos}, _startx{rhs._startx},$/;"	f	class:util::WIN
+WIN	src/extras/curses_util.cpp	/^	WIN::WIN(const WIN& rhs): _win{rhs._win}, _cpos{rhs._cpos}, _rpos{rhs._rpos}, _startx{rhs._star/;"	f	class:util::WIN
+WIN	src/extras/curses_util.cpp	/^	WIN::WIN(int pheight, int pwidth) {$/;"	f	class:util::WIN
 WIN32_LEAN_AND_MEAN	pprint/test/external/catch/include/catch2/catch.hpp	/^#define WIN32_LEAN_AND_MEAN$/;"	d
-WIN_BORDER	src/main.cpp	/^		} WIN_BORDER;$/;"	t	class:WIN	typeref:struct:WIN::win_border_struct	file:
+WIN_BORDER	inc/extras/curses_util.hpp	/^			} WIN_BORDER;$/;"	t	class:util::WIN	typeref:struct:util::WIN::win_border_struct
 WaitForKeypress	pprint/test/external/catch/include/catch2/catch.hpp	/^struct WaitForKeypress$/;"	s	namespace:Catch
 WarnAbout	pprint/test/external/catch/include/catch2/catch.hpp	/^struct WarnAbout$/;"	s	namespace:Catch
 Warning	pprint/test/external/catch/include/catch2/catch.hpp	/^    Warning = 2,$/;"	e	enum:Catch::ResultWas::OfType
@@ -1114,9 +1123,11 @@ _BSD_SOURCE	pprint/test/external/catch/include/catch2/catch.hpp	/^#define _BSD_S
 _GUARD_CLASS_HPP_	inc/sec_class.hpp	/^#define _GUARD_CLASS_HPP_$/;"	d
 _GUARD_CLASS_TIME_HPP_	inc/class_time.hpp	/^#define _GUARD_CLASS_TIME_HPP_$/;"	d
 _GUARD_COURSE_HPP_	inc/course.hpp	/^#define _GUARD_COURSE_HPP_$/;"	d
+_GUARD_CURSES_UTIL_HPP_	inc/extras/curses_util.hpp	/^#define _GUARD_CURSES_UTIL_HPP_$/;"	d
 _GUARD_DATA_HPP_	inc/data.hpp	/^#define _GUARD_DATA_HPP_$/;"	d
 _GUARD_DEPARTMENT_HPP_	inc/department.hpp	/^#define _GUARD_DEPARTMENT_HPP_$/;"	d
 _GUARD_DRIVER_HPP_	inc/driver.hpp	/^#define _GUARD_DRIVER_HPP_$/;"	d
+_GUARD_EXCEPTION_UTIL_HPP_	inc/extras/exception_util.hpp	/^#define _GUARD_EXCEPTION_UTIL_HPP_$/;"	d
 _GUARD_EXTRA_UTIL_HPP_	inc/extras/extra_util.hpp	/^#define _GUARD_EXTRA_UTIL_HPP_$/;"	d
 _GUARD_GENETIC_ALGO_HPP_	inc/genetic_algo.hpp	/^#define _GUARD_GENETIC_ALGO_HPP_$/;"	d
 _GUARD_INSTRUCTOR_HPP_	inc/instructor.hpp	/^#define _GUARD_INSTRUCTOR_HPP_$/;"	d
@@ -1125,6 +1136,7 @@ _GUARD_POPULATION_HPP_	inc/population.hpp	/^#define _GUARD_POPULATION_HPP_$/;"	d
 _GUARD_ROOM_HPP_	inc/room.hpp	/^#define _GUARD_ROOM_HPP_$/;"	d
 _GUARD_SCHEDULE_HPP_	inc/schedule.hpp	/^#define _GUARD_SCHEDULE_HPP_$/;"	d
 __anon1094a8da0102	src/schedule.cpp	/^					[&](const entities::sec_class& tcls) {$/;"	f	function:gen_algo::schedule::calculate_fitness	file:
+__anon364219470102	src/data.cpp	/^		std::for_each( begin( random_nums ), end( random_nums ), [ &obj1, &obj2 ]( const size_t x ) {$/;"	f	function:gen_algo::prepare_data	file:
 __anon512022b40102	pprint/test/external/catch/include/catch2/catch.hpp	/^          [](const auto &value) {$/;"	f	function:Catch::StringMaker::convert	file:
 __anon512022b40211	pprint/test/external/catch/include/catch2/catch.hpp	/^{$/;"	n
 __anon512022b40311	pprint/test/external/catch/include/catch2/catch.hpp	/^{$/;"	n	namespace:Catch
@@ -1176,11 +1188,11 @@ _configure_cmake	pprint/conanfile.py	/^    def _configure_cmake(self):$/;"	m	cla
 _course	inc/sec_class.hpp	/^			entities::course _course;$/;"	m	class:entities::sec_class	typeref:typename:entities::course
 _courses	inc/data.hpp	/^			std::vector<entities::course> _courses;$/;"	m	class:gen_algo::data	typeref:typename:std::vector<entities::course>
 _courses	inc/department.hpp	/^			std::vector<course> _courses;$/;"	m	class:entities::department	typeref:typename:std::vector<course>
-_cpos	src/main.cpp	/^		int _cpos, _rpos, _startx, _starty, _endx, _endy;$/;"	m	class:WIN	typeref:typename:int	file:
+_cpos	inc/extras/curses_util.hpp	/^			int _cpos, _rpos, _startx, _starty, _endx, _endy;$/;"	m	class:util::WIN	typeref:typename:int
 _dept	inc/sec_class.hpp	/^			entities::department _dept;$/;"	m	class:entities::sec_class	typeref:typename:entities::department
 _depts	inc/data.hpp	/^			std::vector<entities::department> _depts;$/;"	m	class:gen_algo::data	typeref:typename:std::vector<entities::department>
-_endx	src/main.cpp	/^		int _cpos, _rpos, _startx, _starty, _endx, _endy;$/;"	m	class:WIN	typeref:typename:int	file:
-_endy	src/main.cpp	/^		int _cpos, _rpos, _startx, _starty, _endx, _endy;$/;"	m	class:WIN	typeref:typename:int	file:
+_endx	inc/extras/curses_util.hpp	/^			int _cpos, _rpos, _startx, _starty, _endx, _endy;$/;"	m	class:util::WIN	typeref:typename:int
+_endy	inc/extras/curses_util.hpp	/^			int _cpos, _rpos, _startx, _starty, _endx, _endy;$/;"	m	class:util::WIN	typeref:typename:int
 _fitness	inc/schedule.hpp	/^			double _fitness;$/;"	m	class:gen_algo::schedule	typeref:typename:double
 _gene_data	inc/genetic_algo.hpp	/^			data _gene_data;$/;"	m	class:gen_algo::genetic_algo	typeref:typename:data
 _gene_data	inc/schedule.hpp	/^			data _gene_data;$/;"	m	class:gen_algo::schedule	typeref:typename:data
@@ -1192,7 +1204,7 @@ _instructors	inc/course.hpp	/^			std::vector<instructor> _instructors;$/;"	m	cla
 _instructors	inc/data.hpp	/^			std::vector<entities::instructor> _instructors;$/;"	m	class:gen_algo::data	typeref:typename:std::vector<entities::instructor>
 _is_fitness_changed	inc/schedule.hpp	/^			bool _is_fitness_changed;$/;"	m	class:gen_algo::schedule	typeref:typename:bool
 _max_students	inc/course.hpp	/^			size_t _max_students;$/;"	m	class:entities::course	typeref:typename:size_t
-_msg	inc/extras/extra_util.hpp	/^			std::string _msg;$/;"	m	class:util::entitity_not_found	typeref:typename:std::string
+_msg	inc/extras/exception_util.hpp	/^			std::string _msg;$/;"	m	class:util::entitity_not_found	typeref:typename:std::string
 _name	inc/course.hpp	/^			std::string _name;$/;"	m	class:entities::course	typeref:typename:std::string
 _name	inc/department.hpp	/^			std::string _name;$/;"	m	class:entities::department	typeref:typename:std::string
 _name	inc/instructor.hpp	/^			std::string _name;$/;"	m	class:entities::instructor	typeref:typename:std::string
@@ -1201,15 +1213,15 @@ _number	inc/room.hpp	/^			std::string _number;$/;"	m	class:entities::room	typere
 _number_of_conflicts	inc/schedule.hpp	/^			size_t _number_of_conflicts;$/;"	m	class:gen_algo::schedule	typeref:typename:size_t
 _room	inc/sec_class.hpp	/^			entities::room _room;$/;"	m	class:entities::sec_class	typeref:typename:entities::room
 _rooms	inc/data.hpp	/^			std::vector<entities::room> _rooms;$/;"	m	class:gen_algo::data	typeref:typename:std::vector<entities::room>
-_rpos	src/main.cpp	/^		int _cpos, _rpos, _startx, _starty, _endx, _endy;$/;"	m	class:WIN	typeref:typename:int	file:
+_rpos	inc/extras/curses_util.hpp	/^			int _cpos, _rpos, _startx, _starty, _endx, _endy;$/;"	m	class:util::WIN	typeref:typename:int
 _schedules	inc/population.hpp	/^			std::vector<schedule> _schedules;$/;"	m	class:gen_algo::population	typeref:typename:std::vector<schedule>
 _sec_class_number	inc/schedule.hpp	/^			size_t _sec_class_number;$/;"	m	class:gen_algo::schedule	typeref:typename:size_t
 _sec_classes	inc/schedule.hpp	/^			std::vector<entities::sec_class> _sec_classes;$/;"	m	class:gen_algo::schedule	typeref:typename:std::vector<entities::sec_class>
-_startx	src/main.cpp	/^		int _cpos, _rpos, _startx, _starty, _endx, _endy;$/;"	m	class:WIN	typeref:typename:int	file:
-_starty	src/main.cpp	/^		int _cpos, _rpos, _startx, _starty, _endx, _endy;$/;"	m	class:WIN	typeref:typename:int	file:
+_startx	inc/extras/curses_util.hpp	/^			int _cpos, _rpos, _startx, _starty, _endx, _endy;$/;"	m	class:util::WIN	typeref:typename:int
+_starty	inc/extras/curses_util.hpp	/^			int _cpos, _rpos, _startx, _starty, _endx, _endy;$/;"	m	class:util::WIN	typeref:typename:int
 _time	inc/class_time.hpp	/^			std::string _time;$/;"	m	class:entities::class_time	typeref:typename:std::string
-_win	src/main.cpp	/^		WINDOW* _win;$/;"	m	class:WIN	typeref:typename:WINDOW *	file:
-_win_border	src/main.cpp	/^		WIN_BORDER _win_border;$/;"	m	class:WIN	typeref:typename:WIN_BORDER	file:
+_win	inc/extras/curses_util.hpp	/^			WINDOW* _win;$/;"	m	class:util::WIN	typeref:typename:WINDOW *
+_win_border	inc/extras/curses_util.hpp	/^			WIN_BORDER _win_border;$/;"	m	class:util::WIN	typeref:typename:WIN_BORDER
 abortAfter	pprint/test/external/catch/include/catch2/catch.hpp	/^  int abortAfter = -1;$/;"	m	struct:Catch::ConfigData	typeref:typename:int
 abortAfter	pprint/test/external/catch/include/catch2/catch.hpp	/^int Config::abortAfter() const { return m_data.abortAfter; }$/;"	f	class:Catch::Config	typeref:typename:int
 aborting	pprint/test/external/catch/include/catch2/catch.hpp	/^  bool aborting;$/;"	m	struct:Catch::TestCaseStats	typeref:typename:bool
@@ -1288,11 +1300,11 @@ benchmarkStarting	pprint/test/external/catch/include/catch2/catch.hpp	/^  virtua
 benchmarkStarting	pprint/test/external/catch/include/catch2/catch.hpp	/^void ConsoleReporter::benchmarkStarting(BenchmarkInfo const &info)$/;"	f	class:Catch::ConsoleReporter	typeref:typename:void
 benchmarkStarting	pprint/test/external/catch/include/catch2/catch.hpp	/^void ListeningReporter::benchmarkStarting(BenchmarkInfo const &benchmarkInfo)$/;"	f	class:Catch::ListeningReporter	typeref:typename:void
 benchmarkStarting	pprint/test/external/catch/include/catch2/catch.hpp	/^void RunContext::benchmarkStarting(BenchmarkInfo const &info)$/;"	f	class:Catch::RunContext	typeref:typename:void
-bl	src/main.cpp	/^			chtype ls, rs, ts, bs, tl, bl, tr, br;$/;"	m	struct:WIN::win_border_struct	typeref:typename:chtype	file:
+bl	inc/extras/curses_util.hpp	/^				chtype ls, rs, ts, bs, tl, bl, tr, br, hls, hrs, hll;$/;"	m	struct:util::WIN::win_border_struct	typeref:typename:chtype
 bothOrAll	pprint/test/external/catch/include/catch2/catch.hpp	/^std::string bothOrAll(std::size_t count)$/;"	f	namespace:__anon512022b42211	typeref:typename:std::string
-br	src/main.cpp	/^			chtype ls, rs, ts, bs, tl, bl, tr, br;$/;"	m	struct:WIN::win_border_struct	typeref:typename:chtype	file:
+br	inc/extras/curses_util.hpp	/^				chtype ls, rs, ts, bs, tl, bl, tr, br, hls, hrs, hll;$/;"	m	struct:util::WIN::win_border_struct	typeref:typename:chtype
 branchName	pprint/test/external/catch/include/catch2/catch.hpp	/^  char const *const branchName;$/;"	m	struct:Catch::Version	typeref:typename:char const * const
-bs	src/main.cpp	/^			chtype ls, rs, ts, bs, tl, bl, tr, br;$/;"	m	struct:WIN::win_border_struct	typeref:typename:chtype	file:
+bs	inc/extras/curses_util.hpp	/^				chtype ls, rs, ts, bs, tl, bl, tr, br, hls, hrs, hll;$/;"	m	struct:util::WIN::win_border_struct	typeref:typename:chtype
 build	pprint/conanfile.py	/^    def build(self):$/;"	m	class:PprintConan
 buildNumber	pprint/test/external/catch/include/catch2/catch.hpp	/^  unsigned int const buildNumber;$/;"	m	struct:Catch::Version	typeref:typename:unsigned int const
 byte_2_lead	pprint/test/external/catch/include/catch2/catch.hpp	/^const uint32_t byte_2_lead = 0xC0;$/;"	v	namespace:__anon512022b41c11	typeref:typename:const uint32_t
@@ -1313,6 +1325,7 @@ caseSensitivitySuffix	pprint/test/external/catch/include/catch2/catch.hpp	/^std:
 cerr	pprint/test/external/catch/include/catch2/catch.hpp	/^std::ostream &cerr() { return std::cerr; }$/;"	f	namespace:Catch	typeref:typename:std::ostream &
 childSections	pprint/test/external/catch/include/catch2/catch.hpp	/^    ChildSections childSections;$/;"	m	struct:Catch::CumulativeReporterBase::SectionNode	typeref:typename:ChildSections
 children	pprint/test/external/catch/include/catch2/catch.hpp	/^    ChildNodes children;$/;"	m	struct:Catch::CumulativeReporterBase::Node	typeref:typename:ChildNodes
+choice_data	src/driver.cpp	/^gen_algo::data *choice_data;$/;"	v	typeref:typename:gen_algo::data *
 clara	pprint/test/external/catch/include/catch2/catch.hpp	/^namespace clara$/;"	n	namespace:Catch
 className	pprint/test/external/catch/include/catch2/catch.hpp	/^  std::string className;$/;"	m	struct:Catch::TestCaseInfo	typeref:typename:std::string
 class_time	inc/class_time.hpp	/^	class class_time {$/;"	c	namespace:entities
@@ -1440,14 +1453,16 @@ count	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto count() const
 count	pprint/test/external/catch/include/catch2/catch.hpp	/^  std::size_t count = 0;$/;"	m	struct:Catch::TagInfo	typeref:typename:std::size_t
 count	pprint/test/external/catch/include/catch2/catch.hpp	/^size_t count(InputIterator first, InputIterator last, T const &item)$/;"	f	namespace:Catch::Matchers::Vector::Detail	typeref:typename:size_t
 course	inc/course.hpp	/^	class course {$/;"	c	namespace:entities
-course	src/course.cpp	/^	course::course(std::string number, std::string name,$/;"	f	class:entities::course
+course	src/course.cpp	/^	course::course( std::string number, std::string name, size_t max_students )$/;"	f	class:entities::course
+course	src/course.cpp	/^	course::course( std::string number, std::string name, size_t max_students, const std::vector<in/;"	f	class:entities::course
+course	src/course.cpp	/^	course::course( std::string number, std::string name, size_t max_students, std::vector<instruct/;"	f	class:entities::course
 cout	pprint/test/external/catch/include/catch2/catch.hpp	/^std::ostream &cout()$/;"	f	namespace:Catch	typeref:typename:std::ostream &
 create	pprint/test/external/catch/include/catch2/catch.hpp	/^    virtual IStreamingReporterPtr create(ReporterConfig const &config) const override$/;"	f	class:Catch::ListenerRegistrar::ListenerFactory	typeref:typename:IStreamingReporterPtr
 create	pprint/test/external/catch/include/catch2/catch.hpp	/^    virtual IStreamingReporterPtr create(ReporterConfig const &config) const override$/;"	f	class:Catch::ReporterRegistrar::ReporterFactory	typeref:typename:IStreamingReporterPtr
 create	pprint/test/external/catch/include/catch2/catch.hpp	/^IStreamingReporterPtr ReporterRegistry::create(std::string const &name, IConfigPtr const &config/;"	f	class:Catch::ReporterRegistry	typeref:typename:IStreamingReporterPtr
 createContext	pprint/test/external/catch/include/catch2/catch.hpp	/^void IMutableContext::createContext()$/;"	f	class:Catch::IMutableContext	typeref:typename:void
 createReporter	pprint/test/external/catch/include/catch2/catch.hpp	/^IStreamingReporterPtr createReporter(std::string const &reporterName, IConfigPtr const &config)$/;"	f	namespace:Catch::__anon512022b41811	typeref:typename:IStreamingReporterPtr
-create_box	src/main.cpp	/^		void create_box() {$/;"	f	class:WIN	typeref:typename:void	file:
+create_box	src/extras/curses_util.cpp	/^	void WIN::create_box() {$/;"	f	class:util::WIN	typeref:typename:void
 create_data	src/data.cpp	/^	void data::create_data() {$/;"	f	class:gen_algo::data	typeref:typename:void
 crossover_population	src/genetic_algo.cpp	/^	population* genetic_algo::crossover_population(population* pop) {$/;"	f	class:gen_algo::genetic_algo	typeref:typename:population *
 crossover_schedule	src/genetic_algo.cpp	/^	schedule* genetic_algo::crossover_schedule(schedule& sch1, schedule& sch2) {$/;"	f	class:gen_algo::genetic_algo	typeref:typename:schedule *
@@ -1459,18 +1474,21 @@ currentTestCaseInfo	pprint/test/external/catch/include/catch2/catch.hpp	/^  Lazy
 currentTestRunInfo	pprint/test/external/catch/include/catch2/catch.hpp	/^  LazyStat<TestRunInfo> currentTestRunInfo;$/;"	m	struct:Catch::StreamingReporterBase	typeref:typename:LazyStat<TestRunInfo>
 currentTracker	pprint/test/external/catch/include/catch2/catch.hpp	/^ITracker &TrackerContext::currentTracker()$/;"	f	class:Catch::TestCaseTracking::TrackerContext	typeref:typename:ITracker &
 custom	pprint/test/external/catch/include/catch2/catch.hpp	/^Approx Approx::custom()$/;"	f	class:Catch::Detail::Approx	typeref:typename:Approx
-data	inc/data.hpp	/^	class data {$/;"	c	namespace:gen_algo
+data	inc/data.hpp	/^	class data {   \/\/ <-- PARENT CLASS$/;"	c	namespace:gen_algo
 data	pprint/test/external/catch/include/catch2/catch.hpp	/^  char data[bufferSize];$/;"	m	class:Catch::detail::__anon512022b41a11::StreamBufImpl	typeref:typename:char[]
-data	src/data.cpp	/^	data::data(): _classes_count{} {$/;"	f	class:gen_algo::data
+data	src/data.cpp	/^	data::data(): _classes_count{ 0 } {  }$/;"	f	class:gen_algo::data
 data_avail_to_print	src/driver.cpp	/^std::vector<std::string> data_avail_to_print;$/;"	v	typeref:typename:std::vector<std::string>
 debug	Makefile	/^debug: dir ${DEBUG_BIN}$/;"	t
 default_target	build_debug/Makefile	/^default_target: all$/;"	t
 delta	pprint/test/external/catch/include/catch2/catch.hpp	/^Totals Totals::delta(Totals const &prevTotals) const$/;"	f	class:Catch::Totals	typeref:typename:Totals
 demangle	inc/pprint/pprint.hpp	/^    std::string demangle(const char* name) {$/;"	f	class:pprint::PrettyPrinter	typeref:typename:std::string
 demangle	pprint/include/pprint.hpp	/^    std::string demangle(const char* name) {$/;"	f	class:pprint::PrettyPrinter	typeref:typename:std::string
+demo_data	inc/data.hpp	/^	class demo_data: public data {  \/\/ <-- CHILD2 CLASS$/;"	c	namespace:gen_algo
+demo_data	src/data.cpp	/^	demo_data::demo_data( const data* data ) {$/;"	f	class:gen_algo::demo_data
 department	inc/department.hpp	/^	class department {$/;"	c	namespace:entities
-department	src/department.cpp	/^	department::department(std::string name, std::vector<course>& courses):$/;"	f	class:entities::department
-department	src/department.cpp	/^	department::department(std::string name, std::vector<course>&& courses):$/;"	f	class:entities::department
+department	src/department.cpp	/^	department::department( std::string name )$/;"	f	class:entities::department
+department	src/department.cpp	/^	department::department( std::string name, const std::vector<course>& courses )$/;"	f	class:entities::department
+department	src/department.cpp	/^	department::department( std::string name, std::vector<course>&& courses )$/;"	f	class:entities::department
 depend	build_debug/Makefile	/^depend:$/;"	t
 describe	pprint/test/external/catch/include/catch2/catch.hpp	/^  std::string describe() const override$/;"	f	class:Catch::Matchers::Generic::PredicateMatcher	typeref:typename:std::string
 describe	pprint/test/external/catch/include/catch2/catch.hpp	/^  std::string describe() const override$/;"	f	struct:Catch::Matchers::Impl::MatchAllOf	typeref:typename:std::string
@@ -1522,7 +1540,7 @@ directory	compile_commands.json	/^  "directory": "\/home\/raytracer\/Downloads\/
 directory	compile_commands.json	/^  "directory": "\/home\/raytracer\/Downloads\/git-materials\/tigen\/build_debug",$/;"	s	object:8
 directory	compile_commands.json	/^  "directory": "\/home\/raytracer\/Downloads\/git-materials\/tigen\/build_debug",$/;"	s	object:9
 doNothing	pprint/test/external/catch/include/catch2/catch.hpp	/^inline void doNothing() {}$/;"	f	namespace:Catch	typeref:typename:void
-driver	src/driver.cpp	/^int driver() {$/;"	f	typeref:typename:int
+driver	src/driver.cpp	/^int driver( std::string&& dtype ) {$/;"	f	typeref:typename:int
 dup	pprint/test/external/catch/include/catch2/catch.hpp	/^#define dup /;"	d
 dup2	pprint/test/external/catch/include/catch2/catch.hpp	/^#define dup2 /;"	d
 durationInSeconds	pprint/test/external/catch/include/catch2/catch.hpp	/^  double durationInSeconds;$/;"	m	struct:Catch::SectionEndInfo	typeref:typename:double
@@ -1557,10 +1575,10 @@ entities	src/department.cpp	/^namespace entities {$/;"	n	file:
 entities	src/instructor.cpp	/^namespace entities {$/;"	n	file:
 entities	src/room.cpp	/^namespace entities {$/;"	n	file:
 entities	src/sec_class.cpp	/^namespace entities {$/;"	n	file:
-entitity_not_found	inc/extras/extra_util.hpp	/^	class entitity_not_found: public std::exception {$/;"	c	namespace:util
-entitity_not_found	src/extras/extra_util.cpp	/^	entitity_not_found::entitity_not_found(): _msg{"Entity Not Found!!!\\n"} {}$/;"	f	class:util::entitity_not_found
-entitity_not_found	src/extras/extra_util.cpp	/^	entitity_not_found::entitity_not_found(std::string& msg): _msg{msg + "\\n"} {}$/;"	f	class:util::entitity_not_found
-entitity_not_found	src/extras/extra_util.cpp	/^	entitity_not_found::entitity_not_found(std::string&& msg): _msg{msg + "\\n"} {}$/;"	f	class:util::entitity_not_found
+entitity_not_found	inc/extras/exception_util.hpp	/^	class entitity_not_found: public std::exception {$/;"	c	namespace:util
+entitity_not_found	src/extras/exception_util.cpp	/^	entitity_not_found::entitity_not_found(): _msg{"Entity Not Found!!!\\n"} {}$/;"	f	class:util::entitity_not_found
+entitity_not_found	src/extras/exception_util.cpp	/^	entitity_not_found::entitity_not_found(std::string& msg): _msg{msg + "\\n"} {}$/;"	f	class:util::entitity_not_found
+entitity_not_found	src/extras/exception_util.cpp	/^	entitity_not_found::entitity_not_found(std::string&& msg): _msg{msg + "\\n"} {}$/;"	f	class:util::entitity_not_found
 entity_existance_check	src/driver.cpp	/^void entity_existance_check(const std::vector<T>& from_entity,$/;"	f	typeref:typename:void
 enum_cast	inc/pprint/pprint.hpp	/^  [[nodiscard]] constexpr std::optional<E> enum_cast(std::string_view value) noexcept {$/;"	f	namespace:magic_enum	typeref:typename:std::optional<E>
 enum_cast	inc/pprint/pprint.hpp	/^  [[nodiscard]] constexpr std::optional<E> enum_cast(std::underlying_type_t<E> value) noexcept {$/;"	f	namespace:magic_enum	typeref:typename:std::optional<E>
@@ -1846,7 +1864,10 @@ help	build_debug/Makefile	/^help:$/;"	t
 hexEscapeChar	pprint/test/external/catch/include/catch2/catch.hpp	/^void hexEscapeChar(std::ostream &os, unsigned char c)$/;"	f	namespace:Catch::__anon512022b42111	typeref:typename:void
 hexThreshold	pprint/test/external/catch/include/catch2/catch.hpp	/^const int hexThreshold = 255;$/;"	v	namespace:Catch::Detail::__anon512022b42011	typeref:typename:const int
 hint	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto hint() const -> std::string { return m_hint; }$/;"	f	class:Catch::clara::detail::ParserRefImpl	typeref:typename:std::string
+hll	inc/extras/curses_util.hpp	/^				chtype ls, rs, ts, bs, tl, bl, tr, br, hls, hrs, hll;$/;"	m	struct:util::WIN::win_border_struct	typeref:typename:chtype
+hls	inc/extras/curses_util.hpp	/^				chtype ls, rs, ts, bs, tl, bl, tr, br, hls, hrs, hll;$/;"	m	struct:util::WIN::win_border_struct	typeref:typename:chtype
 homepage	pprint/conanfile.py	/^    homepage = "https:\/\/github.com\/p-ranav\/pprint"$/;"	v	class:PprintConan
+hrs	inc/extras/curses_util.hpp	/^				chtype ls, rs, ts, bs, tl, bl, tr, br, hls, hrs, hll;$/;"	m	struct:util::WIN::win_border_struct	typeref:typename:chtype
 i	pprint/test/external/catch/include/catch2/catch.hpp	/^  int32_t i;$/;"	m	struct:__anon512022b41611::Converter	typeref:typename:int32_t
 i	pprint/test/external/catch/include/catch2/catch.hpp	/^  int64_t i;$/;"	m	struct:__anon512022b41611::Converter	typeref:typename:int64_t
 id	pprint/test/external/catch/include/catch2/catch.hpp	/^  DWORD id;$/;"	m	struct:Catch::SignalDefs	typeref:typename:DWORD
@@ -1871,9 +1892,9 @@ info_simulate	build_debug/CMakeFiles/3.20.1/CompilerIdCXX/CMakeCXXCompilerId.cpp
 info_simulate_version	build_debug/CMakeFiles/3.20.1/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_simulate_version[] = {$/;"	v	typeref:typename:char const[]
 info_version	build_debug/CMakeFiles/3.20.1/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version[] = {$/;"	v	typeref:typename:char const[]
 info_version_internal	build_debug/CMakeFiles/3.20.1/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version_internal[] = {$/;"	v	typeref:typename:char const[]
-init	src/main.cpp	/^		void init() {$/;"	f	class:WIN	typeref:typename:void	file:
-init_pads	src/main.cpp	/^void init_pads(std::vector<WIN>& wins, const std::vector<std::vector<std::string>::size_type>& p/;"	f	typeref:typename:void
-init_win	src/main.cpp	/^void init_win(WIN& win, const int pheight, const int pwidth) {$/;"	f	typeref:typename:void
+init	src/extras/curses_util.cpp	/^	void WIN::init() {$/;"	f	class:util::WIN	typeref:typename:void
+init_pads	src/main.cpp	/^void init_pads(std::vector<util::WIN>& wins, const std::vector<std::vector<std::string>::size_ty/;"	f	typeref:typename:void
+init_win	src/extras/curses_util.cpp	/^	void WIN::init_win(const int pheight, const int pwidth) {$/;"	f	class:util::WIN	typeref:typename:void
 initialIndent	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto initialIndent(size_t newIndent) -> Column &$/;"	f	class:Catch::clara::TextFlow::Column	typeref:typename:Column &
 instance	pprint/test/external/catch/include/catch2/catch.hpp	/^  static IColourImpl *instance()$/;"	f	class:Catch::__anon512022b41411::PosixColourImpl	typeref:typename:IColourImpl *
 instance	pprint/test/external/catch/include/catch2/catch.hpp	/^  static IColourImpl *instance()$/;"	f	struct:Catch::__anon512022b41211::NoColourImpl	typeref:typename:IColourImpl *
@@ -2011,7 +2032,7 @@ literals	pprint/test/external/catch/include/catch2/catch.hpp	/^namespace literal
 loadBuffer	pprint/test/external/catch/include/catch2/catch.hpp	/^  void loadBuffer()$/;"	f	class:Catch::clara::detail::TokenStream	typeref:typename:void
 location	pprint/test/external/catch/include/catch2/catch.hpp	/^  SourceLineInfo location;$/;"	m	struct:Catch::TestCaseTracking::NameAndLocation	typeref:typename:SourceLineInfo
 logicError	pprint/test/external/catch/include/catch2/catch.hpp	/^  static auto logicError(std::string const &message) -> BasicResult { return {ResultBase::LogicE/;"	f	class:Catch::clara::detail::BasicResult	typeref:typename:BasicResult
-ls	src/main.cpp	/^			chtype ls, rs, ts, bs, tl, bl, tr, br;$/;"	m	struct:WIN::win_border_struct	typeref:typename:chtype	file:
+ls	inc/extras/curses_util.hpp	/^				chtype ls, rs, ts, bs, tl, bl, tr, br, hls, hrs, hll;$/;"	m	struct:util::WIN::win_border_struct	typeref:typename:chtype
 m_activeIterators	pprint/test/external/catch/include/catch2/catch.hpp	/^    size_t m_activeIterators;$/;"	m	class:Catch::clara::TextFlow::Columns::iterator	typeref:typename:size_t
 m_activeSections	pprint/test/external/catch/include/catch2/catch.hpp	/^  std::vector<ITracker *> m_activeSections;$/;"	m	class:Catch::RunContext	typeref:typename:std::vector<ITracker * >
 m_activeTestCase	pprint/test/external/catch/include/catch2/catch.hpp	/^  TestCase const *m_activeTestCase = nullptr;$/;"	m	class:Catch::RunContext	typeref:typename:TestCase const *
@@ -2481,8 +2502,8 @@ operator =	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto operator
 operator =	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto operator=(StringRef const &other) noexcept -> StringRef &$/;"	f	class:Catch::StringRef	typeref:typename:auto
 operator =	pprint/test/external/catch/include/catch2/catch.hpp	/^Colour &Colour::operator=(Colour &&rhs) noexcept$/;"	f	class:Catch::Colour	typeref:typename:Colour &
 operator =	pprint/test/external/catch/include/catch2/catch.hpp	/^XmlWriter::ScopedElement &XmlWriter::ScopedElement::operator=(ScopedElement &&other) noexcept$/;"	f	class:Catch::XmlWriter::ScopedElement	typeref:typename:XmlWriter::ScopedElement &
-operator =	src/main.cpp	/^		WIN& operator=(WIN&& rhs) {$/;"	f	class:WIN	typeref:typename:WIN &	file:
-operator =	src/main.cpp	/^		WIN& operator=(const WIN& rhs) {$/;"	f	class:WIN	typeref:typename:WIN &	file:
+operator =	src/extras/curses_util.cpp	/^	WIN& WIN::operator=(WIN&& rhs) {$/;"	f	class:util::WIN	typeref:typename:WIN &
+operator =	src/extras/curses_util.cpp	/^	WIN& WIN::operator=(const WIN& rhs) {$/;"	f	class:util::WIN	typeref:typename:WIN &
 operator =	src/schedule.cpp	/^	schedule& schedule::operator=(schedule* other) {$/;"	f	class:gen_algo::schedule	typeref:typename:schedule &
 operator ==	pprint/test/external/catch/include/catch2/catch.hpp	/^    auto operator==(iterator const &other) const -> bool$/;"	f	class:Catch::clara::TextFlow::Column::iterator	typeref:typename:bool
 operator ==	pprint/test/external/catch/include/catch2/catch.hpp	/^    auto operator==(iterator const &other) const -> bool$/;"	f	class:Catch::clara::TextFlow::Columns::iterator	typeref:typename:bool
@@ -2567,6 +2588,7 @@ pprint_test	pprint/test/CMakeLists.txt	/^add_executable(pprint_test$/;"	t
 preinstall	build_debug/Makefile	/^preinstall: all$/;"	t
 preinstall/fast	build_debug/Makefile	/^preinstall\/fast:$/;"	t
 prepareExpandedExpression	pprint/test/external/catch/include/catch2/catch.hpp	/^void prepareExpandedExpression(AssertionResult &result)$/;"	f	namespace:Catch	typeref:typename:void
+prepare_data	src/data.cpp	/^	void prepare_data(const push_from& obj1, push_to& obj2, const t count) {$/;"	f	namespace:gen_algo	typeref:typename:void
 prevAssertions	pprint/test/external/catch/include/catch2/catch.hpp	/^  Counts prevAssertions;$/;"	m	struct:Catch::SectionEndInfo	typeref:typename:Counts
 print	inc/pprint/pprint.hpp	/^    void print(T value) {$/;"	f	class:pprint::PrettyPrinter	typeref:typename:void
 print	inc/pprint/pprint.hpp	/^    void print(T value, Targs... Fargs) {$/;"	f	class:pprint::PrettyPrinter	typeref:typename:void
@@ -2678,8 +2700,9 @@ print_internal_without_quotes	pprint/include/pprint.hpp	/^    void print_interna
 print_internal_without_quotes	pprint/include/pprint.hpp	/^    void print_internal_without_quotes(const std::string& value, size_t indent = 0,$/;"	f	class:pprint::PrettyPrinter	typeref:typename:void
 print_result	temp_data/nprint.c	/^void print_result() {$/;"	f	typeref:typename:void
 print_schedule_as_table	src/driver.cpp	/^void print_schedule_as_table(gen_algo::schedule& sch) {$/;"	f	typeref:typename:void
-print_tab_names	src/main.cpp	/^void print_tab_names(std::vector<WIN>& wins, int cur_tab_num) {$/;"	f	typeref:typename:void
+print_tab_names	src/main.cpp	/^void print_tab_names(std::vector<util::WIN>& wins, int cur_tab_num) {$/;"	f	typeref:typename:void
 print_table_element	src/driver.cpp	/^const std::string print_table_element(std::string t, const int& width, const char cfill) {$/;"	f	typeref:typename:const std::string
+print_title_desc	src/main.cpp	/^void print_title_desc() {$/;"	f	typeref:typename:void
 print_tuple	inc/pprint/pprint.hpp	/^  void print_tuple(std::basic_ostream<Ch,Tr>& os, Tuple const& t, seq<Is...>){$/;"	f	namespace:pprint	typeref:typename:void
 print_tuple	pprint/include/pprint.hpp	/^  void print_tuple(std::basic_ostream<Ch,Tr>& os, Tuple const& t, seq<Is...>){$/;"	f	namespace:pprint	typeref:typename:void
 print_vec	src/main.cpp	/^void print_vec(const std::vector<T>& vec) {$/;"	f	typeref:typename:void
@@ -2750,13 +2773,13 @@ rng	pprint/test/external/catch/include/catch2/catch.hpp	/^std::mt19937 &rng()$/;
 rngSeed	pprint/test/external/catch/include/catch2/catch.hpp	/^  unsigned int rngSeed = 0;$/;"	m	struct:Catch::ConfigData	typeref:typename:unsigned int
 rngSeed	pprint/test/external/catch/include/catch2/catch.hpp	/^unsigned int Config::rngSeed() const { return m_data.rngSeed; }$/;"	f	class:Catch::Config	typeref:typename:unsigned int
 rngSeed	pprint/test/external/catch/include/catch2/catch.hpp	/^unsigned int rngSeed()$/;"	f	namespace:Catch	typeref:typename:unsigned int
-rngi	src/extras/extra_util.cpp	/^	int rngi(int lim) {$/;"	f	namespace:util	typeref:typename:int
-rngr	src/extras/extra_util.cpp	/^	double rngr(double lim) {$/;"	f	namespace:util	typeref:typename:double
+rngi	src/extras/extra_util.cpp	/^	int rngi( int limit ) {$/;"	f	namespace:util	typeref:typename:int
+rngr	src/extras/extra_util.cpp	/^	double rngr( double limit ) {$/;"	f	namespace:util	typeref:typename:double
 room	inc/room.hpp	/^	class room {$/;"	c	namespace:entities
 room	src/room.cpp	/^	room::room() {}$/;"	f	class:entities::room
 room	src/room.cpp	/^	room::room(std::string number, size_t capacity):$/;"	f	class:entities::room
 rows	pprint/test/external/catch/include/catch2/catch.hpp	/^  std::vector<std::string> rows;$/;"	m	struct:Catch::SummaryColumn	typeref:typename:std::vector<std::string>
-rs	src/main.cpp	/^			chtype ls, rs, ts, bs, tl, bl, tr, br;$/;"	m	struct:WIN::win_border_struct	typeref:typename:chtype	file:
+rs	inc/extras/curses_util.hpp	/^				chtype ls, rs, ts, bs, tl, bl, tr, br, hls, hrs, hll;$/;"	m	struct:util::WIN::win_border_struct	typeref:typename:chtype
 run	pprint/test/external/catch/include/catch2/catch.hpp	/^int Session::run()$/;"	f	class:Catch::Session	typeref:typename:int
 run	pprint/test/external/catch/include/catch2/catch.hpp	/^int Session::run(int argc, char *argv[])$/;"	f	class:Catch::Session	typeref:typename:int
 run	pprint/test/external/catch/include/catch2/catch.hpp	/^int Session::run(int argc, wchar_t *const argv[])$/;"	f	class:Catch::Session	typeref:typename:int
@@ -2767,7 +2790,7 @@ runOrder	pprint/test/external/catch/include/catch2/catch.hpp	/^  RunTests::InWha
 runOrder	pprint/test/external/catch/include/catch2/catch.hpp	/^RunTests::InWhatOrder Config::runOrder() const { return m_data.runOrder; }$/;"	f	class:Catch::Config	typeref:typename:RunTests::InWhatOrder
 runTest	pprint/test/external/catch/include/catch2/catch.hpp	/^Totals RunContext::runTest(TestCase const &testCase)$/;"	f	class:Catch::RunContext	typeref:typename:Totals
 runTests	pprint/test/external/catch/include/catch2/catch.hpp	/^Catch::Totals runTests(std::shared_ptr<Config> const &config)$/;"	f	namespace:Catch::__anon512022b41811	typeref:typename:Catch::Totals
-run_driver	src/main.cpp	/^void run_driver() {$/;"	f	typeref:typename:void
+run_driver	src/main.cpp	/^void run_driver( std::string&& type ) {$/;"	f	typeref:typename:void
 runtimeError	pprint/test/external/catch/include/catch2/catch.hpp	/^  static auto runtimeError(std::string const &message) -> BasicResult { return {ResultBase::Runt/;"	f	class:Catch::clara::detail::BasicResult	typeref:typename:BasicResult
 s	pprint/test/test_unordered_set.hpp	/^  auto s = stream.str();$/;"	v	typeref:typename:auto
 s_empty	pprint/test/external/catch/include/catch2/catch.hpp	/^  static constexpr char const *const s_empty = "";$/;"	m	class:Catch::StringRef	typeref:typename:char const * const
@@ -2801,6 +2824,8 @@ sectionStarting	pprint/test/external/catch/include/catch2/catch.hpp	/^void XmlRe
 sectionsToRun	pprint/test/external/catch/include/catch2/catch.hpp	/^  std::vector<std::string> sectionsToRun;$/;"	m	struct:Catch::ConfigData	typeref:typename:std::vector<std::string>
 seedRng	pprint/test/external/catch/include/catch2/catch.hpp	/^void seedRng(IConfig const &config)$/;"	f	namespace:Catch	typeref:typename:void
 select_tournament_population	src/genetic_algo.cpp	/^	population* genetic_algo::select_tournament_population(population* pop) {$/;"	f	class:gen_algo::genetic_algo	typeref:typename:population *
+selection_data	inc/data.hpp	/^	class selection_data: public data {  \/\/ <-- CHILD1 CLASS$/;"	c	namespace:gen_algo
+selection_data	src/data.cpp	/^	selection_data::selection_data( const data* data ) {$/;"	f	class:gen_algo::selection_data
 seq	inc/pprint/pprint.hpp	/^  template<std::size_t...> struct seq{};$/;"	s	namespace:pprint
 seq	pprint/include/pprint.hpp	/^  template<std::size_t...> struct seq{};$/;"	s	namespace:pprint
 sequence	pprint/test/external/catch/include/catch2/catch.hpp	/^  unsigned int sequence;$/;"	m	struct:Catch::MessageInfo	typeref:typename:unsigned int
@@ -2821,7 +2846,11 @@ setTextAttribute	pprint/test/external/catch/include/catch2/catch.hpp	/^  void se
 setValue	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto setValue(std::string const &arg) -> ParserResult override$/;"	f	struct:Catch::clara::detail::BoundLambda	typeref:typename:ParserResult override
 setValue	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto setValue(std::string const &arg) -> ParserResult override$/;"	f	struct:Catch::clara::detail::BoundValueRef	typeref:typename:ParserResult override
 set_class_time	src/sec_class.cpp	/^	void sec_class::set_class_time(entities::class_time& class_time) {$/;"	f	class:entities::sec_class	typeref:typename:void
+set_courses	src/department.cpp	/^	void department::set_courses( const std::vector<course>& courses ) { this->_courses = courses; /;"	f	class:entities::department	typeref:typename:void
+set_courses	src/department.cpp	/^	void department::set_courses( std::vector<course>&& courses ) { this->_courses = std::move( cou/;"	f	class:entities::department	typeref:typename:void
 set_instructor	src/sec_class.cpp	/^	void sec_class::set_instructor(entities::instructor& instructor) {$/;"	f	class:entities::sec_class	typeref:typename:void
+set_instructors	src/course.cpp	/^	void course::set_instructors( const std::vector<instructor>& instructors ) {$/;"	f	class:entities::course	typeref:typename:void
+set_instructors	src/course.cpp	/^	void course::set_instructors( std::vector<instructor>&& instructors ) {$/;"	f	class:entities::course	typeref:typename:void
 set_room	src/sec_class.cpp	/^	void sec_class::set_room(entities::room& room) { this->_room = room; }$/;"	f	class:entities::sec_class	typeref:typename:void
 set_version	pprint/conanfile.py	/^    def set_version(self):$/;"	m	class:PprintConan
 settings	pprint/conanfile.py	/^    settings = "os", "arch", "compiler", "build_type"$/;"	v	class:PprintConan
@@ -3041,7 +3070,7 @@ tigen	CMakeLists.txt	/^project(tigen LANGUAGES CXX VERSION 1.0)$/;"	p
 tigen	README.md	/^# tigen$/;"	c
 tigen	build_debug/Makefile	/^tigen: cmake_check_build_system$/;"	t
 tigen/fast	build_debug/Makefile	/^tigen\/fast:$/;"	t
-tl	src/main.cpp	/^			chtype ls, rs, ts, bs, tl, bl, tr, br;$/;"	m	struct:WIN::win_border_struct	typeref:typename:chtype	file:
+tl	inc/extras/curses_util.hpp	/^				chtype ls, rs, ts, bs, tl, bl, tr, br, hls, hrs, hll;$/;"	m	struct:util::WIN::win_border_struct	typeref:typename:chtype
 toLower	pprint/test/external/catch/include/catch2/catch.hpp	/^std::string toLower(std::string const &s)$/;"	f	namespace:Catch	typeref:typename:std::string
 toLowerCh	pprint/test/external/catch/include/catch2/catch.hpp	/^char toLowerCh(char c)$/;"	f	namespace:Catch::__anon512022b41b11	typeref:typename:char
 toLowerInPlace	pprint/test/external/catch/include/catch2/catch.hpp	/^void toLowerInPlace(std::string &s)$/;"	f	namespace:Catch	typeref:typename:void
@@ -3067,7 +3096,7 @@ totals	pprint/test/external/catch/include/catch2/catch.hpp	/^  Totals totals;$/;
 totals	pprint/test/external/catch/include/catch2/catch.hpp	/^  Totals totals;$/;"	m	struct:Catch::TestCaseStats	typeref:typename:Totals
 totals	pprint/test/external/catch/include/catch2/catch.hpp	/^  Totals totals;$/;"	m	struct:Catch::TestGroupStats	typeref:typename:Totals
 totals	pprint/test/external/catch/include/catch2/catch.hpp	/^  Totals totals;$/;"	m	struct:Catch::TestRunStats	typeref:typename:Totals
-tr	src/main.cpp	/^			chtype ls, rs, ts, bs, tl, bl, tr, br;$/;"	m	struct:WIN::win_border_struct	typeref:typename:chtype	file:
+tr	inc/extras/curses_util.hpp	/^				chtype ls, rs, ts, bs, tl, bl, tr, br, hls, hrs, hll;$/;"	m	struct:util::WIN::win_border_struct	typeref:typename:chtype
 trailingBytes	pprint/test/external/catch/include/catch2/catch.hpp	/^size_t trailingBytes(unsigned char c)$/;"	f	namespace:Catch::__anon512022b42111	typeref:typename:size_t
 translate	pprint/test/external/catch/include/catch2/catch.hpp	/^    std::string translate(ExceptionTranslators::const_iterator it, ExceptionTranslators::const_i/;"	f	class:Catch::ExceptionTranslatorRegistrar::ExceptionTranslator	typeref:typename:std::string
 translateActiveException	pprint/test/external/catch/include/catch2/catch.hpp	/^std::string ExceptionTranslatorRegistry::translateActiveException() const$/;"	f	class:Catch::ExceptionTranslatorRegistry	typeref:typename:std::string
@@ -3075,7 +3104,7 @@ translateActiveException	pprint/test/external/catch/include/catch2/catch.hpp	/^s
 trim	pprint/test/external/catch/include/catch2/catch.hpp	/^std::string trim(std::string const &str)$/;"	f	namespace:Catch	typeref:typename:std::string
 tryOpen	pprint/test/external/catch/include/catch2/catch.hpp	/^void SectionTracker::tryOpen()$/;"	f	class:Catch::TestCaseTracking::SectionTracker	typeref:typename:void
 tryTranslators	pprint/test/external/catch/include/catch2/catch.hpp	/^std::string ExceptionTranslatorRegistry::tryTranslators() const$/;"	f	class:Catch::ExceptionTranslatorRegistry	typeref:typename:std::string
-ts	src/main.cpp	/^			chtype ls, rs, ts, bs, tl, bl, tr, br;$/;"	m	struct:WIN::win_border_struct	typeref:typename:chtype	file:
+ts	inc/extras/curses_util.hpp	/^				chtype ls, rs, ts, bs, tl, bl, tr, br, hls, hrs, hll;$/;"	m	struct:util::WIN::win_border_struct	typeref:typename:chtype
 type	inc/pprint/pprint.hpp	/^    std::string type(const T& t) {$/;"	f	class:pprint::PrettyPrinter	typeref:typename:std::string
 type	pprint/include/pprint.hpp	/^    std::string type(const T& t) {$/;"	f	class:pprint::PrettyPrinter	typeref:typename:std::string
 type	pprint/test/external/catch/include/catch2/catch.hpp	/^  ResultWas::OfType type;$/;"	m	struct:Catch::MessageInfo	typeref:typename:ResultWas::OfType
@@ -3099,7 +3128,11 @@ useColour	pprint/test/external/catch/include/catch2/catch.hpp	/^UseColour::YesOr
 useColourOnPlatform	pprint/test/external/catch/include/catch2/catch.hpp	/^bool useColourOnPlatform()$/;"	f	namespace:Catch::__anon512022b41411	typeref:typename:bool
 useConfigData	pprint/test/external/catch/include/catch2/catch.hpp	/^void Session::useConfigData(ConfigData const &configData)$/;"	f	class:Catch::Session	typeref:typename:void
 used	pprint/test/external/catch/include/catch2/catch.hpp	/^  bool used = false;$/;"	m	struct:Catch::LazyStat	typeref:typename:bool
+util	inc/extras/curses_util.hpp	/^namespace util {$/;"	n
+util	inc/extras/exception_util.hpp	/^namespace util {$/;"	n
 util	inc/extras/extra_util.hpp	/^namespace util {$/;"	n
+util	src/extras/curses_util.cpp	/^namespace util {$/;"	n	file:
+util	src/extras/exception_util.cpp	/^namespace util {$/;"	n	file:
 util	src/extras/extra_util.cpp	/^namespace util {$/;"	n	file:
 validate	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto validate() const -> Result override$/;"	f	class:Catch::clara::detail::Opt	typeref:typename:Result override
 validate	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto validate() const -> Result override$/;"	f	struct:Catch::clara::detail::Parser	typeref:typename:Result override
@@ -3123,12 +3156,12 @@ waitForKeypress	pprint/test/external/catch/include/catch2/catch.hpp	/^  WaitForK
 warnAboutMissingAssertions	pprint/test/external/catch/include/catch2/catch.hpp	/^bool Config::warnAboutMissingAssertions() const { return !!(m_data.warnings & WarnAbout::NoAsser/;"	f	class:Catch::Config	typeref:typename:bool
 warnAboutNoTests	pprint/test/external/catch/include/catch2/catch.hpp	/^bool Config::warnAboutNoTests() const { return !!(m_data.warnings & WarnAbout::NoTests); }$/;"	f	class:Catch::Config	typeref:typename:bool
 warnings	pprint/test/external/catch/include/catch2/catch.hpp	/^  WarnAbout::What warnings = WarnAbout::Nothing;$/;"	m	struct:Catch::ConfigData	typeref:typename:WarnAbout::What
-what	src/extras/extra_util.cpp	/^	const char* entitity_not_found::what() const throw() {$/;"	f	class:util::entitity_not_found	typeref:typename:const char *
+what	src/extras/exception_util.cpp	/^	const char* entitity_not_found::what() const throw() {$/;"	f	class:util::entitity_not_found	typeref:typename:const char *
 which	pprint/test/external/catch/include/catch2/catch.hpp	/^  static Arch which()$/;"	f	struct:Catch::Detail::__anon512022b42011::Endianness	typeref:typename:Arch
 width	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto width() const -> size_t { return m_width; }$/;"	f	class:Catch::clara::TextFlow::Column	typeref:typename:size_t
 width	pprint/test/external/catch/include/catch2/catch.hpp	/^  auto width(size_t newWidth) -> Column &$/;"	f	class:Catch::clara::TextFlow::Column	typeref:typename:Column &
 width	pprint/test/external/catch/include/catch2/catch.hpp	/^  int width;$/;"	m	struct:Catch::__anon512022b42411::ColumnInfo	typeref:typename:int
-win_border_struct	src/main.cpp	/^		typedef struct win_border_struct {$/;"	s	class:WIN	file:
+win_border_struct	inc/extras/curses_util.hpp	/^			typedef struct win_border_struct {$/;"	s	class:util::WIN
 withName	pprint/test/external/catch/include/catch2/catch.hpp	/^TestCase TestCase::withName(std::string const &_newName) const$/;"	f	class:Catch::TestCase	typeref:typename:TestCase
 wmain	pprint/test/external/catch/include/catch2/catch.hpp	/^extern "C" int wmain(int argc, wchar_t *argv[], wchar_t *[])$/;"	f	typeref:typename:int
 writeAssertion	pprint/test/external/catch/include/catch2/catch.hpp	/^void JunitReporter::writeAssertion(AssertionStats const &stats)$/;"	f	class:Catch::JunitReporter	typeref:typename:void
@@ -3149,7 +3182,7 @@ writeText	pprint/test/external/catch/include/catch2/catch.hpp	/^XmlWriter &XmlWr
 writeText	pprint/test/external/catch/include/catch2/catch.hpp	/^XmlWriter::ScopedElement &XmlWriter::ScopedElement::writeText(std::string const &text, bool inde/;"	f	class:Catch::XmlWriter::ScopedElement	typeref:typename:XmlWriter::ScopedElement &
 writeToDebugConsole	pprint/test/external/catch/include/catch2/catch.hpp	/^void writeToDebugConsole(std::string const &text)$/;"	f	namespace:Catch	typeref:typename:void
 writeToStream	pprint/test/external/catch/include/catch2/catch.hpp	/^  void writeToStream(std::ostream &os) const$/;"	f	struct:Catch::clara::detail::Parser	typeref:typename:void
-write_data_to_pads	src/main.cpp	/^void write_data_to_pads(std::vector<WIN>& wins, const std::vector<std::vector<std::string>>& res/;"	f	typeref:typename:void
+write_data_to_pads	src/main.cpp	/^void write_data_to_pads(std::vector<util::WIN>& wins, const std::vector<std::vector<std::string>/;"	f	typeref:typename:void
 write_to_pad	src/main.cpp	/^void write_to_pad(WINDOW* win, const std::vector<std::string>& vec_str) {$/;"	f	typeref:typename:void
 xml	pprint/test/external/catch/include/catch2/catch.hpp	/^  XmlWriter xml;$/;"	m	class:Catch::JunitReporter	typeref:typename:XmlWriter
 ~AssertionHandler	pprint/test/external/catch/include/catch2/catch.hpp	/^  ~AssertionHandler()$/;"	f	class:Catch::AssertionHandler
@@ -3182,5 +3215,5 @@ xml	pprint/test/external/catch/include/catch2/catch.hpp	/^  XmlWriter xml;$/;"	m
 ~StringRef	pprint/test/external/catch/include/catch2/catch.hpp	/^  ~StringRef() noexcept$/;"	f	class:Catch::StringRef
 ~TagAliasRegistry	pprint/test/external/catch/include/catch2/catch.hpp	/^TagAliasRegistry::~TagAliasRegistry() {}$/;"	f	class:Catch::TagAliasRegistry
 ~TempFile	pprint/test/external/catch/include/catch2/catch.hpp	/^TempFile::~TempFile()$/;"	f	class:Catch::TempFile
-~WIN	src/main.cpp	/^		~WIN() {$/;"	f	class:WIN	file:
+~WIN	src/extras/curses_util.cpp	/^	WIN::~WIN() {$/;"	f	class:util::WIN
 ~XmlWriter	pprint/test/external/catch/include/catch2/catch.hpp	/^XmlWriter::~XmlWriter()$/;"	f	class:Catch::XmlWriter
