@@ -16,7 +16,7 @@ namespace gen_algo {
 	// is initialization of _gene_data is correct ?
 
 	void schedule::make_schedule() {
-		std::vector<entities::department> data_depts{this->_gene_data.get_deparatments()};
+		std::vector<entities::department> data_depts{this->_gene_data.get_departments()};
 		for (entities::department& dept: data_depts) {
 			for (entities::course& crs: dept.get_courses()) {
 				entities::sec_class new_class(this->_sec_class_number++, dept, crs);
@@ -37,7 +37,7 @@ namespace gen_algo {
 	}
 
 	/*schedule* schedule::get_instance() {
-		std::vector<entities::department> data_depts{this->_gene_data->get_deparatments()};
+		std::vector<entities::department> data_depts{this->_gene_data->get_departments()};
 		for (entities::department& dept: data_depts) {
 			for (entities::course& crs: dept.get_courses()) {
 				entities::sec_class new_class(this->_sec_class_number++, dept, crs);
