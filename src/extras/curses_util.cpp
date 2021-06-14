@@ -90,7 +90,7 @@ namespace util {
 		refresh();
 	}
 
-	void WIN::init_win(const int pheight, const int pwidth) {
+	void WIN::init_win( const int pheight, const int pwidth, const int startx, const int starty, const int endx, const int endy ) {
 		this->_win = newpad(pheight, pwidth);
 		this->_startx = 4;
 		this->_starty = 9;

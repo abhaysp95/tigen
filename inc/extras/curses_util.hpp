@@ -24,7 +24,8 @@ namespace util {
 			WIN& operator=(WIN&& rhs);
 			~WIN();
 			void create_box();
-			void init_win(const int pheight, const int pwidth);
+			void init_win( const int pheight, const int pwidth, const int startx = 4,
+					const int starty = 4, const int endx = COLS - 4, const int endy = LINES - 4 );
 	};
 };
 
