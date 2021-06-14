@@ -3,12 +3,12 @@
 #include "../inc/department.hpp"
 
 namespace entities {
-	department::department( std::string name )
-		: _name{ name } {  }
-	department::department( std::string name, const std::vector<course>& courses )
-		: _name{ name }, _courses{ courses } {  }
-	department::department( std::string name, std::vector<course>&& courses )
-		: _name{ name }, _courses{ std::move( courses ) } {  }
+	department::department( std::string id, std::string name )
+		: _id{ id }, _name{ name } {  }
+	department::department( std::string id, std::string name, const std::vector<course>& courses )
+		: _id{ id }, _name{ name }, _courses{ courses } {  }
+	department::department( std::string id, std::string name, std::vector<course>&& courses )
+		: _id{ id }, _name{ name }, _courses{ std::move( courses ) } {  }
 
 	template<typename T>
 	bool is_equal(const std::vector<T>& v1, const std::vector<T>& v2) {
@@ -20,6 +20,7 @@ namespace entities {
 
 	bool department::operator==(const department& other) const {
 		bool res = true;
+		if( this->_id != other.get_id() ) res = false;
 		if (this->_name != other.get_name())
 			res = false;
 		if (!is_equal(this->_courses, other.get_courses()))
@@ -30,6 +31,7 @@ namespace entities {
 	void department::set_courses( const std::vector<course>& courses ) { this->_courses = courses; }
 	void department::set_courses( std::vector<course>&& courses ) { this->_courses = std::move( courses ); }
 
+	std::string department::get_id() const { return this->_id; }
 	std::string department::get_name() const { return this->_name; }
 	std::vector<course> department::get_courses() const { return this->_courses; }
 };
