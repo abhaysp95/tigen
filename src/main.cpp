@@ -36,7 +36,6 @@ std::vector<std::string> new_lines;
 void run_driver( std::string&& type="demo" );
 void print_help();
 int print_with_ncurses();
-void print_title_desc();
 void init_pads(std::vector<util::WIN>& wins, const std::vector<std::vector<std::string>::size_type>& pheights,
 		const std::vector<std::vector<std::string>::size_type>& pwidths);
 void init_win(util::WIN& win, const int pheight, const int pwidth);
@@ -62,8 +61,8 @@ int main(int argc, char** argv) {
 			/***********************************************************
 			* Update this part for ncurses selection and printing both *
 			************************************************************/
-			/*run_driver();
-			int status = print_with_ncurses();
+			run_driver( "select" );
+			/*int status = print_with_ncurses();
 			if (status == -1) {
 				print_vec(data_avail_to_print);
 				print_vec(gen_data_to_print);
@@ -165,7 +164,7 @@ int print_with_ncurses() {
 	keypad(stdscr, TRUE);
 	start_color();  // add check here
 
-	print_title_desc();
+	print_title_desc();  // in data.hpp
 
 	init_pads(wins, pheights, pwidths);
 
@@ -326,9 +325,7 @@ int print_with_ncurses() {
 	return 0;
 }
 
-#define MAX_TITLE_LEN 21
-
-void print_title_desc() {
+/*void print_title_desc() {
 	for (int i = 0; i < 5; i++) {
 		move(i, (COLS - MAX_TITLE_LEN) / 2);
 		clrtoeol();
@@ -344,7 +341,7 @@ void print_title_desc() {
 	clrtoeol();
 	mvprintw(6, (COLS - desc.size()) / 2, desc.c_str());
 	refresh();
-}
+}*/
 
 /** start from here tomorrow */
 void init_pads(std::vector<util::WIN>& wins, const std::vector<std::vector<std::string>::size_type>& pheights,
