@@ -15,13 +15,14 @@ namespace entities {
 	  */
 	class department {
 		private:
+			std::string _id;
 			std::string _name;
 			std::vector<course> _courses;
 		public:
-			explicit department( std::string name );
+			explicit department( std::string id, std::string name );
 
-			explicit department(std::string name, const std::vector<course>& courses);
-			explicit department(std::string name, std::vector<course>&& courses);
+			explicit department( std::string id, std::string name, const std::vector<course>& courses );
+			explicit department( std::string id, std::string name, std::vector<course>&& courses );
 
 			// copy constructor and copy assignment
 			department(const department& other) = default;
@@ -36,6 +37,7 @@ namespace entities {
 			void set_courses( std::vector<course>&& courses );
 
 			// accessors
+			std::string get_id() const;
 			std::string get_name() const;
 			std::vector<course> get_courses() const;
 
