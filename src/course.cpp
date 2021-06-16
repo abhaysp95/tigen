@@ -5,6 +5,7 @@
 #include <algorithm>
 
 namespace entities {
+	course::course(  ): _id{}, _name{}, _max_students{} {  }
 	course::course( std::string id, std::string name, size_t max_students )
 		: _id{ id }, _name{ name }, _max_students{ max_students } {  }
 	course::course( std::string id, std::string name, size_t max_students, const std::vector<instructor>& instructors )
@@ -24,7 +25,7 @@ namespace entities {
 		return (ppair.first == v1.cend() && ppair.second == v2.cend());
 	}
 
-	bool course::operator==(const course& other) const {
+	bool course::operator==( const course& other ) const {
 		bool res = true;
 		if (this->_id != other.get_id())
 			res = false;
@@ -32,8 +33,8 @@ namespace entities {
 			res = false;
 		if (this->_max_students != other.get_max_students())
 			res = false;
-		if (!is_equal(this->_instructors, other.get_instructors()))
-			res = false;
+		//if (!is_equal(this->_instructors, other.get_instructors()))
+			//res = false;
 		return res;
 	}
 

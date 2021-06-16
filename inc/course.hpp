@@ -20,6 +20,7 @@ namespace entities {
 			size_t _max_students;
 			std::vector<instructor> _instructors;
 		public:
+			course();
 			explicit course( std::string id, std::string name, size_t max_students );
 
 			explicit course(std::string id, std::string name,
@@ -45,7 +46,7 @@ namespace entities {
 			size_t get_max_students() const;
 			std::vector<instructor> get_instructors() const;
 
-			bool operator==(const course& other) const;
+			bool operator==( const course& other ) const;
 			bool operator<( const course& other ) const;
 
 			//std::ostream& dump(std::ostream& os) const;
