@@ -30,6 +30,9 @@ namespace entities {
 
 	void department::set_courses( const std::vector<course>& courses ) { this->_courses = courses; }
 	void department::set_courses( std::vector<course>&& courses ) { this->_courses = std::move( courses ); }
+	void department::set_instructor_for_course( const std::vector<instructor>& instructors, size_t crs_idx ) {
+		if( 0 <= crs_idx && crs_idx < this->_courses.size() ) this->_courses[crs_idx].set_instructors( instructors );
+	}
 
 	std::string department::get_id() const { return this->_id; }
 	std::string department::get_name() const { return this->_name; }
