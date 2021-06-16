@@ -30,6 +30,7 @@ typedef struct _show_item {
 
 void print_title_desc();
 void print_in_middle( WINDOW* my_win, int starty, int startx, int width, std::string&& msg);
+void print_footer( WINDOW* my_win, const char* msg = "Press 'q' to quit" );
 void free_show_item( SHOW_ITEM* item_detail, int length );
 void create_menu_win( MENU** my_menu, WINDOW** my_win, int max_item_size, const char* msg = "Select Item" );
 void move_through_items( MENU* my_menu, WINDOW* my_win, SHOW_ITEM* item_detail );
