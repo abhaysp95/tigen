@@ -249,6 +249,7 @@ int driver( std::string&& dtype ) {
 	//std::cout.tie(NULL);
 
 	/** choice_data would either be selectable data or demo data( use "dtype" for checking ) */
+	//gen_algo::data gene_data( NULL );
 	gene_data = new gen_algo::data( NULL );
 	if( 0 == dtype.compare( "demo" ) ) {
 		choice_data = new gen_algo::demo_data( gene_data );
@@ -270,35 +271,35 @@ int driver( std::string&& dtype ) {
 
 	/*******   UNCOMMENT THIS BLOCK WHEN YOU ARE DONE WITH GEN_ALGO::SELECTION_DATA() *******/
 
-	//double fittest_schedule_fitness{};
+	double fittest_schedule_fitness{};
 
 	/** do calculation and print generation */
-	/*do {
+	do {
 		fittest_schedule_fitness = calculate_population(ga, &new_population);
 		print_generation_table(new_population, fittest_schedule_fitness);
 		std::cout << "Generation Number " << generation_number << " generated!!!\n";
-	} while (fittest_schedule_fitness < 1.0);*/
+	} while (fittest_schedule_fitness < 1.0);
 
 
 	/*******   UNCOMMENT THIS BLOCK WHEN YOU ARE DONE WITH GEN_ALGO::SELECTION_DATA() *******/
 
-	//try {
-		//std::vector<gen_algo::schedule>& np_schedules = new_population->get_schedules();
-		//gen_algo::schedule& fittest_schedule = np_schedules.at(0);
-		//print_schedule_as_table(fittest_schedule);
-	//}
-	//catch (util::entitity_not_found& e) {
+	try {
+		std::vector<gen_algo::schedule>& np_schedules = new_population->get_schedules();
+		gen_algo::schedule& fittest_schedule = np_schedules.at(0);
+		print_schedule_as_table(fittest_schedule);
+	}
+	catch (util::entitity_not_found& e) {
 		/* checkout this section again to see if resources are getting freed properly or not */
-		//free_obj( new_population );
-		//free_obj( gene_data );
-		//free_obj( choice_data );
-		//throw;
-	//}
+		free_obj( new_population );
+		free( gene_data );
+		free_obj( choice_data );
+		throw;
+	}
 
 	/*************************************************************************************/
 
 	free_obj( new_population );
-	free_obj( gene_data );
+	free( gene_data );
 	free_obj( choice_data );
 	return 0;
 }
