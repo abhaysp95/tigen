@@ -15,6 +15,8 @@
 
 #include <iostream>  // it's temporary
 
+template<typename t> struct TD;
+
 const size_t DEMO_DEPTS_SIZE = 5;
 const size_t DEMO_COURSES_SIZE = 14;
 const size_t DEMO_INSTRUCTORS_SIZE = 15	;
@@ -58,7 +60,15 @@ void print_in_middle( WINDOW* my_win, int starty, int startx, int width, std::st
 	temp = ( width - length ) / 2;
 	x = startx + ( int )temp;
 	mvwprintw( my_win, y, x, "%s", msg.c_str() );
-	refresh();
+	wrefresh( my_win );
+	//refresh();
+}
+
+void print_footer( WINDOW* my_win, const char* msg ) {
+	move( LINES - 2, 4 );
+	clrtoeol();
+	mvwprintw( my_win, LINES - 2, 4, msg);
+	wrefresh( my_win );
 }
 
 void free_show_item( SHOW_ITEM* item_detail, int length ) {
@@ -75,6 +85,7 @@ void free_show_item( SHOW_ITEM* item_detail, int length ) {
 
 void create_menu_win( MENU** my_menu, WINDOW** my_win, int max_item_size, const char* msg) {
 	int height = 0, width = 0;
+	bool print_title{ true };
 	if( 16 < LINES ) {
 		int count_items = item_count( *my_menu );
 		if( 24 < LINES ) {
@@ -88,8 +99,14 @@ void create_menu_win( MENU** my_menu, WINDOW** my_win, int max_item_size, const 
 		}
 	}
 	else height = LINES - 2;
-	if( max_item_size + 7 ) width = max_item_size + 10;
-	else width = max_item_size + 7;
+	if( max_item_size + 7 < COLS ) {
+		if( max_item_size + 10 < strlen( msg ) + 5 ) width = strlen( msg ) + 5;
+		else width = max_item_size + 10;
+	}
+	else {
+		if( max_item_size + 7 < strlen( msg ) + 5 ) print_title = false;
+		width = max_item_size + 7;
+	}
 
 	if( 24 < LINES ) {
 		*my_win = newwin( height, width, ( ( LINES - height ) / 2 ) + 4, ( COLS - width ) / 2 );
@@ -103,16 +120,16 @@ void create_menu_win( MENU** my_menu, WINDOW** my_win, int max_item_size, const 
 
 	set_menu_mark( *my_menu, " -> " );
 
-	// make window better
-	box( *my_win, 0, 0 );
-	print_in_middle( *my_win, 1, 0, width, msg );
-	mvwaddch( *my_win, 2, 0, ACS_LTEE );
-	mvwhline( *my_win, 2, 1, ACS_HLINE, width - 2 );
-	mvwaddch( *my_win, 2, width - 1, ACS_RTEE );
-
 	post_menu( *my_menu );
 	wrefresh( *my_win );
 
+	// make window better
+	if( print_title ) print_in_middle( *my_win, 1, 1, width, msg );
+	box( *my_win, 0, 0 );
+	mvwaddch( *my_win, 2, 0, ACS_LTEE );
+	mvwhline( *my_win, 2, 1, ACS_HLINE, width - 2 );
+	mvwaddch( *my_win, 2, width - 1, ACS_RTEE );
+	print_footer( stdscr, "Press <space> to select, arrow keys for movement, <enter> to confirm selection and 'q' to move to next item type[press 'q' again to exit]" );
 	refresh();
 }
 
@@ -143,7 +160,9 @@ void move_through_items( MENU* my_menu, WINDOW* my_win, SHOW_ITEM* item_detail )
 					}
 					move( LINES - 4, 4 );
 					clrtoeol();
-					mvprintw( LINES - 4, 4, item_detail->selection );
+					const char msg[20] = "You selected: ";
+					mvprintw( LINES - 4, 4, msg );
+					mvprintw( LINES - 4, strlen( msg ) + 5, item_detail->selection );
 					refresh();
 				}
 				break;
@@ -179,7 +198,6 @@ std::vector<std::string> get_selected_ids( char* selected_ids, const char* delim
 
 template<typename T>
 int create_id_desc( SHOW_ITEM* item_detail, const std::vector<T>& vec, int entity_size ) {
-	// clear if any previous data exists
 
 	int msg_size = -1e9;
 
@@ -229,6 +247,7 @@ void get_selected_entity( const std::vector<std::string>& selected_ids, const st
 
 template<typename T>
 bool entity_comparator( const T& e1, const T& e2 ) {
+	if( e1.get_id().empty() || e2.get_id().empty() ) return false;
 	std::string e1_id{ e1.get_id() }, e2_id{ e2.get_id() };
 	std::transform( begin( e1_id ), end( e1_id ), begin( e1_id ), []( unsigned char c ) {
 			return std::tolower( c );
@@ -237,6 +256,19 @@ bool entity_comparator( const T& e1, const T& e2 ) {
 			return std::tolower( c );
 			} );
 	return e1_id < e2_id;
+}
+
+/** get the desired type set from the type of vector passed */
+template<typename T>
+std::set<T> get_entity_union( const std::vector<T>& for_type ) {
+	return typename std::set<T>();
+}
+
+template<typename T>
+void print_entity_names( const std::vector<T>& vec ) {
+	for( const T& x: vec ) {
+		std::cout << x.get_name() << '\n';
+	}
 }
 
 namespace gen_algo {
@@ -248,16 +280,16 @@ namespace gen_algo {
 		if( static_cast<long>( NULL ) != get_null ) {
 			// write a logic here to terminate the program, until you haven't written a logic to use something instead of NULL
 		}
-		entities::room r1  ( "R1", 155 );
-		entities::room r2  ( "R2", 170 );
-		entities::room r3  ( "R3", 160 );
-		entities::room r4  ( "R4", 180 );
-		entities::room r5  ( "R5", 150 );
-		entities::room r6  ( "R6", 130 );
-		entities::room r7  ( "R7", 180 );
-		entities::room r8  ( "R8", 164 );
-		entities::room r9  ( "R9", 190 );
-		entities::room r10 ( "R10", 140 );
+		entities::room r1  ( "R1", "Room No. 1", 155 );
+		entities::room r2  ( "R2", "Room No. 2", 170 );
+		entities::room r3  ( "R3", "Room No. 3", 160 );
+		entities::room r4  ( "R4", "Room No. 4", 180 );
+		entities::room r5  ( "R5", "Room No. 5", 150 );
+		entities::room r6  ( "R6", "Room No. 6", 130 );
+		entities::room r7  ( "R7", "Room No. 7", 180 );
+		entities::room r8  ( "R8", "Room No. 8", 164 );
+		entities::room r9  ( "R9", "Room No. 9", 190 );
+		entities::room r10 ( "R10", "Room No. 10", 140 );
 		this->_rooms = std::vector<entities::room>{r1, r2, r3, r4, r5, r6, r7, r8, r9, r10};
 
 		// classtimings
@@ -346,7 +378,7 @@ namespace gen_algo {
 		//ITEM* cur_item = NULL;
 		WINDOW* my_win = NULL;
 
-		char win_message[128];
+		std::string win_message;
 
 		SHOW_ITEM item_detail;
 		item_detail.selection = NULL;
@@ -396,8 +428,8 @@ namespace gen_algo {
 
 		***********************************************/
 
-		sprintf( win_message, "Select Department" );
-		create_menu_win( &my_menu, &my_win, max_item_size, win_message );
+		win_message = "Select Departments";
+		create_menu_win( &my_menu, &my_win, max_item_size, win_message.c_str() );
 
 		move_through_items( my_menu, my_win, &item_detail );
 
@@ -421,7 +453,10 @@ namespace gen_algo {
 		entity_size = static_cast<int>( data->get_courses().size() );
 		max_item_size = create_id_desc( &item_detail, data->get_courses(), entity_size );
 
-		std::set<entities::course> crs_union{};
+		//this->_courses = std::vector<entities::course>( 10 );
+		//size_t counter{ 0 };
+
+		std::set<entities::course> crs_union;
 
 		for( int i = 0; i < this->_depts.size(); i++ ) {
 			if( NULL == my_items ) my_items = ( ITEM** )calloc( entity_size + 1, sizeof( ITEM* ) );
@@ -436,9 +471,8 @@ namespace gen_algo {
 
 			menu_opts_off( my_menu, O_ONEVALUE );  // select only one value( off )
 
-			sprintf( win_message, "Select Course for Department \"%s\"", this->_depts[i].get_id().c_str() );
-			create_menu_win( &my_menu, &my_win, entity_size, win_message );
-
+			win_message = "Select Course for Department[" + this->_depts[i].get_id() + "]";
+			create_menu_win( &my_menu, &my_win, entity_size, win_message.c_str() );
 
 			move_through_items( my_menu, my_win, &item_detail );
 
@@ -447,55 +481,161 @@ namespace gen_algo {
 			selected_ids = get_selected_ids( item_detail.selection, " " );
 			std::vector<entities::course> current_courses = get_selected_entity( selected_ids, data->get_courses() );
 
-			//for( const entities::course& crs: current_courses ) {
-				//crs_union.insert( crs );
-			//}
-
-			/** test this logic with a demo */
-			if( this->_courses.empty() ) this->_courses = current_courses;
-			else {
-				std::vector<entities::course>::const_iterator cciter{ current_courses.cbegin() };
-				const std::vector<entities::course>::const_iterator start_find_pos{ this->_courses.cbegin() };
-				std::vector<entities::course>::const_iterator pos_iter;
-				auto idx = distance( start_find_pos, this->_courses.cbegin() );
-				while( cciter < current_courses.cend() ) {
-					pos_iter = find( start_find_pos + idx, this->_courses.cend(), *cciter );
-					if( this->_courses.cend() == pos_iter ) {
-						this->_courses.push_back( *cciter );
-					}
-					else {
-						idx = distance( start_find_pos, pos_iter );
-					}
-					cciter++;
-					std::cout << ( start_find_pos + idx )->get_id() << '\n';
-				}
-				sort( this->_courses.begin(), this->_courses.end(), entity_comparator<entities::course> );
+			for( const entities::course& crs: current_courses ) {
+				crs_union.insert( crs );
 			}
 
 			this->_depts[i].set_courses( current_courses );
 
 			free_menu_and_items( &my_menu, &my_items, entity_size );
 		}
-		//for( const entities::course& crs: crs_union ) this->_courses.push_back( crs );
 
-		endwin();
+		for( const entities::course& crs: crs_union ) this->_courses.push_back( crs );
 
 		free_show_item( &item_detail, entity_size );
+
+		/*******************************
+		********************************
+		**  selection for instructor  **
+		********************************
+		*******************************/
+
+		entity_size = static_cast<int>( data->get_instructors().size() );
+		max_item_size = create_id_desc( &item_detail, data->get_instructors(), entity_size );
+
+		std::set<entities::instructor> inst_union;
+
+		for( int i = 0; i < this->_courses.size(); i++ ) {
+			if( NULL == my_items ) my_items = ( ITEM** )calloc( entity_size + 1, sizeof( ITEM* ) );
+
+			for( int i = 0; i < entity_size; i++ ) {
+				my_items[i] = new_item( item_detail.id[i], item_detail.desc[i] );
+			}
+			my_items[entity_size] = new_item( ( char* )NULL, ( char* )NULL );
+
+			if( NULL == my_menu ) my_menu = new_menu( ( ITEM** ) my_items );
+
+			menu_opts_off( my_menu, O_ONEVALUE );
+
+			win_message = "Select Instructor for Course[" + this->_courses[i].get_id() + "]";
+			create_menu_win( &my_menu, &my_win, entity_size, win_message.c_str() );
+
+			move_through_items( my_menu, my_win, &item_detail );
+
+			selected_ids = get_selected_ids( item_detail.selection, " " );
+			std::vector<entities::instructor> current_instructors = get_selected_entity( selected_ids, data->get_instructors() );
+
+			for( const entities::instructor& inst: current_instructors ) {
+				inst_union.insert( inst );
+			}
+
+			this->_courses[i].set_instructors( current_instructors );
+
+			for( size_t j = 0; j < this->_depts.size(); j++ ) {
+				for( size_t k = 0; k < this->_depts[j].get_courses().size(); k++ ) {
+					if( this->_depts[j].get_courses()[k] == this->_courses[i] ) {
+						this->_depts[j].set_instructor_for_course( current_instructors, k );
+						break;
+					}
+				}
+			}
+
+			free_menu_and_items( &my_menu, &my_items, entity_size );
+		}
+
+		for( const entities::instructor& inst: inst_union ) this->_instructors.push_back( inst );
+
+		free_show_item( &item_detail, entity_size );
+
+		/*******************************
+		********************************
+		**  selection for class_time  **
+		********************************
+		*******************************/
+
+		entity_size = static_cast<int>( data->get_class_times().size() );
+		max_item_size = create_id_desc( &item_detail, data->get_class_times(), entity_size );
+
+		if( NULL == my_items ) my_items = ( ITEM** )calloc( entity_size + 1, sizeof( ITEM* ) );
+
+		for( int i = 0; i < entity_size; i++ ) {
+			my_items[i] = new_item( item_detail.id[i], item_detail.desc[i] );
+		}
+		my_items[entity_size] = new_item( ( char* )NULL, ( char* )NULL );
+
+		if( NULL == my_menu ) my_menu = new_menu( ( ITEM** ) my_items );
+
+		menu_opts_off( my_menu, O_ONEVALUE );
+
+		win_message = "Select Class Times";
+		create_menu_win( &my_menu, &my_win, max_item_size, win_message.c_str() );
+
+		move_through_items( my_menu, my_win, &item_detail );
+
+		free_menu_and_items( &my_menu, &my_items, entity_size );
+
+		selected_ids = get_selected_ids( item_detail.selection, " " );
+
+		this->_class_times = get_selected_entity( selected_ids, data->get_class_times() );
+
+		free_show_item( &item_detail, entity_size );
+
+		/**************************
+		***************************
+		**  selection for rooms  **
+		***************************
+		**************************/
+
+		entity_size = static_cast<int>( data->get_rooms().size() );
+		max_item_size = create_id_desc( &item_detail, data->get_rooms(), entity_size );
+
+		if( NULL == my_items ) my_items = ( ITEM** )calloc( entity_size + 1, sizeof( ITEM* ) );
+
+		for( int i = 0; i < entity_size; i++ ) {
+			my_items[i] = new_item( item_detail.id[i], item_detail.desc[i] );
+		}
+		my_items[entity_size] = new_item( ( char* )NULL, ( char* )NULL );
+
+		if( NULL == my_menu ) my_menu = new_menu( ( ITEM** ) my_items );
+
+		menu_opts_off( my_menu, O_ONEVALUE );
+
+		win_message = "Select Rooms";
+		create_menu_win( &my_menu, &my_win, max_item_size, win_message.c_str() );
+
+		move_through_items( my_menu, my_win, &item_detail );
+
+		free_menu_and_items( &my_menu, &my_items, entity_size );
+
+		selected_ids = get_selected_ids( item_detail.selection, " " );
+
+		this->_rooms = get_selected_entity( selected_ids, data->get_rooms() );
+
+		free_show_item( &item_detail, entity_size );
+
+
+		endwin();
 
 		/** for debugging purpose */
 		//for( const std::string& str: selected_ids ) std::cout << str << '\n';
 
-		// find the departments matching the id( copies entities from "data::<entity>" to "selection_data::<entity>" )
-		//this->_courses = get_selected_entity( selected_ids, data->get_courses() );
-
 		/** for debuggin purpose */
-		for( int i = 0; i < static_cast<int>( this->_depts.size() ); i++ ) {
-			std::cout << this->_depts[i].get_name() << '\n';
-		}
-		for( int i = 0; i < static_cast<int>( this->_courses.size() ); i++ ) {
-			std::cout << this->_courses[i].get_name() << '\n';
-		}
+		//( MAKE THIS DEBUGGING LOOP IN A TEMPLATE FUNCTION )
 
+		std::cout << "Departments selected: \n";
+		print_entity_names( this->_depts );
+
+		std::cout << "Courses selected: \n";
+		print_entity_names( this->_courses );
+
+		std::cout << "Instructors selected: \n";
+		print_entity_names( this->_instructors );
+
+		std::cout << "Rooms selected: \n";
+		print_entity_names( this->_rooms );
+
+		std::cout << "Class time selected: \n";
+		print_entity_names( this->_class_times );
 	}
 
 
@@ -570,25 +710,31 @@ namespace gen_algo {
 
 
 
+
 			/** test this logic with a demo */
 			/*if( this->_courses.empty() ) this->_courses = current_courses;
+			[>if( this->_courses.empty() ) {
+				for( size_t i = 0; i < current_courses.size(); i++ ) {
+					this->_courses[counter++] = current_courses[i];
+				}
+			}<]
 			else {
 				std::vector<entities::course>::const_iterator cciter{ current_courses.cbegin() };
-				const std::vector<entities::course>::const_iterator start_find_pos{ this->_courses.cbegin() };
 				std::vector<entities::course>::const_iterator pos_iter;
-				auto idx = distance( start_find_pos, this->_courses.cbegin() );
+				long idx{ 0 };
 				while( cciter < current_courses.cend() ) {
+					const std::vector<entities::course>::const_iterator start_find_pos{ this->_courses.cbegin() };
 					pos_iter = find( start_find_pos + idx, this->_courses.cend(), *cciter );
 					if( this->_courses.cend() == pos_iter ) {
 						this->_courses.push_back( *cciter );
+						//this->_courses[ counter++ ] = *cciter;
+						//std::cout << "reached here\n";
 					}
 					else {
 						idx = distance( start_find_pos, pos_iter );
 					}
 					cciter++;
-					std::cout << ( start_find_pos + idx )->get_id() << '\n';
 
 				}
 				sort( this->_courses.begin(), this->_courses.end(), entity_comparator<entities::course> );
 			}*/
-			// reached here( remove this comment )
