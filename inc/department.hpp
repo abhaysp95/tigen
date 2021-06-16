@@ -35,6 +35,7 @@ namespace entities {
 			// mutator
 			void set_courses( const std::vector<course>& courses );
 			void set_courses( std::vector<course>&& courses );
+			void set_instructor_for_course( const std::vector<instructor>& instructors, size_t crs_idx );
 
 			// accessors
 			std::string get_id() const;
