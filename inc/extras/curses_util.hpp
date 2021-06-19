@@ -4,6 +4,8 @@
 #include <ncurses.h>
 #include <string>
 
+extern const int MAX_TITLE_LEN;
+
 namespace util {
 	class WIN {
 		private:
@@ -27,6 +29,8 @@ namespace util {
 			void init_win( const int pheight, const int pwidth, const int startx = 4,
 					const int starty = 4, const int endx = COLS - 4, const int endy = LINES - 4 );
 	};
+
+	void print_title_desc();
 };
 
 #endif

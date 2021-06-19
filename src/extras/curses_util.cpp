@@ -2,6 +2,8 @@
 
 #include "../../inc/extras/curses_util.hpp"
 
+const int MAX_TITLE_LEN = 21;
+
 namespace util {
 	void WIN::init() {
 		_win = nullptr;
@@ -110,6 +112,25 @@ namespace util {
 		this->_win_border.hll = ACS_HLINE;
 
 		this->create_box();
+	}
+
+	void print_title_desc() {
+		clear();
+		for (int i = 0; i < 5; i++) {
+			move(i, (COLS - MAX_TITLE_LEN) / 2);
+			clrtoeol();
+		}
+		mvprintw(0, (COLS - MAX_TITLE_LEN) / 2, "  __  _");
+		mvprintw(1, (COLS - MAX_TITLE_LEN) / 2, " / /_(_)__ ____ ___ ");
+		mvprintw(2, (COLS - MAX_TITLE_LEN) / 2, "/ __/ / _ `/ -_) _ \\ ");
+		mvprintw(3, (COLS - MAX_TITLE_LEN) / 2, "\\__/_/\\_, /\\__/_//_/ ");
+		mvprintw(4, (COLS - MAX_TITLE_LEN) / 2, "     /___/ ");
+
+		std::string desc{"Time-Table generation using Genetic Algorithm"};
+		move(6, (COLS - desc.size()) / 2);
+		clrtoeol();
+		mvprintw(6, (COLS - desc.size()) / 2, desc.c_str());
+		refresh();
 	}
 
 };
