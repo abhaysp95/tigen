@@ -2,10 +2,10 @@
 
 CXXC      = clang++
 CXXFLAG   = -Wall -std=c++14
-CXXDFLAG := ${CXXFLAG} -g
+CXXDFLAG := ${CXXFLAG} -ggdb
 CC        = clang
 CFLAG     = -Wall -std=c99
-CDFLAG   := ${CFLAG} -g
+CDFLAG   := ${CFLAG} -ggdb
 LD        = clang++
 LFLAG     = -pthread -lncurses -lpanel -lmenu
 LDFLAG   := ${LFLAG} -v
