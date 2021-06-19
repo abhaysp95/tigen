@@ -26,11 +26,13 @@ namespace entities {
 			class_time(class_time&& other) = default;
 			class_time& operator=(class_time&& other) = default;
 
-			bool operator==(const class_time& other) const;
+			bool operator==( const class_time& other ) const;
+			bool operator<( const class_time& other ) const;
 
 			// accessors
 			std::string get_id() const;
 			std::string get_time() const;
+			std::string get_name() const;
 	};
 };
 

@@ -22,7 +22,7 @@ namespace entities {
 
 	size_t sec_class::get_id() const { return this->_id; }
 	// try to return if you can, constant entities from below accessors
-	entities::department sec_class::get_deparatment() const { return this->_dept; }
+	entities::department sec_class::get_department() const { return this->_dept; }
 	entities::course sec_class::get_course() const { return this->_course; }
 	entities::room sec_class::get_room() const { return this->_room; }
 	entities::instructor sec_class::get_instructor() const { return this->_instructor; }
@@ -37,9 +37,9 @@ namespace entities {
 	}*/
 
 	std::ostream& operator<<(std::ostream& os, const sec_class& other) {
-		return os << ("[ " + other.get_deparatment().get_name() + ", "
-				+ other.get_course().get_number() + ", "
-				+ other.get_room().get_number() + ", "
+		return os << ("[ " + other.get_department().get_id() + ", "
+				+ other.get_course().get_id() + ", "
+				+ other.get_room().get_id() + ", "
 				+ other.get_instructor().get_id() + ", "
 				+ other.get_class_time().get_id() + " ]");
 	}

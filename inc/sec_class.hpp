@@ -47,7 +47,7 @@ namespace entities {
 
 			// accessor
 			size_t get_id() const;
-			entities::department get_deparatment() const;
+			entities::department get_department() const;
 			entities::room get_room() const;
 			entities::course get_course() const;
 			entities::instructor get_instructor() const;

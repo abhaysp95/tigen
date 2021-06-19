@@ -26,7 +26,8 @@ namespace entities {
 			instructor(instructor&& other) = default;
 			instructor& operator=(instructor&& other) = default;
 
-			bool operator==(const instructor& other) const;
+			bool operator==( const instructor& other ) const;
+			bool operator<( const instructor& otheer ) const;
 
 			// accessors
 			std::string get_id() const;

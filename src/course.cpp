@@ -5,12 +5,13 @@
 #include <algorithm>
 
 namespace entities {
-	course::course( std::string number, std::string name, size_t max_students )
-		: _number{ number }, _name{ name }, _max_students{ max_students } {  }
-	course::course( std::string number, std::string name, size_t max_students, const std::vector<instructor>& instructors )
-		: _number{ number }, _name{ name }, _max_students{ max_students }, _instructors{ instructors } {  }
-	course::course( std::string number, std::string name, size_t max_students, std::vector<instructor>&& instructors )
-		: _number{ number }, _name{ name }, _max_students{ max_students }, _instructors{ std::move( instructors ) } {  }
+	course::course(  ): _id{}, _name{}, _max_students{} {  }
+	course::course( std::string id, std::string name, size_t max_students )
+		: _id{ id }, _name{ name }, _max_students{ max_students } {  }
+	course::course( std::string id, std::string name, size_t max_students, const std::vector<instructor>& instructors )
+		: _id{ id }, _name{ name }, _max_students{ max_students }, _instructors{ instructors } {  }
+	course::course( std::string id, std::string name, size_t max_students, std::vector<instructor>&& instructors )
+		: _id{ id }, _name{ name }, _max_students{ max_students }, _instructors{ std::move( instructors ) } {  }
 
 	template<typename T> struct TD;  // just to check auto decltype
 
@@ -24,17 +25,21 @@ namespace entities {
 		return (ppair.first == v1.cend() && ppair.second == v2.cend());
 	}
 
-	bool course::operator==(const course& other) const {
+	bool course::operator==( const course& other ) const {
 		bool res = true;
-		if (this->_number != other.get_number())
+		if (this->_id != other.get_id())
 			res = false;
 		if (this->_name != other.get_name())
 			res = false;
 		if (this->_max_students != other.get_max_students())
 			res = false;
-		if (!is_equal(this->_instructors, other.get_instructors()))
-			res = false;
+		//if (!is_equal(this->_instructors, other.get_instructors()))
+			//res = false;
 		return res;
+	}
+
+	bool course::operator<( const course& other ) const {
+		return this->get_id() < other.get_id();
 	}
 
 	void course::set_instructors( const std::vector<instructor>& instructors ) {
@@ -45,7 +50,7 @@ namespace entities {
 		this->_instructors = std::move( instructors );
 	}
 
-	std::string course::get_number() const { return this->_number; }
+	std::string course::get_id() const { return this->_id; }
 	std::string course::get_name() const { return this->_name; }
 	size_t course::get_max_students() const { return this->_max_students; }
 	std::vector<instructor> course::get_instructors() const { return this->_instructors; }

@@ -12,11 +12,12 @@ namespace entities {
 	  */
 	class room {
 		private:
-			std::string _number;
+			std::string _id;
+			std::string _name;
 			size_t _capacity;
 		public:
 			room();
-			explicit room(std::string number, size_t capacity);
+			explicit room(std::string id, std::string name, size_t capacity);
 
 			// copy constructor and copy assignment
 			room(const room& other) = default;
@@ -26,9 +27,11 @@ namespace entities {
 			room(room&& other) = default;
 			room& operator=(room&& other) = default;
 
-			bool operator==(const room& other) const;
+			bool operator==( const room& other ) const;
+			bool operator<( const room& other ) const;
 
-			std::string get_number() const;
+			std::string get_id() const;
+			std::string get_name() const;
 			size_t get_capacity() const;
 	};
 };
