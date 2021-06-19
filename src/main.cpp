@@ -19,7 +19,7 @@
 #include <ncurses.h>
 #include <panel.h>
 
-#define VERSION 1.2
+#define VERSION 1.3
 #define DSIZE 3
 
 // use this when you want info for ncurses printing
@@ -33,6 +33,7 @@ std::vector<std::string> tab_names = {
 
 std::vector<std::string> new_lines;
 
+bool check_screen_dimensions();
 void run_driver( std::string&& type="demo" );
 void print_help();
 int print_with_ncurses();
@@ -61,13 +62,20 @@ int main(int argc, char** argv) {
 			/***********************************************************
 			* Update this part for ncurses selection and printing both *
 			************************************************************/
-			run_driver( "select" );
-			/*int status = print_with_ncurses();
-			if (status == -1) {
-				print_vec(data_avail_to_print);
-				print_vec(gen_data_to_print);
-				print_vec(fittest_schedule_to_print);
-			}*/
+			bool is_valid = check_screen_dimensions();
+			if( is_valid ) {
+				run_driver( "select" );
+				int status = print_with_ncurses();
+				if (status == -1) {
+					print_vec(data_avail_to_print);
+					print_vec(gen_data_to_print);
+					print_vec(fittest_schedule_to_print);
+				}
+			}
+			else {
+				std::cerr << "Screen Dimension is too small\n";
+				exit(1);
+			}
 		}
 		/** --demo will have two option, either --term or --tui */
 		else if( strncmp( *( argv + 1 ), "--demo", 6 ) == 0 ) {
@@ -76,18 +84,26 @@ int main(int argc, char** argv) {
 				exit(1);
 			}
 			else {
-				run_driver( "demo" );
 				if( strncmp( *( argv + 2 ), "--term", 6 )  == 0 ) {
+					run_driver( "demo" );
 					print_vec(data_avail_to_print);
 					print_vec(gen_data_to_print);
 					print_vec(fittest_schedule_to_print);
 				}
 				else if( strncmp( *( argv + 2 ), "--tui", 5 ) == 0 ) {
-					int status = print_with_ncurses();
-					if( -1 == status ) {
-						print_vec( data_avail_to_print );
-						print_vec( gen_data_to_print );
-						print_vec( fittest_schedule_to_print );
+					bool is_valid = check_screen_dimensions();
+					if( is_valid ) {
+						run_driver( "demo" );
+						int status = print_with_ncurses();
+						if( -1 == status ) {
+							print_vec( data_avail_to_print );
+							print_vec( gen_data_to_print );
+							print_vec( fittest_schedule_to_print );
+						}
+					}
+					else {
+						std::cerr << "Screen Dimension is too small\n";
+						exit(1);
 					}
 				}
 			}
@@ -107,7 +123,7 @@ int main(int argc, char** argv) {
 }
 
 void run_driver( std::string&& type ) {
-	std::cout << "Generating time-table...\n";
+	std::cout << "Generating time-table..." << std::endl;
 	try {
 		driver( std::move(type) );
 	}
@@ -116,6 +132,22 @@ void run_driver( std::string&& type ) {
 		std::cout << "Exiting Now!!!\n";
 		exit(1);
 	}
+}
+
+bool check_screen_dimensions() {
+	bool status{ true };
+
+	initscr();
+	raw();
+	curs_set(0);
+
+	int x, y;
+	getmaxyx( stdscr, y, x );
+	std::cout << "( x, y ): " << x << ", " << y << '\n';
+	if( y < 10 || x < 40 ) status = false;
+
+	endwin();
+	return status;
 }
 
 int print_with_ncurses() {
@@ -164,7 +196,7 @@ int print_with_ncurses() {
 	keypad(stdscr, TRUE);
 	start_color();  // add check here
 
-	print_title_desc();  // in data.hpp
+	util::print_title_desc();  // in data.hpp
 
 	init_pads(wins, pheights, pwidths);
 
@@ -293,12 +325,17 @@ int print_with_ncurses() {
 			default:
 				break;  // currently, can't think of anything to put here
 		}
-		if (clrpad) wins[cur_win].create_box();
+		if (clrpad) {
+			util::print_title_desc();
+			wins[cur_win].create_box();
+		}
 		prefresh(wins[cur_win]._win, wins[cur_win]._rpos, wins[cur_win]._cpos, wins[cur_win]._starty + 3,
 				wins[cur_win]._startx + 2, wins[cur_win]._endy - 2, wins[cur_win]._endx - 1);
 		print_tab_names(wins, cur_win);
+		//mvprintw( LINES - 1, 4, "You're here" );
+		//refresh();
+		//getch();
 		if (clrpad) {
-			print_title_desc();
 			mvprintw(LINES - 1, 4, "Press <tab> and <\\> key for tab cycle, and arrow keys to scroll(vertical and horizontal)[press 'q' to exit]");
 			clrpad = !clrpad;
 		}
@@ -309,10 +346,10 @@ int print_with_ncurses() {
 		move(LINES - 2, 4);
 		clrtoeol();
 		mvprintw(LINES - 2, 4, info.c_str());
-		refresh();
 #endif
 		update_panels();
 		doupdate();
+		refresh();
 	}
 
 
@@ -388,26 +425,32 @@ void print_help() {
 	std::cout << "Help for tigen:\n\
 	When \"no argument\" is provided, it will show this help.\n\
 	Following are the extra arguments you can provide:\n\
-		--tui [--debug]   : show output in curses mode.\n\
-		--term            : Run algo and print output in terminal.\n\
-		--version         : Show version of tigen.\n\
-		--help            : Show this help.\n\n\
+		--tui  [--debug]      : show output in curses mode.\n\
+		--demo [--tui/--term] : creates demo data from main data to show output.\n\
+		--version             : Show version of tigen.\n\
+		--help                : Show this help.\n\n\
 	Key combinations to navigate through ncurses window:\n\
-		  <keys>                      <movement>\n\
-		tab                    : go to next tab(clockwise movement)\n\
-		(back-slash)<\\>        : go to previous tab(anti-clockwise moment)\n\
-		g                      : move to top-most line in result window(vertical)\n\
-		G                      : move to bottom-most line in result window(vertical)\n\
-		B                      : move to begin of the current result window(horiontal)\n\
-		W                      : move to end of the current result window(horizontal)\n\
-		h/left arrow           : move left(by 4 char)\n\
-		l/right arrow          : move right(by 4 char)\n\
-		k/up arrow             : move up(one row at a time)\n\
-		l/down arrow           : move down(one row at a time)\n\
-		<C-u>/PageUp           : move upon one screen view\n\
-		<C-d>/PageDown         : move down one screen view)\n\
-		b/Home                 : move one screen view left\n\
-		w/End                  : move one screen view right\n";
+		<keys>                      <movement>\n\
+	-> selection window:\n\
+		<space>          : to select the entity\n\
+		up/down arrow    : move to select items\n\
+		<enter>          : to confirm your selection before proceeding further\n\
+		q                : to go to next entity( type ), if pressed again then exits the program\n\
+	-> result window:\n\
+		tab              : go to next tab(clockwise movement)\n\
+		(back-slash)<\\>  : go to previous tab(anti-clockwise moment)\n\
+		g                : move to top-most line in result window(vertical)\n\
+		G                : move to bottom-most line in result window(vertical)\n\
+		B                : move to begin of the current result window(horiontal)\n\
+		W                : move to end of the current result window(horizontal)\n\
+		h/left arrow     : move left(by 4 char)\n\
+		l/right arrow    : move right(by 4 char)\n\
+		k/up arrow       : move up(one row at a time)\n\
+		l/down arrow     : move down(one row at a time)\n\
+		<C-u>/PageUp     : move upon one screen view\n\
+		<C-d>/PageDown   : move down one screen view)\n\
+		b/Home           : move one screen view left\n\
+		w/End            : move one screen view right\n";
 }
 
 
