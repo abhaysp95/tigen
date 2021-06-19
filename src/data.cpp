@@ -23,27 +23,6 @@ const size_t DEMO_INSTRUCTORS_SIZE = 15	;
 const size_t DEMO_ROOMS_SIZE = 5;
 const size_t DEMO_CLASS_TIMES_SIZE = 6;
 
-const int MAX_TITLE_LEN = 21;
-
-void print_title_desc() {
-	clear();
-	for (int i = 0; i < 5; i++) {
-		move(i, (COLS - MAX_TITLE_LEN) / 2);
-		clrtoeol();
-	}
-	mvprintw(0, (COLS - MAX_TITLE_LEN) / 2, "  __  _");
-	mvprintw(1, (COLS - MAX_TITLE_LEN) / 2, " / /_(_)__ ____ ___ ");
-	mvprintw(2, (COLS - MAX_TITLE_LEN) / 2, "/ __/ / _ `/ -_) _ \\ ");
-	mvprintw(3, (COLS - MAX_TITLE_LEN) / 2, "\\__/_/\\_, /\\__/_//_/ ");
-	mvprintw(4, (COLS - MAX_TITLE_LEN) / 2, "     /___/ ");
-
-	std::string desc{"Time-Table generation using Genetic Algorithm"};
-	move(6, (COLS - desc.size()) / 2);
-	clrtoeol();
-	mvprintw(6, (COLS - desc.size()) / 2, desc.c_str());
-	refresh();
-}
-
 void print_in_middle( WINDOW* my_win, int starty, int startx, int width, std::string&& msg ) {
 	int length, x, y;
 	float temp;
@@ -89,7 +68,7 @@ void create_menu_win( MENU** my_menu, WINDOW** my_win, int max_item_size, const 
 	if( 16 < LINES ) {
 		int count_items = item_count( *my_menu );
 		if( 24 < LINES ) {
-			print_title_desc();
+			util::print_title_desc();
 			if( LINES - 22 < count_items ) height = LINES - 18;
 			else height = count_items + 4;
 		}
@@ -129,7 +108,7 @@ void create_menu_win( MENU** my_menu, WINDOW** my_win, int max_item_size, const 
 	mvwaddch( *my_win, 2, 0, ACS_LTEE );
 	mvwhline( *my_win, 2, 1, ACS_HLINE, width - 2 );
 	mvwaddch( *my_win, 2, width - 1, ACS_RTEE );
-	print_footer( stdscr, "Press <space> to select, arrow keys for movement, <enter> to confirm selection and 'q' to move to next item type[press 'q' again to exit]" );
+	print_footer( stdscr, "<space> to select, arrow keys to move, <enter> to confirm selection, 'q' to move to next type['q' again to exit]" );
 	refresh();
 }
 
@@ -371,7 +350,7 @@ namespace gen_algo {
 		this->_depts = std::vector<entities::department>{ d1, d2, d3, d4, d5, d6, d7 };
 	}
 
-	selection_data::selection_data( const data* data ) {
+	selection_data::selection_data( const data& data ) {
 
 		ITEM** my_items = NULL;
 		MENU* my_menu = NULL;
@@ -391,7 +370,7 @@ namespace gen_algo {
 		initscr();
 		cbreak();
 		noecho();
-		curs_set(1);  // change this to 0 later
+		curs_set(0);  // change this to 0 later
 		keypad( stdscr, TRUE );
 
 		/*******************************
@@ -400,10 +379,10 @@ namespace gen_algo {
 		********************************
 		*******************************/
 
-		entity_size = static_cast<int>( data->get_departments().size() );
+		entity_size = static_cast<int>( data.get_departments().size() );
 
 		/** fill up the items in C string to show as ITEM */
-		max_item_size = create_id_desc( &item_detail, data->get_departments(), entity_size );
+		max_item_size = create_id_desc( &item_detail, data.get_departments(), entity_size );
 
 		my_items = ( ITEM** )calloc( entity_size + 1, sizeof( ITEM* ) );
 
@@ -441,7 +420,7 @@ namespace gen_algo {
 		free_show_item(&item_detail, entity_size);
 
 		// find the departments matching the id( copies entities from "data::<entity>" to "selection_data::<entity>" )
-		this->_depts = get_selected_entity( selected_ids, data->get_departments() );
+		this->_depts = get_selected_entity( selected_ids, data.get_departments() );
 
 
 		/***************************
@@ -450,8 +429,8 @@ namespace gen_algo {
 		****************************
 		***************************/
 
-		entity_size = static_cast<int>( data->get_courses().size() );
-		max_item_size = create_id_desc( &item_detail, data->get_courses(), entity_size );
+		entity_size = static_cast<int>( data.get_courses().size() );
+		max_item_size = create_id_desc( &item_detail, data.get_courses(), entity_size );
 
 		//this->_courses = std::vector<entities::course>( 10 );
 		//size_t counter{ 0 };
@@ -479,7 +458,7 @@ namespace gen_algo {
 			//unpost_menu( my_menu );
 
 			selected_ids = get_selected_ids( item_detail.selection, " " );
-			std::vector<entities::course> current_courses = get_selected_entity( selected_ids, data->get_courses() );
+			std::vector<entities::course> current_courses = get_selected_entity( selected_ids, data.get_courses() );
 
 			for( const entities::course& crs: current_courses ) {
 				crs_union.insert( crs );
@@ -500,8 +479,8 @@ namespace gen_algo {
 		********************************
 		*******************************/
 
-		entity_size = static_cast<int>( data->get_instructors().size() );
-		max_item_size = create_id_desc( &item_detail, data->get_instructors(), entity_size );
+		entity_size = static_cast<int>( data.get_instructors().size() );
+		max_item_size = create_id_desc( &item_detail, data.get_instructors(), entity_size );
 
 		std::set<entities::instructor> inst_union;
 
@@ -523,7 +502,7 @@ namespace gen_algo {
 			move_through_items( my_menu, my_win, &item_detail );
 
 			selected_ids = get_selected_ids( item_detail.selection, " " );
-			std::vector<entities::instructor> current_instructors = get_selected_entity( selected_ids, data->get_instructors() );
+			std::vector<entities::instructor> current_instructors = get_selected_entity( selected_ids, data.get_instructors() );
 
 			for( const entities::instructor& inst: current_instructors ) {
 				inst_union.insert( inst );
@@ -553,8 +532,8 @@ namespace gen_algo {
 		********************************
 		*******************************/
 
-		entity_size = static_cast<int>( data->get_class_times().size() );
-		max_item_size = create_id_desc( &item_detail, data->get_class_times(), entity_size );
+		entity_size = static_cast<int>( data.get_class_times().size() );
+		max_item_size = create_id_desc( &item_detail, data.get_class_times(), entity_size );
 
 		if( NULL == my_items ) my_items = ( ITEM** )calloc( entity_size + 1, sizeof( ITEM* ) );
 
@@ -576,7 +555,7 @@ namespace gen_algo {
 
 		selected_ids = get_selected_ids( item_detail.selection, " " );
 
-		this->_class_times = get_selected_entity( selected_ids, data->get_class_times() );
+		this->_class_times = get_selected_entity( selected_ids, data.get_class_times() );
 
 		free_show_item( &item_detail, entity_size );
 
@@ -586,8 +565,8 @@ namespace gen_algo {
 		***************************
 		**************************/
 
-		entity_size = static_cast<int>( data->get_rooms().size() );
-		max_item_size = create_id_desc( &item_detail, data->get_rooms(), entity_size );
+		entity_size = static_cast<int>( data.get_rooms().size() );
+		max_item_size = create_id_desc( &item_detail, data.get_rooms(), entity_size );
 
 		if( NULL == my_items ) my_items = ( ITEM** )calloc( entity_size + 1, sizeof( ITEM* ) );
 
@@ -609,7 +588,7 @@ namespace gen_algo {
 
 		selected_ids = get_selected_ids( item_detail.selection, " " );
 
-		this->_rooms = get_selected_entity( selected_ids, data->get_rooms() );
+		this->_rooms = get_selected_entity( selected_ids, data.get_rooms() );
 
 		free_show_item( &item_detail, entity_size );
 
@@ -617,12 +596,7 @@ namespace gen_algo {
 		endwin();
 
 		/** for debugging purpose */
-		//for( const std::string& str: selected_ids ) std::cout << str << '\n';
-
-		/** for debuggin purpose */
-		//( MAKE THIS DEBUGGING LOOP IN A TEMPLATE FUNCTION )
-
-		std::cout << "Departments selected: \n";
+		/*std::cout << "Departments selected: \n";
 		print_entity_names( this->_depts );
 
 		std::cout << "Courses selected: \n";
@@ -635,7 +609,7 @@ namespace gen_algo {
 		print_entity_names( this->_rooms );
 
 		std::cout << "Class time selected: \n";
-		print_entity_names( this->_class_times );
+		print_entity_names( this->_class_times );*/
 	}
 
 
@@ -653,12 +627,12 @@ namespace gen_algo {
 	}
 
 	//void demo_data::make_connection( const data* data ) {
-	demo_data::demo_data( const data* data ) {
-		prepare_data( data->get_rooms(), this->_rooms, DEMO_ROOMS_SIZE );
-		prepare_data( data->get_class_times(), this->_class_times, DEMO_CLASS_TIMES_SIZE );
-		prepare_data( data->get_instructors(), this->_instructors, DEMO_INSTRUCTORS_SIZE );
-		prepare_data( data->get_courses(), this->_courses, DEMO_COURSES_SIZE );
-		prepare_data( data->get_departments(), this->_depts, DEMO_DEPTS_SIZE );
+	demo_data::demo_data( const data& data ) {
+		prepare_data( data.get_rooms(), this->_rooms, DEMO_ROOMS_SIZE );
+		prepare_data( data.get_class_times(), this->_class_times, DEMO_CLASS_TIMES_SIZE );
+		prepare_data( data.get_instructors(), this->_instructors, DEMO_INSTRUCTORS_SIZE );
+		prepare_data( data.get_courses(), this->_courses, DEMO_COURSES_SIZE );
+		prepare_data( data.get_departments(), this->_depts, DEMO_DEPTS_SIZE );
 
 		// setup for course( is it possible to reduce this labour, check it again )
 		this->_courses.at( 0 ).set_instructors( std::vector<entities::instructor>{ this->_instructors[2], this->_instructors[4] });
