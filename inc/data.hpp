@@ -20,15 +20,12 @@ extern const size_t DEMO_INSTRUCTORS_SIZE;
 extern const size_t DEMO_ROOMS_SIZE;
 extern const size_t DEMO_CLASS_TIMES_SIZE;
 
-extern const int MAX_TITLE_LEN;
-
 typedef struct _show_item {
 	char* selection;
 	char** id;
 	char** desc;
 } SHOW_ITEM;
 
-void print_title_desc();
 void print_in_middle( WINDOW* my_win, int starty, int startx, int width, std::string&& msg);
 void print_footer( WINDOW* my_win, const char* msg = "Press 'q' to quit" );
 void free_show_item( SHOW_ITEM* item_detail, int length );
@@ -63,13 +60,13 @@ namespace gen_algo {
 		private:
 			void init_curses_selection( selection_data* obj );
 		public:
-			explicit selection_data( const data* data );
+			explicit selection_data( const data& data );
 
 	};
 
 	class demo_data: public data {  // <-- CHILD2 CLASS
 		public:
-			explicit demo_data( const data* data );
+			explicit demo_data( const data& data );
 	};
 };
 
