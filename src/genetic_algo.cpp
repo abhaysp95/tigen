@@ -24,7 +24,7 @@ namespace gen_algo {
 		}
 
 		for (size_t i = NUMBER_OF_ELITE_SCHEDULES; i < pop->get_schedules().size(); ++i) {
-			//if (CROSSOVER_RATE > (rand() / static_cast<double>(RAND_MAX))) {
+			// if (CROSSOVER_RATE > (rand() / static_cast<double>(RAND_MAX))) {
 			// reason for choosing 2.0 is that I want number which would be
 			// above 0.0 and something close around 1.0 and 2.0 fits that
 			// criteria
