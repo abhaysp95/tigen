@@ -16,10 +16,11 @@
 #include <chrono>
 #include <exception>
 #include <stdexcept>
+#include <unistd.h>
 
 int schedule_number = 0;
 int generation_number = 0;
-gen_algo::data *gene_data;
+//gen_algo::data *gene_data;
 gen_algo::data *choice_data;
 
 std::vector<std::string> data_avail_to_print;
@@ -41,6 +42,59 @@ std::string vec_to_str(const std::vector<T>& vec) {
 		res += '\n';
 	res += "]\n";
 	return res;
+}
+
+template<typename T>
+void free_obj(T** object) {
+	if ( nullptr != *object ) {
+		delete *object;
+		*object = nullptr;
+	}
+	if( nullptr != object ) object = nullptr;
+}
+
+
+// return demangled type name of template typename
+// I should probably remove this(cause, it's compiler specific thing and would
+// give wrong results if user uses some other compilers)
+template<typename T>
+std::string type_name() {
+	int status{};
+	std::string tname = typeid(T).name();
+	#if defined(__clang__) || defined(_GNUG__)
+	char *demangled_name = abi::__cxa_demangle(tname.c_str(), NULL, NULL, &status);
+	if (status == 0) {
+		tname = demangled_name;
+		std::free(demangled_name);
+	}
+	#else
+	std::cout << "\ndemangling status: " << status << '\n';
+	std::cout <<
+		"Type Name demangling is not supported by Compiler[variable \"__clang__\" and \"__GNUG__\" undefined]\n";
+	#endif
+	return tname;
+}
+
+template<typename T>
+void entity_existance_check(const std::vector<T>& from_entity,
+		const typename std::vector<T>::const_iterator& check_entity) {
+	if (check_entity == from_entity.cend()) {
+		std::string msg = type_name<T>() + " not found!!!\n";
+		throw util::entitity_not_found(std::move(msg));
+	}
+}
+
+void create_desired_type_data( const gen_algo::data& gene_data, const std::string& dtype ) {
+	if( 0 == dtype.compare( "demo" ) ) {
+		if( ( nullptr != choice_data ) ) free_obj( &choice_data );
+		choice_data = new gen_algo::demo_data( gene_data );
+	}
+	else if( 0 == dtype.compare( "select" ) ) {
+		/** curses for selection will start with the instantiation of this
+		 * class's object and this will only contain user selected data */
+		choice_data = new gen_algo::selection_data( gene_data );
+	}
+	/**********************************************************/
 }
 
 void print_available_data(gen_algo::data* d) {
@@ -85,45 +139,6 @@ const std::string print_table_element(std::string t, const int& width, const cha
 	return ss.str();
 }
 
-template<typename T>
-void free_obj(T* object) {
-	if ( nullptr != object ) {
-		delete object;
-		object = nullptr;
-	}
-}
-
-
-// return demangled type name of template typename
-// I should probably remove this(cause, it's compiler specific thing and would
-// give wrong results if user uses some other compilers)
-template<typename T>
-std::string type_name() {
-	int status{};
-	std::string tname = typeid(T).name();
-	#if defined(__clang__) || defined(_GNUG__)
-	char *demangled_name = abi::__cxa_demangle(tname.c_str(), NULL, NULL, &status);
-	if (status == 0) {
-		tname = demangled_name;
-		std::free(demangled_name);
-	}
-	#else
-	std::cout << "\ndemangling status: " << status << '\n';
-	std::cout <<
-		"Type Name demangling is not supported by Compiler[variable \"__clang__\" and \"__GNUG__\" undefined]\n";
-	#endif
-	return tname;
-}
-
-template<typename T>
-void entity_existance_check(const std::vector<T>& from_entity,
-		const typename std::vector<T>::const_iterator& check_entity) {
-	if (check_entity == from_entity.cend()) {
-		std::string msg = type_name<T>() + " not found!!!\n";
-		throw util::entitity_not_found(std::move(msg));
-	}
-}
-
 void print_schedule_as_table(gen_algo::schedule& sch) {
 	size_t class_number{};
 	std::vector<entities::sec_class> classes = sch.get_sec_classes();  // std::bad_alloc
@@ -137,7 +152,7 @@ void print_schedule_as_table(gen_algo::schedule& sch) {
 		+ print_table_element("Department (id)", 38) + " | "
 		+ print_table_element("Course (#, max students #)", 31) + " | "
 		+ print_table_element("Room (capacity)", 15) + " | "
-		+ print_table_element("Instructor (id)", 20) + " | "
+		+ print_table_element("Instructor (id)", 21) + " | "
 		+ print_table_element("Meeting Time (id)", 23)} + "\n");
 
 	fittest_schedule_to_print.push_back(print_table_element(" ", 8)
@@ -185,7 +200,7 @@ void print_schedule_as_table(gen_algo::schedule& sch) {
 			+ print_table_element( std::string( citer_room->get_id()
 					+ " (" + std::to_string( citer_room->get_capacity() ) + ')' ), 15 ) + " | "
 			+ print_table_element( std::string( citer_instructor->get_name()
-					+ " (" + citer_instructor->get_id() + ')' ), 20 ) + " | "
+					+ " (" + citer_instructor->get_id() + ')' ), 21 ) + " | "
 			+ print_table_element( std::string( citer_class_time->get_time()
 					+ " (" + citer_class_time->get_id() + ')' ), 23 ) + "\n" );
 
@@ -249,18 +264,9 @@ int driver( std::string&& dtype ) {
 	//std::cout.tie(NULL);
 
 	/** choice_data would either be selectable data or demo data( use "dtype" for checking ) */
-	//gen_algo::data gene_data( NULL );
-	gene_data = new gen_algo::data( NULL );
-	if( 0 == dtype.compare( "demo" ) ) {
-		choice_data = new gen_algo::demo_data( gene_data );
-	}
-	else if( 0 == dtype.compare( "select" ) ) {
-		/** curses for selection will start with the instantiation of this
-		 * class's object and this will only contain user selected data */
-		choice_data = new gen_algo::selection_data( gene_data );
-	}
-	/**********************************************************/
-
+	gen_algo::data gene_data( NULL );
+	//gene_data = new gen_algo::data( NULL );
+	create_desired_type_data( gene_data, dtype );
 
 	//print_available_data(gene_data);
 	print_available_data( choice_data );
@@ -277,7 +283,19 @@ int driver( std::string&& dtype ) {
 	do {
 		fittest_schedule_fitness = calculate_population(ga, &new_population);
 		print_generation_table(new_population, fittest_schedule_fitness);
-		std::cout << "Generation Number " << generation_number << " generated!!!\n";
+		//std::cout << "Generation Number " << generation_number << " generated!!!\n";
+		std::cout << "\rGeneration ( " << generation_number << " ) generated!!!";
+		std::cout.flush();
+
+		/** there's a problem while printing final schedule( message says
+		 * bad_alloc, but/and same department twice( not contiguous ) ) */
+		/*if( generation_number > 100 ) {
+			free_obj( &new_population );
+			free_obj( &choice_data );
+			generation_number = 0;
+			std::cout << "Limit Exceeded. RESTARTING!!!\n";
+			create_desired_type_data( gene_data, dtype );
+		}*/
 	} while (fittest_schedule_fitness < 1.0);
 
 
@@ -290,16 +308,16 @@ int driver( std::string&& dtype ) {
 	}
 	catch (util::entitity_not_found& e) {
 		/* checkout this section again to see if resources are getting freed properly or not */
-		free_obj( new_population );
-		free( gene_data );
-		free_obj( choice_data );
+		free_obj( &new_population );
+		//free( gene_data );
+		free_obj( &choice_data );
 		throw;
 	}
 
 	/*************************************************************************************/
 
-	free_obj( new_population );
-	free( gene_data );
-	free_obj( choice_data );
+	free_obj( &new_population );
+	//free( gene_data );
+	free_obj( &choice_data );
 	return 0;
 }
