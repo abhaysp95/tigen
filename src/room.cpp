@@ -10,6 +10,7 @@ namespace entities {
 
 	bool room::operator==( const room& other ) const {
 		return ((this->_id == other.get_id())
+				&& ( this->_name == other.get_name() )
 				&& (this->_capacity == other.get_capacity()));
 	}
 
