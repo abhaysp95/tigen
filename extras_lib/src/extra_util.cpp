@@ -1,6 +1,6 @@
 // cpp file for "extras/extra_util.hpp"
 
-#include "../../inc/extras/extra_util.hpp"
+#include <extras/extra_util.hpp>
 
 namespace util {
 	std::mt19937_64 rang(std::chrono::high_resolution_clock::now().time_since_epoch().count());

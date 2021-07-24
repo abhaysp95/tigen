@@ -3,8 +3,8 @@
 #ifndef _GUARD_POPULATION_HPP_
 #define _GUARD_POPULATION_HPP_
 
-#include "../inc/data.hpp"
-#include "../inc/schedule.hpp"
+#include "data.hpp"
+#include "schedule.hpp"
 
 #include <vector>
 

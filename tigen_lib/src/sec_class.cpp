@@ -1,6 +1,6 @@
 // cpp file for "class.hpp"
 
-#include "../inc/sec_class.hpp"
+#include <elib/sec_class.hpp>
 
 namespace entities {
 	//sec_class::sec_class(size_t id, entities::department dept, entities::course course,

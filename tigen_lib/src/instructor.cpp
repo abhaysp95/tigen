@@ -1,6 +1,6 @@
 // cpp file for "instructor.hpp"
 
-#include "../inc/instructor.hpp"
+#include <elib/instructor.hpp>
 
 namespace entities {
 	instructor::instructor()

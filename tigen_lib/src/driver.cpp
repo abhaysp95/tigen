@@ -1,8 +1,8 @@
 // cpp file for "driver.hpp"
 
-#include "../inc/driver.hpp"
-#include "../inc/extras/extra_util.hpp"
-#include "../inc/extras/exception_util.hpp"
+#include <glib/driver.hpp>
+#include <extras/extra_util.hpp>
+#include <extras/exception_util.hpp>
 
 #include <iostream>
 #include <ios>

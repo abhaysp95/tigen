@@ -1,7 +1,7 @@
 // main file
 
-#include "../inc/driver.hpp"
-#include "../inc/extras/curses_util.hpp"
+#include <glib/driver.hpp>
+#include <extras/curses_util.hpp>
 
 #include <iostream>
 #include <ios>

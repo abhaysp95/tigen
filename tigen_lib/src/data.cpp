@@ -1,9 +1,12 @@
 // cpp file for "data.hpp"
 
-#include "../inc/data.hpp"
+//#include "../inc/data.hpp"
+#include <glib/data.hpp>
 
-#include "../inc/extras/extra_util.hpp"
-#include "../inc/extras/curses_util.hpp"
+//#include "../inc/extras/extra_util.hpp"
+//#include "../inc/extras/curses_util.hpp"
+#include <extras/extra_util.hpp>
+#include <extras/curses_util.hpp>
 
 #include <unordered_set>
 #include <algorithm>
@@ -36,7 +39,7 @@ void print_in_middle( WINDOW* my_win, int starty, int startx, int width, std::st
 	if( 0 == width ) width = 80;
 
 	length = static_cast<int>( msg.size() );
-	temp = ( width - length ) / 2;
+	temp = ( width - length ) / 2.0;
 	x = startx + ( int )temp;
 	mvwprintw( my_win, y, x, "%s", msg.c_str() );
 	wrefresh( my_win );

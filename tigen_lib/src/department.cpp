@@ -1,6 +1,6 @@
 // cpp file for "department.hpp"
 
-#include "../inc/department.hpp"
+#include <elib/department.hpp>
 
 namespace entities {
 	department::department( std::string id, std::string name )

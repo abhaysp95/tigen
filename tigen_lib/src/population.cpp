@@ -1,6 +1,6 @@
 // cpp file for "population.hpp"
 
-#include "../inc/population.hpp"
+#include <glib/population.hpp>
 
 #include <algorithm>
 

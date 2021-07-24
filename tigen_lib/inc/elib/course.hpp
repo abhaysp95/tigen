@@ -3,7 +3,7 @@
 #ifndef _GUARD_COURSE_HPP_
 #define _GUARD_COURSE_HPP_
 
-#include "../inc/instructor.hpp"
+#include "instructor.hpp"
 
 #include <vector>
 #include <string>

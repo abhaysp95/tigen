@@ -1,6 +1,6 @@
 // cpp file for "extra/curses_util.hpp"
 
-#include "../../inc/extras/curses_util.hpp"
+#include <extras/curses_util.hpp>
 
 const int MAX_TITLE_LEN = 21;
 
