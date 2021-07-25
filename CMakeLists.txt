@@ -10,13 +10,17 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 # Uncomment below lines if you are going to use clang
 # (you can also modify these flags as per your need)
 # ====================================================
-#set(CMAKE_C_COMPILER    "/usr/bin/clang")
-#set(CMAKE_C_FLAGS       "-Wall -std=c99")
-#set(CMAKE_C_FLAGS_DEBUG "-g")
+if(NOT "${CMAKE_C_COMPILER}")
+	set(CMAKE_C_COMPILER    "/usr/bin/clang")
+	set(CMAKE_C_FLAGS       "-Wall -std=c99")
+	set(CMAKE_C_FLAGS_DEBUG "-g")
+endif()
 
-#set(CMAKE_CXX_COMPILER    "/usr/bin/clang++")
-#set(CMAKE_CXX_FLAGS       "-Wall")
-#set(CMAKE_CXX_FLAGS_DEBUG "-g")
+if(NOT "${CMAKE_CXX_COMPILER}")
+	set(CMAKE_CXX_COMPILER    "/usr/bin/clang++")
+	set(CMAKE_CXX_FLAGS       "-Wall")
+	set(CMAKE_CXX_FLAGS_DEBUG "-g")
+endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
