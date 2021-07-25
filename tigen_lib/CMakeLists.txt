@@ -24,10 +24,10 @@ set(LIB_HEADERS
 	inc/glib/population.hpp
 	inc/glib/schedule.hpp)
 
-add_library(tigen_lib STATIC "${LIB_SOURCES}" "${LIB_HEADERS}")
-target_link_libraries(tigen_lib PUBLIC extras_library)
-target_include_directories(tigen_lib PUBLIC ../tigen_lib/inc ../extras_lib/inc)
-target_include_directories(tigen_lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
+add_library(tigen_lib SHARED "${LIB_SOURCES}" "${LIB_HEADERS}")
+target_link_libraries(tigen_lib PRIVATE extras_library)
+target_include_directories(tigen_lib PRIVATE ../tigen_lib/inc ../extras_lib/inc)
+target_include_directories(tigen_lib PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 target_compile_features(tigen_lib PUBLIC cxx_std_17)
 target_compile_features(tigen_lib PUBLIC c_std_99)
