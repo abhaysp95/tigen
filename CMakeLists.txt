@@ -33,9 +33,9 @@ set(LIB_HEADERS
 	extras_lib/inc/extras/exception_util.hpp
 	extras_lib/inc/extras/extra_util.hpp)
 
-add_library(extras_library STATIC "${LIB_SOURCES}" "${LIB_HEADERS}")
+add_library(extras_library SHARED "${LIB_SOURCES}" "${LIB_HEADERS}")
 
-target_include_directories(extras_library PUBLIC extras_lib/inc)
+target_include_directories(extras_library PRIVATE extras_lib/inc)
 
 target_compile_features(extras_library PUBLIC cxx_std_17)
 target_compile_features(extras_library PUBLIC c_std_99)
@@ -65,9 +65,9 @@ set(TIGEN_LIB_HEADERS
 	tigen_lib/inc/glib/population.hpp
 	tigen_lib/inc/glib/schedule.hpp)
 
-add_library(tigen_library STATIC "${TIGEN_LIB_SOURCES}" "${TIGEN_LIB_HEADERS}")
-target_link_libraries(tigen_library PUBLIC extras_library)
-target_include_directories(tigen_library PUBLIC tigen_lib/inc extras_lib/inc)
+add_library(tigen_library SHARED "${TIGEN_LIB_SOURCES}" "${TIGEN_LIB_HEADERS}")
+target_link_libraries(tigen_library PRIVATE extras_library)
+target_include_directories(tigen_library PRIVATE tigen_lib/inc extras_lib/inc)
 
 target_compile_features(tigen_library PUBLIC cxx_std_17)
 target_compile_features(tigen_library PUBLIC c_std_99)
