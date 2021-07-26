@@ -1,7 +1,10 @@
 // cpp file for "schedule.hpp"
 
-#include "../inc/schedule.hpp"
-#include "../inc/extras/extra_util.hpp"
+//#include "../inc/schedule.hpp"
+//#include "../inc/extras/extra_util.hpp"
+
+#include <glib/schedule.hpp>
+#include <extras/extra_util.hpp>
 
 #include <algorithm>
 #include <string>

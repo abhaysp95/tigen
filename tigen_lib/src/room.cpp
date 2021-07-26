@@ -1,6 +1,6 @@
 // cpp file for "room.hpp"
 
-#include "../inc/room.hpp"
+#include <elib/room.hpp>
 
 namespace entities {
 	room::room()

@@ -3,17 +3,16 @@
 #ifndef _GUARD_DRIVER_HPP_
 #define _GUARD_DRIVER_HPP_
 
-#include "../inc/course.hpp"
-#include "../inc/sec_class.hpp"
-#include "../inc/instructor.hpp"
-#include "../inc/room.hpp"
-#include "../inc/department.hpp"
-#include "../inc/class_time.hpp"
-#include "../inc/data.hpp"
-#include "../inc/genetic_algo.hpp"
-#include "../inc/schedule.hpp"
-#include "../inc/population.hpp"
-#include "../inc/schedule.hpp"
+#include "../elib/course.hpp"
+#include "../elib/sec_class.hpp"
+#include "../elib/instructor.hpp"
+#include "../elib/room.hpp"
+#include "../elib/department.hpp"
+#include "../elib/class_time.hpp"
+#include "data.hpp"
+#include "genetic_algo.hpp"
+#include "schedule.hpp"
+#include "population.hpp"
 
 #include <vector>
 #include <string>

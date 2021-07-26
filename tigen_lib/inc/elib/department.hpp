@@ -3,7 +3,7 @@
 #ifndef _GUARD_DEPARTMENT_HPP_
 #define _GUARD_DEPARTMENT_HPP_
 
-#include "../inc/course.hpp"
+#include "course.hpp"
 
 #include <vector>
 #include <string>

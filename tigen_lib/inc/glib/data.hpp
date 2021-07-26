@@ -3,11 +3,11 @@
 #ifndef _GUARD_DATA_HPP_
 #define _GUARD_DATA_HPP_
 
-#include "../inc/department.hpp"
-#include "../inc/course.hpp"
-#include "../inc/instructor.hpp"
-#include "../inc/room.hpp"
-#include "../inc/class_time.hpp"
+#include "../elib/department.hpp"
+#include "../elib/course.hpp"
+#include "../elib/instructor.hpp"
+#include "../elib/room.hpp"
+#include "../elib/class_time.hpp"
 
 #include <vector>
 #include <string>

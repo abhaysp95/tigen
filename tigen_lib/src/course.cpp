@@ -1,6 +1,6 @@
 // cpp file for "course.hpp"
 
-#include "../inc/course.hpp"
+#include <elib/course.hpp>
 
 #include <algorithm>
 

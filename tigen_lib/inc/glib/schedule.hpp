@@ -3,8 +3,8 @@
 #ifndef _GUARD_SCHEDULE_HPP_
 #define _GUARD_SCHEDULE_HPP_
 
-#include "../inc/data.hpp"
-#include "../inc/sec_class.hpp"
+#include "../elib/sec_class.hpp"
+#include "data.hpp"
 
 #include <vector>
 

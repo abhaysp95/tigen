@@ -3,9 +3,9 @@
 #ifndef _GUARD_GENETIC_ALGO_HPP_
 #define _GUARD_GENETIC_ALGO_HPP_
 
-#include "../inc/schedule.hpp"
-#include "../inc/data.hpp"
-#include "../inc/population.hpp"
+#include "schedule.hpp"
+#include "data.hpp"
+#include "population.hpp"
 
 #include <vector>
 

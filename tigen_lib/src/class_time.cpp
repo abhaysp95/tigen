@@ -1,6 +1,6 @@
 // cpp file for "class_time.hpp"
 
-#include "../inc/class_time.hpp"
+#include <elib/class_time.hpp>
 
 namespace entities {
 	class_time::class_time()

@@ -1,7 +1,7 @@
 // cpp file for "genetic_algo.hpp"
 
-#include "../inc/genetic_algo.hpp"
-#include "../inc/extras/extra_util.hpp"
+#include <glib/genetic_algo.hpp>
+#include <extras/extra_util.hpp>
 
 const int POPULATION_SIZE = 9;
 const double MUTATION_RATE = 0.1;
