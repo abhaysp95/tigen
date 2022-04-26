@@ -269,7 +269,7 @@ int driver( std::string&& dtype ) {
 	create_desired_type_data( gene_data, dtype );
 
 	//print_available_data(gene_data);
-	print_available_data( choice_data );
+	// print_available_data( choice_data );
 
 	//gen_algo::genetic_algo ga(*gene_data);
 	gen_algo::genetic_algo ga( *choice_data );
@@ -278,13 +278,22 @@ int driver( std::string&& dtype ) {
 	/*******   UNCOMMENT THIS BLOCK WHEN YOU ARE DONE WITH GEN_ALGO::SELECTION_DATA() *******/
 
 	double fittest_schedule_fitness{};
+	size_t count{};
+
+	auto full_evolve_time = std::chrono::high_resolution_clock::now();
+	std::vector<std::chrono::nanoseconds> elapsed_time_shots{};
 
 	/** do calculation and print generation */
+
+
 	do {
+		auto begin_evolve = std::chrono::high_resolution_clock::now();
+
+		count++;
 		fittest_schedule_fitness = calculate_population(ga, &new_population);
-		print_generation_table(new_population, fittest_schedule_fitness);
+		// print_generation_table(new_population, fittest_schedule_fitness);
 		//std::cout << "Generation Number " << generation_number << " generated!!!\n";
-		std::cout << "\rGeneration ( " << generation_number << " ) generated!!!";
+		// std::cout << "\rGeneration ( " << generation_number << " ) generated!!!";
 		std::cout.flush();
 
 		/** there's a problem while printing final schedule( message says
@@ -296,15 +305,29 @@ int driver( std::string&& dtype ) {
 			std::cout << "Limit Exceeded. RESTARTING!!!\n";
 			create_desired_type_data( gene_data, dtype );
 		}*/
-	} while (fittest_schedule_fitness < 1.0);
+		auto interval = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - begin_evolve);
+		elapsed_time_shots.push_back(interval);
+		std::cout << "\tevolve gen #" << count << ": " << std::fixed << std::setprecision(3) << (interval.count() * 1e-9) << " sec\n";
+	} while (fittest_schedule_fitness < 1.0 && count < 10);
 
+	std::chrono::nanoseconds average_evolve_time{};
+	for (const auto& x: elapsed_time_shots)
+		average_evolve_time += x;
+
+	std::cout << "Average time for evolution of " << elapsed_time_shots.size() << " genrations: ";
+	std::cout << std::fixed << std::setprecision(3) <<
+		std::setw(15) << std::setfill(' ') << std::right <<
+		(average_evolve_time.count() * 1e-9) / elapsed_time_shots.size() << " sec\n";
+
+	std::cout << "\ntime for reaching termination: " <<
+		std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - full_evolve_time).count() * 1e-9 << " seconds\n";
 
 	/*******   UNCOMMENT THIS BLOCK WHEN YOU ARE DONE WITH GEN_ALGO::SELECTION_DATA() *******/
 
 	try {
 		std::vector<gen_algo::schedule>& np_schedules = new_population->get_schedules();
 		gen_algo::schedule& fittest_schedule = np_schedules.at(0);
-		print_schedule_as_table(fittest_schedule);
+		// print_schedule_as_table(fittest_schedule);
 	}
 	catch (util::entitity_not_found& e) {
 		/* checkout this section again to see if resources are getting freed properly or not */
