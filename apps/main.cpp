@@ -123,9 +123,13 @@ int main(int argc, char** argv) {
 }
 
 void run_driver( std::string&& type ) {
-	std::cout << "Generating time-table..." << std::endl;
+	std::cout << "\nGenerating time-table..." << std::endl;
 	try {
+		auto driver_time_begin = std::chrono::high_resolution_clock::now();
 		driver( std::move(type) );
+		std::cout << "time for program driver to finish: " <<
+			std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - driver_time_begin).count() * 1e-9 << " seconds\n";
+		std::cout << std::endl;
 	}
 	catch(std::exception& e) {
 		std::cout << e.what();
