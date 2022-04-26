@@ -11,14 +11,14 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 # (you can also modify these flags as per your need)
 # ====================================================
 if(NOT "${CMAKE_C_COMPILER}")
-	set(CMAKE_C_COMPILER    "/usr/bin/clang")
-	set(CMAKE_C_FLAGS       "-Wall -std=c99")
+	set(CMAKE_C_COMPILER    "/usr/bin/gcc")
+	set(CMAKE_C_FLAGS       "-Wall -pg -std=c99")
 	set(CMAKE_C_FLAGS_DEBUG "-g")
 endif()
 
 if(NOT "${CMAKE_CXX_COMPILER}")
-	set(CMAKE_CXX_COMPILER    "/usr/bin/clang++")
-	set(CMAKE_CXX_FLAGS       "-Wall")
+	set(CMAKE_CXX_COMPILER    "/usr/bin/g++")
+	set(CMAKE_CXX_FLAGS       "-Wall -pg -std=c++14")
 	set(CMAKE_CXX_FLAGS_DEBUG "-g")
 endif()
 
