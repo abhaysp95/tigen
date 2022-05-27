@@ -49,16 +49,37 @@ Help for tigen:
 
 ## Build:
 
-You can use `make`_(UNIX Makefiles)_ to build the program. Just do:
-```sh
-$ make
+Tigen can be build for both Linux/Unix and Windows OS. You can use `CMake` to build the tigen as cross-platform software or you can use `Unix-Makefile` utility for building in Linux systems.
+
+The root directory of the project contains a `CMakelists.txt` file for using with `CMake` and a `Makefile` for using with `make` tool.
+
+### Building with make:
+
+Run the `make` command on root directory of project and this will do all the compiling and linking process. It'll create some directories. Executable for project will be inside in `bin` folder. `make` will provide some more optional arguments, for example `make debug` command will build the executable containing the debug flags. Use `make help` to know more.
+
+### Building with cmake:
+
+To build with `CMake`, first create a `build` directory in root folder of project and enter into it. Enter the following command to build:
+
 ```
-in the root directory of project. Following are the targets provided with `make` for the project:
-* make (build the project)
-* make all (build the project)
-* make debug (build the project using -g flag(inclusion of debug symbols))
-* make help (shows the included directory and files used in the building process)
-* make clean (clean the project directory of binaries and object files)
+$ mkdir build
+$ cd build
+$ cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=On -S .. -B .
+```
+
+This will setup the build for project. It'll create the files to build the project.
+
+`-GNinja` flag will setup the project build so that `ninja` tool can be used to build the project. If you'll not provide this flag, by default CMake will create Makefile(s) for Linux/Unix systems and NMake files in Windows system.
+
+`-DCMAKE_BUILD_TYPE=Debug` setup the project such that the when the project is build, executable will contain debug flags.
+
+`-DCMAKE_EXPORT_COMPILE_COMMANDS=On` will create a `compile_commands.json` file, which is useful with language-servers and completion engines during coding the project.
+
+`-S ..` points to the source `CMakelists.txt` file
+
+`-B .` points to build directory
+
+`CMake` contains many other flags, options and features. Use `man cmake` or `cmake --help` to know more.
 
 ## Screenshots:
 
@@ -89,8 +110,8 @@ in the root directory of project. Following are the targets provided with `make`
 
 ## Contributors of the project
 
-* Tarun Singh
 * Abhay Shanker Pathak
+* Tarun Singh
 * Pragati Srivastava
 
 `Note: work in progress`
